@@ -99,7 +99,7 @@ async function displayTask(title) {
     taskImage.attributes.src.nodeValue = data[0].image;
     taskTitle.innerText = data[0].title;
     taskDescription.innerText = data[0].description;
-    runnerNum.innerText = data[0].runners;
+    runnerNum.innerText = data[0].runners + "+";
     startingTip.innerText = data[0].tip;
   } catch (err) {
     console.error(err);
