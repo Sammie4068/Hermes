@@ -297,15 +297,14 @@ aside span:not(:last-child) {
   border-right: 2px solid var(--primary-color);
 }
 
-.article_btn{
+.article_btn {
   position: absolute;
   left: 53.5rem;
   bottom: 0;
   margin: 10px 0 -20px 0;
-
 }
 
-.aside_num{
+.aside_num {
   font-size: 1.5rem;
 }
 .aside_text {
@@ -383,22 +382,39 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
+  .team_img_wrapper {
+    display: none;
+  }
   .logo h2 {
-    font-size: 23px;
+    font-size: 30px;
+  }
+
+  .toggle_btn {
+    position: relative;
+    left: 0;
+  }
+
+  .runner_btn {
+    margin-left: -25px;
+    margin-top: 5px;
+  }
+  .container {
+    overflow-x: hidden;
   }
   .nav_menu {
     position: fixed;
     width: 93%;
-    height: 100%;
+    height: 500px;
     display: block;
     top: 2.5%;
     right: -100%;
-    background-color: #fff;
+    background-color: transparent;
     padding: 3rem;
     border-radius: 10px;
     box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
     z-index: 50;
     transition: 0.4s;
+    backdrop-filter: blur(10px);
   }
   .nav_menu_list {
     flex-direction: column;
@@ -416,7 +432,9 @@ footer {
     position: absolute;
     right: 10%;
     font-size: 25px;
-    color: #50689e;
+    color: var(--primary-color);
+    top: 8.5px;
+    margin-right: -16.5px;
   }
   .close_btn:hover {
     color: #000;
@@ -426,6 +444,9 @@ footer {
   }
   .grid-item-1 {
     padding-left: 0rem;
+  }
+  .grid-cols-2 {
+    margin-top: -4rem;
   }
   .main-heading {
     font-size: 35px;
@@ -498,3 +519,12 @@ footer {
     font-size: 19px;
   }
 }
+
+/* @media screen and (max-width: 375px) {
+  .logo h2{
+    font-size: 2rem;
+  }
+  .toggle_btn {
+    display: block;
+  }
+} */
