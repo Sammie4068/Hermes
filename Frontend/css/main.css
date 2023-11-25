@@ -48,6 +48,20 @@ button {
 .container {
   width: 100%;
 }
+.sub-heading {
+  color: var(--primary-color);
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sub-heading span {
+  font-family: "Italianno", cursive;
+  margin-left: 0.6rem;
+  font-size: 5rem;
+}
+
 @media screen and (min-width: 1040px) {
   .container {
     width: 1040px;
@@ -91,6 +105,7 @@ button {
 }
 .nav_menu_link:hover {
   color: var(--primary-color);
+  background-color: #fff;
 }
 .toggle_btn {
   font-size: 20px;
@@ -342,10 +357,19 @@ aside span:not(:last-child) {
   width: 100%;
   line-height: 40px;
 }
-.icon svg {
-  width: 30px;
-  height: 30px;
-  color: #6b85d8;
+.icon img {
+  width: 100px;
+  height: 100px;
+  color: var(--link-color);
+}
+
+.stars {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: flex-start;
+  color: #e2a333;
+  gap: 2.5px;
 }
 .featured_info {
   width: 100%;
@@ -355,6 +379,7 @@ aside span:not(:last-child) {
   display: block;
   font-size: 21px;
   line-height: 33px;
+  font-weight: 700;
   color: var(--lg-heading);
 }
 .featured_info p {
@@ -366,11 +391,114 @@ aside span:not(:last-child) {
   line-height: 25px;
   font-size: 15.5px;
 }
+
+.feedbacks h4 {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
 footer {
+  display: flex;
+  flex-direction: column;
+  place-items: flex-start;
+  place-content: center;
+  background: var(--primary-color);
+  color: #fff;
+  max-width: 1450px;
   width: 100%;
-  background-color: var(--primary-color);
-  height: 12px;
-  margin-top: 8rem;
+  padding: 40px 80px;
+  gap: 30px;
+}
+
+footer a {
+  color: #fff;
+}
+footer .col {
+  display: flex;
+  flex-direction: row;
+  place-items: start;
+  place-content: space-between;
+  width: 100%;
+}
+footer .col .i h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 35px 0px 20px 0px;
+}
+footer .col .i h5 {
+  font-size: 12px;
+  font-weight: 400;
+  margin-top: 10px;
+}
+footer .col .i h5 strong {
+  font-weight: 600;
+}
+footer .i,
+footer .ii,
+footer .iii,
+footer .iv {
+  margin-top: 0 !important;
+}
+footer small {
+  place-self: center;
+  font-size: 13px;
+}
+footer .iv .store {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: space-between;
+  gap: 7px;
+}
+footer .iv .store .app,
+footer .iv .store .play {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  place-content: center;
+  background-color: #088178;
+  border-radius: 10px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: 0.2s;
+  margin-block: 15px;
+  width: 160px;
+  height: 48px;
+}
+footer .iv .store .app:hover,
+footer .iv .store .play:hover {
+  scale: 1.02;
+}
+footer .iv .store .app img,
+footer .iv .store .play img {
+  height: 90.5%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 5px;
+}
+footer .iv .pay {
+  margin-top: 20px;
+}
+footer .follow h4 {
+  font-size: 14px;
+  font-weight: 700;
+}
+footer .follow .socials {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+footer .follow .socials i{
+  font-size: 30px;
+  transition: 0.2s;
+  cursor: pointer;
+}
+footer .follow .socials i:hover {
+  transform: scale(1.07);
 }
 
 @media screen and (min-width: 768px) {
@@ -519,4 +647,49 @@ footer {
   .featured_info span {
     font-size: 19px;
   }
+}
+
+/* task.html */
+.contain {
+  position: relative;
+  top: -4rem;
+  height: 100%;
+  background-color: #a8ede2;
+  color: var(--primary-color);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.contain h4 {
+  margin-left: 10%;
+}
+
+.input-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.input-field input,
+select,
+textarea {
+  outline: none;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  border-radius: 5px;
+  border: 1px solid var(--primary-color);
+  padding: 0 15px;
+  height: 42px;
+  margin: 8px 0;
+  background-color: #fafbfb;
+}
+
+.input-field label {
+  font-weight: 500;
+}
+
+.input-field textarea {
+  padding-top: 5px;
+  height: 5rem;
 }

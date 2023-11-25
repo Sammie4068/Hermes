@@ -10,13 +10,20 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
     <header class="container header">
       <nav class="nav">
         <div class="logo">
-          <h2>Hermes.</h2>
+          <a href="main.html"><h2>Hermes.</h2></a>
         </div>
 
         <div class="nav_menu" id="nav_menu">
@@ -44,7 +51,7 @@
       </nav>
     </header>
 
-    <section class="wrapper">
+    <section class="wrapper" id="wrapper">
       <div class="container">
         <div class="grid-cols-2">
           <div class="grid-item-1">
@@ -65,7 +72,10 @@
           </div>
           <div class="grid-item-2">
             <div class="team_img_wrapper">
-              <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700746670/Hermes/Architetto----Bicicletta_gfc9yf.svg" alt="team-img" />
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700746670/Hermes/Architetto----Bicicletta_gfc9yf.svg"
+                alt="team-img"
+              />
             </div>
           </div>
         </div>
@@ -78,9 +88,26 @@
         data-aos="fade-up"
         data-aos-duration="1000"
       >
+        <h1 class="sub-heading">Our Services</h1>
         <div class="feat">
           <div class="card active">
-            <svg fill="#000000" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M23,17a4,4,0,1,0-4,4A4,4,0,0,0,23,17Zm-4,2a2,2,0,1,1,2-2A2,2,0,0,1,19,19ZM5,21a4,4,0,1,0-4-4A4,4,0,0,0,5,21Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,5,15ZM15.707,6.293,18.414,9H20a1,1,0,0,1,0,2H18a1,1,0,0,1-.707-.293L15,8.414,11.414,12l1.293,1.293A1,1,0,0,1,13,14v4a1,1,0,0,1-2,0V14.414L9.293,12.707a1,1,0,0,1,0-1.414l5-5A1,1,0,0,1,15.707,6.293ZM18,6a2,2,0,1,1,2-2A2,2,0,0,1,18,6Z"></path></g></svg>
+            <svg
+              fill="#000000"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M23,17a4,4,0,1,0-4,4A4,4,0,0,0,23,17Zm-4,2a2,2,0,1,1,2-2A2,2,0,0,1,19,19ZM5,21a4,4,0,1,0-4-4A4,4,0,0,0,5,21Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,5,15ZM15.707,6.293,18.414,9H20a1,1,0,0,1,0,2H18a1,1,0,0,1-.707-.293L15,8.414,11.414,12l1.293,1.293A1,1,0,0,1,13,14v4a1,1,0,0,1-2,0V14.414L9.293,12.707a1,1,0,0,1,0-1.414l5-5A1,1,0,0,1,15.707,6.293ZM18,6a2,2,0,1,1,2-2A2,2,0,0,1,18,6Z"
+                ></path>
+              </g>
+            </svg>
 
             <span><h6>Errands</h6></span>
           </div>
@@ -476,86 +503,49 @@
               </span>
             </aside>
           </article>
-          <button class="btn setter_btn article_btn">
-            Set Task<i class="ri-arrow-right-line"></i>
-          </button>
+          <a href="#wrapper"
+            ><button class="btn setter_btn article_btn">
+              Set Task<i class="ri-arrow-right-line"></i></button
+          ></a>
         </div>
       </div>
     </section>
 
     <section class="wrapper">
       <div class="container" data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="sub-heading">Customer Satisfaction is our Priority</h1>
         <div class="grid-cols-3">
           <div class="grid-col-item">
-            <!-- <div class="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
-            </div> -->
+            <div class="icon">
+              <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954660/Hermes/trust_ftmn72.png" alt="trust" />
+            </div>
             <div class="featured_info">
-              <span>Built for Students </span>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-                ratione facilis animi voluptas exercitationem molestiae.
-              </p>
+              <span>Priority pledge</span>
+              <p>If you’re not satisfied, we’ll work to make it right.</p>
             </div>
           </div>
           <div class="grid-col-item">
-            <!-- <div class="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
-                />
-              </svg>
-            </div> -->
+            <div class="icon">
+              <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954680/Hermes/reliable_s0zymg.png" alt="reliable" />
+            </div>
             <div class="featured_info">
-              <span>Provide Job Oppurtunities</span>
+              <span>Reliable Runners</span>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-                ipsum esse corrupti. Quo, labore debitis!
+                Runners are trusted undergraduate students that have undergone
+                background checks before joining the platform.
               </p>
             </div>
           </div>
 
           <div class="grid-col-item">
-            <!-- <div class="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                />
-              </svg>
-            </div> -->
+            <div class="icon">
+              <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954693/Hermes/engagement_jfyf0z.png" alt="engagement" />
+            </div>
             <div class="featured_info">
-              <span>Get Help with everything</span>
+              <span>Dedicated Support</span>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
-                nostrum voluptate totam ipsa corrupti vero!
+                Friendly costumer support service when you need us – every day
+                of the week.
               </p>
             </div>
           </div>
@@ -563,7 +553,192 @@
       </div>
     </section>
 
-    <footer></footer>
+    <section class="wrapper">
+      <div class="container" data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="sub-heading">
+          Everyone's talking about <span> Hermes.</span>
+        </h1>
+        <div class="grid-cols-3">
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Fatima Ali</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I sent Ibrahim on an errand to help me pick up some goods from
+                the park, he delivered with speed and the goods were intact. He
+                was prompt, communicative, and efficient. Highly recommend!
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Fatima Ali</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I sent Ibrahim on an errand to help me pick up some goods from
+                the park, he delivered with speed and the goods were intact. He
+                was prompt, communicative, and efficient. Highly recommend!
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Fatima Ali</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I sent Ibrahim on an errand to help me pick up some goods from
+                the park, he delivered with speed and the goods were intact. He
+                was prompt, communicative, and efficient. Highly recommend!
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Fatima Ali</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I sent Ibrahim on an errand to help me pick up some goods from
+                the park, he delivered with speed and the goods were intact. He
+                was prompt, communicative, and efficient. Highly recommend!
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Fatima Ali</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I sent Ibrahim on an errand to help me pick up some goods from
+                the park, he delivered with speed and the goods were intact. He
+                was prompt, communicative, and efficient. Highly recommend!
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Fatima Ali</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I sent Ibrahim on an errand to help me pick up some goods from
+                the park, he delivered with speed and the goods were intact. He
+                was prompt, communicative, and efficient. Highly recommend!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="col">
+        <div class="i">
+          <h4>Contact</h4>
+
+          <h5>
+            <strong>Address:</strong> 5 Hong Avenue, off Gwanma Road, Kaduna
+            State
+          </h5>
+          <h5><strong>Phone:</strong> +234 807 6568 689/+234 814 2500 816</h5>
+          <div class="follow">
+            <h4>Follow Us</h4>
+
+            <div class="socials">
+              <i class="fa-brands fa-square-facebook"></i>
+              <i class="fa-brands fa-square-twitter"></i>
+              <i class="fa-brands fa-square-instagram"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="i ii">
+          <h4>About</h4>
+
+          <a href=""><h5>About Us</h5></a>
+          <a href=""><h5>Privacy Policy</h5></a>
+          <a href=""><h5>Terms & Conditions</h5></a>
+          <a href=""><h5>Contact Us</h5></a>
+        </div>
+
+        <div class="i iii">
+          <h4>My Account</h4>
+
+          <a href=""><h5>Sign In</h5></a>
+          <a href=""><h5>Set task</h5></a>
+          <a href=""><h5>My tasks</h5></a>
+          <a href=""><h5>Track My Runner</h5></a>
+          <a href=""><h5>Help</h5></a>
+        </div>
+
+        <div class="i iv">
+          <h4>Install App</h4>
+
+          <a href=""><h5>From App Store or Google Play</h5></a>
+
+          <div class="store">
+            <a href="" class="app">
+              <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954710/Hermes/app_mibux4.jpg" alt="" />
+            </a>
+            <a href="" class="play">
+              <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954728/Hermes/play_uewvzs.jpg" alt="" />
+            </a>
+          </div>
+
+          <a href=""><h5>Secure Payment Gateways</h5></a>
+
+          <div class="pay">
+            <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954719/Hermes/pay_kb8clp.png" alt="" />
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>

@@ -112,5 +112,52 @@ window.addEventListener("load", () => {
 
 const setterBtn = document.querySelectorAll(".setter_btn")
 setterBtn.forEach(btn => btn.addEventListener("click", () => {
-  window.location = "auth.html"
+  console.log("clicked")
+  const token = localStorage.getItem("token");
+  if (token) {
+    describeTask();
+  }else {
+    window.location = "auth.html"
+  }
 }))
+
+const wrapper = document.getElementById("wrapper")
+function describeTask() {
+  wrapper.innerHTML = ``;
+  let markup = `<div class="contain" data-aos="fade-up" data-aos-duration="1000">
+        <h4>Describe your Task</h4>
+        <p>
+          Tell us about your task. We use these details to get Runners in your
+          area who fit your needs.
+        </p>
+        <form action="#" class="task-info">
+          <div class="input-field">
+            <label>Task </label>
+            <input type="text" />
+          </div>
+          <div class="input-field">
+            <label>Task description</label>
+            <textarea id="task-decription" placeholder="Start the conversation and tell your Runner what you need done."></textarea>
+          </div>
+          <div class="input-field">
+            <label>Task Location</label>
+            <input type="text" />
+          </div>
+          <div class="input-field">
+            <label>Task Options</label>
+            <select required>
+              <option disabled selected>How big is your task?</option>
+              <option>Small - 1hr max</option>
+              <option>Medium - 3hrs max</option>
+              <option>Big - 4hr+ max</option>
+            </select>
+          </div>
+          <div class="input-field">
+            <label>Number of runners</label>
+            <input type="number" placeholder="How many runners do you need?" />
+          </div>
+          <button class="btn next-btn">Next</button>
+        </form>
+      </div>`;
+  wrapper.insertAdjacentHTML("afterbegin", markup)
+}

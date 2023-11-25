@@ -169,7 +169,6 @@ async function loginPost(url, data) {
       localStorage.setItem("token", bodydata.token);
       localStorage.setItem("username", bodydata.name);
       localStorage.setItem("email", bodydata.email)
-      // window.location = "home.html";
     }
   } catch (err) {
     console.error(`Error: ${err}`);
