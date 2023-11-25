@@ -1,3 +1,12 @@
 const { getNameTask, getTasks } = require("./admin/admin")
 
-module.exports = { getNameTask,getTasks };
+const { login, register, getUsers, tokenChecker } = require("./auth/auth");
+
+module.exports = {
+  getNameTask,
+  getTasks,
+  login,
+  register,
+  getUsers,
+  tokenChecker,
+};

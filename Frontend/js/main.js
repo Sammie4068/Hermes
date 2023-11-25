@@ -109,3 +109,8 @@ async function displayTask(title) {
 window.addEventListener("load", () => {
   displayTask("errands");
 });
+
+const setterBtn = document.querySelectorAll(".setter_btn")
+setterBtn.forEach(btn => btn.addEventListener("click", () => {
+  window.location = "auth.html"
+}))

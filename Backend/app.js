@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const cors = require("cors");
-const { adminRoute } = require("./routes/index");
+const { adminRoute, authRoute } = require("./routes/index");
 
 app.use(express.json());
 app.use(cors());
@@ -10,6 +10,7 @@ app.use(morgan("tiny"));
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1", cors(), adminRoute);
+app.use("/api/v1", cors(), authRoute);
 
 const port = process.env.PORT;
 
