@@ -43,7 +43,11 @@ SignupForm.addEventListener("submit", (e) => {
       email: email.value.trim().toLowerCase(),
       password: password.value,
     };
-    postData(`${baseURL}register`, userData);
+    let loginData = {
+      email: email.value.trim().toLowerCase(),
+      password: password.value,
+    };
+    postData(`${baseURL}register`, userData, loginData);
   }
 });
 
@@ -84,7 +88,7 @@ function passwordValidation() {
     document.getElementById("signup-password-line").classList.add("error");
   } else {
     passwordErrMsg.innerText = "";
-     document.getElementById("signup-password-line").classList.remove("error");
+    document.getElementById("signup-password-line").classList.remove("error");
     return true;
   }
 }
@@ -93,12 +97,14 @@ password.addEventListener("input", passwordValidation);
 function confirmPasswordValidation() {
   if (confirmPassword.value !== password.value) {
     confirmPasswordErrMsg.innerText = "Password don't match";
-    document.getElementById("signup-confirm-password-line").classList.add("error")
+    document
+      .getElementById("signup-confirm-password-line")
+      .classList.add("error");
   } else {
     confirmPasswordErrMsg.innerText = "";
-        document
-          .getElementById("signup-confirm-password-line")
-          .classList.remove("error");
+    document
+      .getElementById("signup-confirm-password-line")
+      .classList.remove("error");
     return true;
   }
 }
@@ -107,7 +113,7 @@ confirmPassword.addEventListener("input", confirmPasswordValidation);
 // Post request to server
 const baseURL = "http://localhost:3000/api/v1/";
 
-async function postData(url, data) {
+async function postData(url, data, userData) {
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -124,11 +130,8 @@ async function postData(url, data) {
       username.value = "";
       email.value = "";
       password.value = "";
-      confirmPassword.value = "";
-      setTimeout(() => {
-        signupMsg.textContent = "";
-        panel()
-      }, 1000);
+      // confirmPassword.value = "";
+      loginPost(`${baseURL}login`, userData);
     }
     if (bodydata.message == "Already Exists") {
       signupMsg.textContent = "Email Already Exist";
@@ -139,7 +142,6 @@ async function postData(url, data) {
     console.error(`Error: ${err}`);
   }
 }
-
 
 // Signin Auth
 const signinForm = document.getElementById("signin-form");
@@ -162,13 +164,11 @@ async function loginPost(url, data) {
       signinMsg.style.color = "red";
     }
     if (bodydata.message == "logged") {
-      signinMsg.textContent = "Logged in"
-      signinMsg.style.color = "green";
-
       localStorage.setItem("id", bodydata.id);
       localStorage.setItem("token", bodydata.token);
       localStorage.setItem("username", bodydata.name);
-      localStorage.setItem("email", bodydata.email)
+      localStorage.setItem("email", bodydata.email);
+      window.location = "main.html";
     }
   } catch (err) {
     console.error(`Error: ${err}`);
@@ -190,7 +190,7 @@ const signupEyeIcon = document.getElementById("eyeIcon");
 const confirmEyeIcon = document.getElementById("confirmEyeIcon");
 
 function showpass(input, icon) {
-  if(input.value == "") return
+  if (input.value == "") return;
   if (input.type == "password") {
     input.type = "text";
     icon.innerHTML = `<i class="fas fa-eye-slash"></i>`;

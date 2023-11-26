@@ -61,7 +61,7 @@ gsap.from(".btn_wrapper", {
   duration: 1,
 });
 
-gsap.from(".team_img_wrapper img", {
+gsap.from(".img_wrapper img", {
   opacity: 0,
   y: 20,
   delay: 3,
@@ -83,7 +83,6 @@ function toggleActive(activeCard) {
   cards.forEach((card) => card.classList.remove("active"));
   activeCard.classList.add("active");
 }
-
 
 const taskImage = document.getElementById("task_image");
 const taskTitle = document.getElementById("task_title");
@@ -110,18 +109,19 @@ window.addEventListener("load", () => {
   displayTask("errands");
 });
 
-const setterBtn = document.querySelectorAll(".setter_btn")
-setterBtn.forEach(btn => btn.addEventListener("click", () => {
-  console.log("clicked")
-  const token = localStorage.getItem("token");
-  if (token) {
-    describeTask();
-  }else {
-    window.location = "auth.html"
-  }
-}))
+const setterBtn = document.querySelectorAll(".setter_btn");
+setterBtn.forEach((btn) =>
+  btn.addEventListener("click", () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      describeTask();
+    } else {
+      window.location = "auth.html";
+    }
+  })
+);
 
-const wrapper = document.getElementById("wrapper")
+const wrapper = document.getElementById("wrapper");
 function describeTask() {
   wrapper.innerHTML = ``;
   let markup = `<div class="contain" data-aos="fade-up" data-aos-duration="1000">
@@ -133,7 +133,9 @@ function describeTask() {
         <form action="#" class="task-info">
           <div class="input-field">
             <label>Task </label>
-            <input type="text" />
+            <input type="text" class="task-input" placeholder="Select a task" readonly/>
+           <ul class="task-dropdown" id="task-dropdown">
+            </ul>
           </div>
           <div class="input-field">
             <label>Task description</label>
@@ -145,7 +147,7 @@ function describeTask() {
           </div>
           <div class="input-field">
             <label>Task Options</label>
-            <select required>
+            <select required class="task-options">
               <option disabled selected>How big is your task?</option>
               <option>Small - 1hr max</option>
               <option>Medium - 3hrs max</option>
@@ -159,5 +161,42 @@ function describeTask() {
           <button class="btn next-btn">Next</button>
         </form>
       </div>`;
-  wrapper.insertAdjacentHTML("afterbegin", markup)
+  wrapper.insertAdjacentHTML("afterbegin", markup);
+  const taskInput = document.querySelector(".task-input");
+  const taskList = document.getElementById("task-dropdown");
+
+  taskInput.addEventListener("click", function () {
+    if (taskList.style.display == "none") {
+      taskList.style.display = "block";
+    } else {
+      taskList.style.display = "none";
+    }
+  });
+
+  document.addEventListener("click", function (event) {
+    if (event.target !== taskInput && event.target !== taskList) {
+      taskList.style.display = "none";
+    }
+  });
+
+  taskList.addEventListener("click", function (event) {
+    if (event.target.tagName === "LI") {
+      taskInput.value = event.target.textContent;
+      taskList.style.display = "none";
+    }
+  });
+  allTasks(taskList)
+}
+
+async function allTasks(parentEle) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const data = await res.json()
+    data.forEach(dt => {
+      const html = `<li>${dt.title}</li>`;
+      parentEle.insertAdjacentHTML("afterbegin", html)
+    })
+  } catch (err) {
+    console.log(err)
+  }
 }

@@ -226,10 +226,8 @@ button {
   place-items: center;
   place-content: space-between;
   flex-wrap: wrap;
-  /* margin: 10px 0px; */
   padding: 40px 80px;
   width: 100%;
-  /* max-width: 1450px; */
 }
 .feat .card {
   display: flex;
@@ -313,10 +311,9 @@ aside span:not(:last-child) {
 }
 
 .article_btn {
-  position: absolute;
-  left: 53.5rem;
   bottom: 0;
-  margin: 10px 0 -20px 0;
+  margin-left: 6rem;
+  margin-top: 2rem;
 }
 
 .aside_num {
@@ -330,12 +327,12 @@ aside span:not(:last-child) {
   width: 100%;
   height: 100%;
 }
-.team_img_wrapper {
+.img_wrapper {
   width: 500px;
   max-width: 100%;
   height: 440px;
 }
-.team_img_wrapper img {
+.img_wrapper img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -393,7 +390,8 @@ aside span:not(:last-child) {
 }
 
 .feedbacks h4 {
-  color: var(--primary-color);
+  color: var(--lg-heading);
+  font-weight: 800;
   font-size: 1.2rem;
 }
 
@@ -474,7 +472,7 @@ footer .iv .store .play img {
   height: 90.5%;
   width: 100%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   border-radius: 5px;
 }
 footer .iv .pay {
@@ -492,7 +490,7 @@ footer .follow .socials {
   gap: 10px;
 }
 
-footer .follow .socials i{
+footer .follow .socials i {
   font-size: 30px;
   transition: 0.2s;
   cursor: pointer;
@@ -511,7 +509,7 @@ footer .follow .socials i:hover {
 }
 
 @media screen and (max-width: 768px) {
-  .team_img_wrapper {
+  .img_wrapper {
     display: none;
   }
   .logo h2 {
@@ -571,6 +569,53 @@ footer .follow .socials i:hover {
   .wrapper {
     padding: 0 0.7rem;
   }
+  .sub-heading {
+    font-size: 1.8rem;
+  }
+  .feat {
+    display: flex;
+    overflow-x: scroll;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    padding: 5px;
+  }
+
+  .card {
+    width: 3rem;
+    height: 5rem;
+    margin-right: 1rem;
+  }
+
+  .feat .card span {
+    background: transparent;
+    padding: 0;
+    margin-top: 4px;
+    border-radius: 3px;
+  }
+  .feat .card span h6 {
+    font-size: 7px;
+    text-wrap: nowrap;
+  }
+  .feat svg {
+    width: 100px;
+    height: 100px;
+  }
+  .display {
+    flex-direction: column;
+  }
+
+  .display img {
+    width: 100%;
+    height: 100%;
+  }
+  .sub-heading-hermes {
+    font-size: 1.3rem;
+  }
+  .sub-heading-hermes span {
+    font-size: 2rem;
+    margin-left: 0.4rem;
+  }
   .grid-item-1 {
     padding-left: 0rem;
   }
@@ -599,6 +644,18 @@ footer .follow .socials i:hover {
 
   aside span:not(:first-child) {
     padding-left: 20px;
+  }
+
+  footer {
+    padding: 20px;
+  }
+  footer .col {
+    flex-direction: column-reverse;
+  }
+  .task-options option{
+    border: 1px solid red;
+    background-color: #126241;
+    padding: 20px;
   }
 }
 
@@ -640,7 +697,7 @@ footer .follow .socials i:hover {
     align-items: center;
     justify-content: center;
   }
-  .team_img_wrapper {
+  .img_wrapper {
     width: 350px;
     height: 350px;
   }
@@ -662,6 +719,9 @@ footer .follow .socials i:hover {
 
 .contain h4 {
   margin-left: 10%;
+}
+.contain p {
+  margin-bottom: 2rem;
 }
 
 .input-field {
@@ -692,4 +752,23 @@ textarea {
 .input-field textarea {
   padding-top: 5px;
   height: 5rem;
+}
+.task-input {
+  text-transform: capitalize;
+  cursor: pointer;
+}
+.task-dropdown {
+  background-color: #fafbfb;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: -0.5rem;
+}
+.task-dropdown li {
+  text-transform: capitalize;
+  border-bottom: 1px solid #002b1d;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.task-dropdown li:hover {
+  transform: scale(1.01);
 }
