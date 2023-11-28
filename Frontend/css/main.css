@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Italianno&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=GFS+Didot&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
 
 * {
@@ -84,7 +83,6 @@ button {
 
 .logo h2 {
   font-family: "Italianno", cursive;
-  /* font-family: 'GFS Didot', serif; */
   font-size: 40px;
   color: var(--primary-color);
 }
@@ -208,6 +206,9 @@ button {
   border: 2px solid #32d2c6;
   box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
 }
+.runner_btn a {
+  color: #047143ed;
+}
 .runner_btn:hover {
   background-color: #a8eee3;
   transition: box-shadow 0.25s ease, transform 0.25s ease;
@@ -311,6 +312,7 @@ aside span:not(:last-child) {
 }
 
 .article_btn {
+  display: none;
   bottom: 0;
   margin-left: 6rem;
   margin-top: 2rem;
@@ -646,6 +648,9 @@ footer .follow .socials i:hover {
     padding-left: 20px;
   }
 
+  .article_btn {
+  display: block;
+}
   footer {
     padding: 20px;
   }
@@ -765,7 +770,6 @@ textarea {
 }
 .task-dropdown li {
   text-transform: capitalize;
-  border-bottom: 1px solid #002b1d;
   cursor: pointer;
   margin-bottom: 5px;
 }

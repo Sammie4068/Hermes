@@ -1,5 +1,9 @@
 const { req, res, next } = require("express");
-const { getAllTasks, getTaskByName } = require("../../models/index");
+const {
+  getAllTasks,
+  getTaskByName,
+  getAllRunners,
+} = require("../../models/index");
 
 
 exports.getTasks = async (req, res, next) => {
@@ -18,4 +22,13 @@ exports.getNameTask = async (req, res, next) => {
     } catch (err) {
         return next(err)
     }
+}
+
+exports.getAllRunners = async (req, res, next) => {
+  try {
+    const results = await getAllRunners()
+    res.json(results.rows)
+  } catch (err) {
+    return next(err)
+  }
 }

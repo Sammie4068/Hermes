@@ -1,6 +1,8 @@
-const { getAllTasks, getTaskByName } = require("./admin/admin")
+const { getAllTasks, getTaskByName, getAllRunners } = require("./admin/admin");
 
 const { getUserByEmail, addUsers, getAllUsers } = require("./auth/auth");
+
+const { addRunner, getRunnerByEmail } = require("./runners/runners");
 
 module.exports = {
   getAllTasks,
@@ -8,4 +10,7 @@ module.exports = {
   getUserByEmail,
   addUsers,
   getAllUsers,
+  addRunner,
+  getAllRunners,
+  getRunnerByEmail,
 };
