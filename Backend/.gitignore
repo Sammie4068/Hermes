@@ -2,6 +2,7 @@ DS_store
 request.rest
 package-lock.json
 sample.sql
+uploads
 
 # Logs
 logs

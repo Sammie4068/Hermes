@@ -1,8 +1,38 @@
 const container = document.getElementById("container");
 const overlayCon = document.getElementById("overlaycon");
 const overlayBtn = document.getElementById("overlayBtn");
+const modal = document.querySelector(".modal");
+const overlayer = document.querySelector(".overlayer");
+const setterCard = document.getElementById("setterCard");
+const runnerCard = document.getElementById("runnerCard");
 
-overlayBtn.addEventListener("click", panel);
+setterCard.addEventListener("click", () => {
+  localStorage.setItem("role", setterCard.textContent.trim().toLowerCase());
+  panel();
+  closeModal();
+});
+runnerCard.addEventListener("click", () => {
+  localStorage.setItem("role", runnerCard.textContent.trim().toLowerCase());
+  window.location = "runner.html";
+});
+
+overlayBtn.addEventListener("click", () => {
+  const role = localStorage.getItem("role");
+  if (role) {
+    panel();
+  } else {
+    overlayer.classList.remove("hidden");
+    modal.classList.remove("hidden");
+  }
+});
+
+function closeModal() {
+  modal.classList.add("hidden");
+  overlayer.classList.add("hidden");
+}
+
+overlayer.addEventListener("click", closeModal);
+
 document.getElementById("signup-btn2").addEventListener("click", panel);
 document.getElementById("signin-btn2").addEventListener("click", panel);
 
@@ -39,7 +69,7 @@ SignupForm.addEventListener("submit", (e) => {
     confirmPasswordValidation()
   ) {
     let userData = {
-      name: username.value.trim(),
+      name: username.value.trim().toLowerCase(),
       email: email.value.trim().toLowerCase(),
       password: password.value,
     };
@@ -164,10 +194,7 @@ async function loginPost(url, data) {
       signinMsg.style.color = "red";
     }
     if (bodydata.message == "logged") {
-      localStorage.setItem("id", bodydata.id);
-      localStorage.setItem("token", bodydata.token);
-      localStorage.setItem("username", bodydata.name);
-      localStorage.setItem("email", bodydata.email);
+      localStorage.setItem("token", bodydata.token)
       window.location = "main.html";
     }
   } catch (err) {
@@ -180,6 +207,7 @@ signinForm.addEventListener("submit", (e) => {
   let userData = {
     email: signinEmail.value.trim(),
     password: signinPassword.value,
+    role: localStorage.getItem("role")
   };
   loginPost(`${baseURL}login`, userData);
 });

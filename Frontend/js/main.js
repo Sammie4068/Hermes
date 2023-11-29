@@ -68,8 +68,42 @@ gsap.from(".img_wrapper img", {
   duration: 1,
 });
 
-document.querySelector(".runner_btn").addEventListener("click", ()=> {
-  window.location = "runner.html"
+// Authentication
+const token = localStorage.getItem("token")
+const account = document.getElementById("account")
+const signin = document.getElementById("signin");
+
+
+if(token){
+  signin.classList.add("hidden")
+  account.classList.remove("hidden")
+}
+
+
+signin.addEventListener("click", () => {
+  window.location = "auth.html";
+});
+
+const asSetter = document.getElementById("as-setter");
+const asRunner = document.getElementById("as-runner");
+
+function setRole(role) {
+  window.location = "auth.html";
+  localStorage.setItem(
+    "role",
+    role.textContent.trim().split(" ")[1].toLowerCase()
+  );
+}
+
+asSetter.addEventListener("click", () => {
+  setRole(asSetter);
+});
+asRunner.addEventListener("click", () => {
+  setRole(asRunner);
+});
+
+document.querySelector(".runner_btn").addEventListener("click", () => {
+  window.location = "runner.html";
 });
 
 // Task cards
@@ -116,12 +150,7 @@ window.addEventListener("load", () => {
 const setterBtn = document.querySelectorAll(".setter_btn");
 setterBtn.forEach((btn) =>
   btn.addEventListener("click", () => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      describeTask();
-    } else {
-      window.location = "auth.html";
-    }
+    describeTask();
   })
 );
 
@@ -189,18 +218,18 @@ function describeTask() {
       taskList.style.display = "none";
     }
   });
-  allTasks(taskList)
+  allTasks(taskList);
 }
 
 async function allTasks(parentEle) {
   try {
     const res = await fetch(`http://localhost:3000/api/v1/tasks`);
-    const data = await res.json()
-    data.forEach(dt => {
+    const data = await res.json();
+    data.forEach((dt) => {
       const html = `<li>${dt.title}</li>`;
-      parentEle.insertAdjacentHTML("afterbegin", html)
-    })
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }

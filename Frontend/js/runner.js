@@ -1,3 +1,10 @@
+const signin = document.getElementById("signin");
+signin.addEventListener("click", () => {
+  localStorage.setItem("role", "runner")
+  window.location = "auth.html"
+})
+
+
 AOS.init();
 
 const infoForm = document.querySelector(".personal_info");

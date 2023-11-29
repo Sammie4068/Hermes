@@ -1,7 +1,16 @@
 const { req, res, next } = require("express");
-const { getUserByEmail, addUsers, getAllUsers } = require("../../models/index");
+const {
+  getUserByEmail,
+  addUsers,
+  getAllUsers,
+  addRunner,
+  getRunnerByEmail,
+  getUser,
+} = require("../../models/index");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const uploadImage = require("../../utilities/index");
+
 const secret = process.env.SECRET;
 
 exports.getUsers = async (req, res) => {
@@ -11,13 +20,13 @@ exports.getUsers = async (req, res) => {
 
 exports.login = async (req, res, next) => {
   try {
-    const foundUser = await getUserByEmail(req.body.email);
+    const foundUser = await getUser(req.body.email, req.body.role);
 
     if (foundUser.rows.length === 0 || !foundUser.rows[0].active) {
       return res.json({ message: "Invalid" });
     }
 
-    const { id, name, email} = foundUser.rows[0];
+    const { role, name, email} = foundUser.rows[0];
     const hashedPassword = await bcrypt.compare(
       req.body.password,
       foundUser.rows[0].password
@@ -32,7 +41,7 @@ exports.login = async (req, res, next) => {
     return res.json({
       token,
       message: "logged",
-      id,
+      role,
       name,
       email,
     });
@@ -52,6 +61,7 @@ exports.register = async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         hashedPassword,
+        role: "setter"
       };
       const result = await addUsers(user);
       res.json({ message: "success" });
@@ -66,5 +76,51 @@ exports.tokenChecker = async (req, res, next) => {
     return res.json({ message: "You made it!" });
   } catch (err) {
     return res.json(err);
+  }
+};
+
+exports.addRunner = async (req, res, next) => {
+  try {
+    const urls = [];
+    const files = req.files;
+
+    for (const file of files) {
+      const { path } = file;
+      const newPath = await uploadImage(path);
+      const { secure_url } = newPath;
+      urls.push(secure_url);
+    }
+    let hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const runner = {
+      name: req.body.name,
+      email: req.body.email,
+      gender: req.body.gender,
+      photo: urls[0],
+      password: hashedPassword,
+      school: req.body.school,
+      schoolstate: req.body.schoolstate,
+      field: req.body.field,
+      yearenrolled: req.body.yearenrolled,
+      yeargrad: req.body.yeargrad,
+      idcard: urls[1],
+      role: "runner"
+    };
+    const result = await addRunner(runner);
+    res.json({ message: "success" });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.getRunnerByEmail = async (req, res, next) => {
+  try {
+    const foundRunner = await getRunnerByEmail(req.params.email);
+    if (foundRunner.rows.length > 0) {
+      res.json({ message: "exists" });
+    } else {
+      res.json({ message: "success" });
+    }
+  } catch (err) {
+    return next(err);
   }
 };
