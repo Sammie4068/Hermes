@@ -146,7 +146,15 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-  background-color: #002b1d;
+  transform: scale(1.02);
+}
+
+textarea {
+  height: 140px;
+}
+
+.profile_card div {
+  margin-bottom: 20px;
 }
 
 .show {
@@ -186,7 +194,7 @@ input:required:valid {
   width: 13rem;
 }
 
-#backBtn {
+.btnCont .back_btn {
   background-color: #800000;
   width: 20%;
   margin-right: 10px;

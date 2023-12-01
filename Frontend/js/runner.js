@@ -1,13 +1,13 @@
 const signin = document.getElementById("signin");
 signin.addEventListener("click", () => {
-  localStorage.setItem("role", "runner")
-  window.location = "auth.html"
-})
-
+  localStorage.setItem("role", "runner");
+  window.location = "auth.html";
+});
 
 AOS.init();
 
 const infoForm = document.querySelector(".personal_info");
+const profileForm = document.querySelector(".profile_card");
 const schoolForm = document.querySelector(".school_info");
 const fullName = document.getElementById("fullname");
 const gender = document.getElementById("gender");
@@ -16,6 +16,8 @@ const email = document.getElementById("email");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("cpassword");
 const showCheckbox = document.getElementById("showpassword");
+const choosenTask = document.getElementById("choose_task");
+const bio = document.getElementById("description");
 const schoolName = document.getElementById("uni");
 const schoolState = document.getElementById("states");
 const field = document.getElementById("study");
@@ -23,11 +25,15 @@ const yearEnrolled = document.getElementById("date-enrolled");
 const yearGrad = document.getElementById("date-grad");
 const idCard = document.getElementById("idCard");
 const oathCheckbox = document.getElementById("oath");
-const nextBtn = document.getElementById("nextBtn");
-const backBtn = document.getElementById("backBtn");
+const nextBtn1 = document.getElementById("nextBtn1");
+const nextBtn2 = document.getElementById("nextBtn2");
+const backBtn1 = document.getElementById("backBtn1");
+const backBtn2 = document.getElementById("backBtn2");
 const submitBtn = document.getElementById("submitBtn");
 const errorMsg = document.getElementById("msg-i");
 const errorMsg2 = document.getElementById("msg-ii");
+const errorMsg3 = document.getElementById("msg-iii");
+const showLabel = document.getElementById("show_label");
 const passwordPattern =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const emailPattern =
@@ -38,9 +44,11 @@ showCheckbox.addEventListener("click", () => {
   if (showCheckbox.checked) {
     password.type = "text";
     confirmPassword.type = "text";
+    showLabel.innerText = "Hide Password";
   } else {
     password.type = "password";
     confirmPassword.type = "password";
+    showLabel.innerText = "Show Password";
   }
 });
 
@@ -75,7 +83,6 @@ async function checkEmail() {
       `http://localhost:3000/api/v1/runners/email/${email.value}`
     );
     const data = await res.json();
-    console.log(data);
     if (data.message === "exists") {
       errorMsg.innerText = "Email already exists";
       return false;
@@ -106,9 +113,18 @@ function confirmPasswordValidation() {
   }
 }
 
+function profileFormIsEmpty() {
+  if (choosenTask.value == "" || bio.value == "") {
+    errorMsg2.innerText = "Please fill all inputs";
+  } else {
+    errorMsg2.innerText = "";
+    return true;
+  }
+}
+
 function yearIsValid() {
   if (yearEnrolled.value.length > 4 || yearGrad.value.length > 4) {
-    errorMsg2.innerText = "Please enter a valid year";
+    errorMsg3.innerText = "Please enter a valid year";
   } else {
     errorMsg.innerText = "";
     return true;
@@ -124,29 +140,37 @@ function schoolFormIsEmpty() {
     yearGrad.value == "" ||
     idCard.files.length < 1
   ) {
-    errorMsg2.innerText = "Please fill all inputs";
+    errorMsg3.innerText = "Please fill all inputs";
   } else {
-    errorMsg2.innerText = "";
+    errorMsg3.innerText = "";
     return true;
   }
 }
 
 function isChecked() {
   if (!oathCheckbox.checked) {
-    errorMsg2.innerText = "Please check the oath box";
+    errorMsg3.innerText = "Please check the oath box";
   } else {
-    errorMsg2.innerText = "";
+    errorMsg3.innerText = "";
     return true;
   }
 }
 
-backBtn.addEventListener("click", (e) => {
+backBtn1.addEventListener("click", (e) => {
   e.preventDefault();
-  schoolForm.classList.add("hidden");
   infoForm.classList.remove("hidden");
+  profileForm.classList.add("hidden");
+  schoolForm.classList.add("hidden");
 });
 
-nextBtn.addEventListener("click", async (e) => {
+backBtn2.addEventListener("click", (e) => {
+  e.preventDefault();
+  profileForm.classList.remove("hidden");
+  schoolForm.classList.add("hidden");
+  infoForm.classList.add("hidden");
+});
+
+nextBtn1.addEventListener("click", async (e) => {
   e.preventDefault();
   if (
     infoFormIsEmpty() &&
@@ -155,8 +179,16 @@ nextBtn.addEventListener("click", async (e) => {
     confirmPasswordValidation() &&
     (await checkEmail())
   ) {
-  infoForm.classList.add("hidden");
-  schoolForm.classList.remove("hidden");
+    infoForm.classList.add("hidden");
+    profileForm.classList.remove("hidden");
+  }
+});
+
+nextBtn2.addEventListener("click", async (e) => {
+  e.preventDefault();
+  if (profileFormIsEmpty()) {
+    profileForm.classList.add("hidden");
+    schoolForm.classList.remove("hidden");
   }
 });
 
@@ -166,19 +198,22 @@ submitBtn.addEventListener("click", (e) => {
   if (schoolFormIsEmpty() && yearIsValid() && isChecked()) {
     const formData = new FormData();
 
-    formData.append("name", fullName.value);
+    formData.append("name", fullName.value.toLowerCase());
     formData.append("email", email.value);
     formData.append("gender", gender.value);
     formData.append("image", photo.files[0]);
     formData.append("password", password.value);
-    formData.append("school", schoolName.value);
-    formData.append("schoolstate", schoolState.value);
-    formData.append("field", field.value);
+    formData.append("gig", choosenTask.value.toLowerCase());
+    formData.append("bio", bio.value.toLowerCase());
+    formData.append("school", schoolName.value.toLowerCase());
+    formData.append("schoolstate", schoolState.value.toLowerCase());
+    formData.append("field", field.value.toLowerCase());
     formData.append("yearenrolled", yearEnrolled.value);
     formData.append("yeargrad", yearGrad.value);
     formData.append("image", idCard.files[0]);
 
     postData(formData);
+    window.location = "account.html";
   }
 });
 
@@ -191,7 +226,7 @@ async function postData(data) {
     const bodydata = await res.json();
     console.log(bodydata);
     if (bodydata.message == "success") {
-      window.location = "main.html";
+      window.location = "account.html";
     }
   } catch (err) {
     console.error(`Error: ${err}`);

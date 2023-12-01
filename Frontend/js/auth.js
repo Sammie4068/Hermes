@@ -7,18 +7,18 @@ const setterCard = document.getElementById("setterCard");
 const runnerCard = document.getElementById("runnerCard");
 
 setterCard.addEventListener("click", () => {
-  localStorage.setItem("role", setterCard.textContent.trim().toLowerCase());
+  localStorage.setItem("signuprole", setterCard.textContent.trim().toLowerCase());
   panel();
   closeModal();
 });
 runnerCard.addEventListener("click", () => {
-  localStorage.setItem("role", runnerCard.textContent.trim().toLowerCase());
+  localStorage.setItem("signuprole", runnerCard.textContent.trim().toLowerCase());
   window.location = "runner.html";
 });
 
 overlayBtn.addEventListener("click", () => {
-  const role = localStorage.getItem("role");
-  if (role) {
+  const signuprole = localStorage.getItem("signuprole");
+  if (signuprole) {
     panel();
   } else {
     overlayer.classList.remove("hidden");

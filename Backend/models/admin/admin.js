@@ -9,5 +9,5 @@ exports.getTaskByName = async (title) => {
 };
 
 exports.getAllRunners = async () => {
-  return db.query("SELECT * FROM runners")
+  return db.query("SELECT * FROM users WHERE role='runner'")
 }

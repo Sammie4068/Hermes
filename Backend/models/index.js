@@ -9,6 +9,8 @@ const {
   getUser,
 } = require("./auth/auth");
 
+const { getRunners } = require("./users/users");
+
 module.exports = {
   getAllTasks,
   getTaskByName,
@@ -19,4 +21,5 @@ module.exports = {
   getAllRunners,
   getRunnerByEmail,
   getUser,
+  getRunners,
 };

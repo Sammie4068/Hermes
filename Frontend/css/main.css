@@ -149,8 +149,8 @@ button {
   max-width: 600px;
   border: 1px solid #f3f3f3;
   box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
-  z-index: 2;
   animation: fadeIn 0.2s ease-in-out;
+  z-index: 9999999;
 }
 
 .item-title {
@@ -866,4 +866,8 @@ textarea {
 }
 .task-dropdown li:hover {
   transform: scale(1.01);
+}
+
+.task-signinBtn{
+ width: 220px;
 }

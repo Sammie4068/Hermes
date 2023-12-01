@@ -69,16 +69,14 @@ gsap.from(".img_wrapper img", {
 });
 
 // Authentication
-const token = localStorage.getItem("token")
-const account = document.getElementById("account")
+const token = localStorage.getItem("token");
+const account = document.getElementById("account");
 const signin = document.getElementById("signin");
 
-
-if(token){
-  signin.classList.add("hidden")
-  account.classList.remove("hidden")
+if (token) {
+  signin.classList.add("hidden");
+  account.classList.remove("hidden");
 }
-
 
 signin.addEventListener("click", () => {
   window.location = "auth.html";
@@ -153,6 +151,20 @@ setterBtn.forEach((btn) =>
     describeTask();
   })
 );
+// Get all taskers
+async function allTasks(parentEle) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const data = await res.json();
+    data.forEach((dt) => {
+      const html = `<li>${dt.title}</li>`;
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 
 const wrapper = document.getElementById("wrapper");
 function describeTask() {
@@ -166,7 +178,7 @@ function describeTask() {
         <form action="#" class="task-info">
           <div class="input-field">
             <label>Task </label>
-            <input type="text" class="task-input" placeholder="Select a task" readonly/>
+            <input type="text" class="task-input" placeholder="Select a task" readonly required/>
            <ul class="task-dropdown" id="task-dropdown">
             </ul>
           </div>
@@ -176,7 +188,7 @@ function describeTask() {
           </div>
           <div class="input-field">
             <label>Task Location</label>
-            <input type="text" />
+            <input type="text" required/>
           </div>
           <div class="input-field">
             <label>Task Options</label>
@@ -189,9 +201,13 @@ function describeTask() {
           </div>
           <div class="input-field">
             <label>Number of runners</label>
-            <input type="number" placeholder="How many runners do you need?" />
+            <input type="number" placeholder="How many runners do you need?" required/>
           </div>
-          <button class="btn next-btn">Next</button>
+          ${
+            token
+              ? `<button class="btn next-btn">Next</button>`
+              : `<button class="btn task-signinBtn">Sign in to get runner</button>`
+          }
         </form>
       </div>`;
   wrapper.insertAdjacentHTML("afterbegin", markup);
@@ -219,17 +235,14 @@ function describeTask() {
     }
   });
   allTasks(taskList);
+
+  document.querySelector(".task-signinBtn").addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location = "auth.html";
+    localStorage.setItem("role", "setter");
+  });
 }
 
-async function allTasks(parentEle) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
-    const data = await res.json();
-    data.forEach((dt) => {
-      const html = `<li>${dt.title}</li>`;
-      parentEle.insertAdjacentHTML("afterbegin", html);
-    });
-  } catch (err) {
-    console.log(err);
-  }
-}
+
+
+

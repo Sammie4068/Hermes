@@ -62,20 +62,49 @@
               <input type="password" name="cpassword" id="cpassword" required />
             </div>
             <div class="show">
-              <label for="showpassword">Show Password</label>
+              <label for="showpassword" id="show_label">Show Password</label>
               <input type="checkbox" name="showpassword" id="showpassword" />
             </div>
             <div>
-              <input type="submit" value="Next" id="nextBtn" />
+              <input type="submit" value="Next" id="nextBtn1" />
             </div>
             <p class="signin">
               Already have an account? <a href="#" id="signin">Sign in</a>
             </p>
           </div>
 
+          <div class="profile_card hidden">
+            <h1>Profile card</h1>
+            <p class="msg" id="msg-ii"></p>
+            <div>
+              <label for="task">Task</label>
+              <select name="task" id="choose_task">
+                <option disabled selected></option>
+                <option value="errands">Errands</option>
+                <option value="baby sitting">Baby Sitting</option>
+                <option value="moving">Moving</option>
+              </select>
+              <p>
+                Choose the task you want to run. This can be change anytime.
+              </p>
+            </div>
+            <div>
+              <label>Describe yourself</label>
+              <textarea name="description" id="description"></textarea>
+              <p>
+                Describe yourself for setters to know you better. This can be
+                changed anytime.
+              </p>
+            </div>
+            <div class="btnCont">
+              <input type="submit" value="Back" id="backBtn1" class="back_btn" />
+              <input type="submit" value="Next" id="nextBtn2" />
+            </div>
+          </div>
+
           <div class="school_info hidden">
             <h1>Academy Details</h1>
-            <p class="msg" id="msg-ii"></p>
+            <p class="msg" id="msg-iii"></p>
             <div>
               <label>School Name</label>
               <input type="text" name="uni" id="uni" required />
@@ -149,7 +178,7 @@
               >
             </div>
             <div class="btnCont">
-              <input type="submit" value="Back" id="backBtn" />
+              <input type="submit" value="Back" id="backBtn2" class="back_btn"/>
               <input type="submit" value="Submit" id="submitBtn" />
             </div>
           </div>

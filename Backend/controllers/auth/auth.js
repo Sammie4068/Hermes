@@ -103,7 +103,9 @@ exports.addRunner = async (req, res, next) => {
       yearenrolled: req.body.yearenrolled,
       yeargrad: req.body.yeargrad,
       idcard: urls[1],
-      role: "runner"
+      role: "runner",
+      gig: req.body.gig,
+      bio: req.body.bio
     };
     const result = await addRunner(runner);
     res.json({ message: "success" });
