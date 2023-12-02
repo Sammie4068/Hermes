@@ -164,85 +164,124 @@ async function allTasks(parentEle) {
     console.log(err);
   }
 }
+const taskInput = document.querySelector(".task-input");
+const taskList = document.getElementById("task-dropdown");
 
+taskInput.addEventListener("click", function () {
+  if (taskList.style.display == "none") {
+    taskList.style.display = "block";
+  } else {
+    taskList.style.display = "none";
+  }
+});
 
-const wrapper = document.getElementById("wrapper");
-function describeTask() {
-  wrapper.innerHTML = ``;
-  let markup = `<div class="contain" data-aos="fade-up" data-aos-duration="1000">
-        <h4>Describe your Task</h4>
-        <p>
-          Tell us about your task. We use these details to get Runners in your
-          area who fit your needs.
-        </p>
-        <form action="#" class="task-info">
-          <div class="input-field">
-            <label>Task </label>
-            <input type="text" class="task-input" placeholder="Select a task" readonly required/>
-           <ul class="task-dropdown" id="task-dropdown">
-            </ul>
-          </div>
-          <div class="input-field">
-            <label>Task description</label>
-            <textarea id="task-decription" placeholder="Start the conversation and tell your Runner what you need done."></textarea>
-          </div>
-          <div class="input-field">
-            <label>Task Location</label>
-            <input type="text" required/>
-          </div>
-          <div class="input-field">
-            <label>Task Options</label>
-            <select required class="task-options">
-              <option disabled selected>How big is your task?</option>
-              <option>Small - 1hr max</option>
-              <option>Medium - 3hrs max</option>
-              <option>Big - 4hr+ max</option>
-            </select>
-          </div>
-          <div class="input-field">
-            <label>Number of runners</label>
-            <input type="number" placeholder="How many runners do you need?" required/>
-          </div>
-          ${
-            token
-              ? `<button class="btn next-btn">Next</button>`
-              : `<button class="btn task-signinBtn">Sign in to get runner</button>`
-          }
-        </form>
-      </div>`;
-  wrapper.insertAdjacentHTML("afterbegin", markup);
-  const taskInput = document.querySelector(".task-input");
-  const taskList = document.getElementById("task-dropdown");
+document.addEventListener("click", function (event) {
+  if (event.target !== taskInput && event.target !== taskList) {
+    taskList.style.display = "none";
+  }
+});
 
-  taskInput.addEventListener("click", function () {
-    if (taskList.style.display == "none") {
-      taskList.style.display = "block";
-    } else {
-      taskList.style.display = "none";
-    }
-  });
+taskList.addEventListener("click", function (event) {
+  if (event.target.tagName === "LI") {
+    taskInput.value = event.target.textContent;
+    taskList.style.display = "none";
+  }
+});
 
-  document.addEventListener("click", function (event) {
-    if (event.target !== taskInput && event.target !== taskList) {
-      taskList.style.display = "none";
-    }
-  });
-
-  taskList.addEventListener("click", function (event) {
-    if (event.target.tagName === "LI") {
-      taskInput.value = event.target.textContent;
-      taskList.style.display = "none";
-    }
-  });
-  allTasks(taskList);
-
-  document.querySelector(".task-signinBtn").addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location = "auth.html";
-    localStorage.setItem("role", "setter");
-  });
+// Button switch
+const taskBtnWrapper = document.querySelector(".button__wrapper");
+const nextBtn = document.querySelector(".next-btn");
+const taskSignin = document.querySelector(".task-signinBtn");
+if (token) {
+  nextBtn.classList.remove("hidden");
+  taskSignin.classList.add("hidden");
+} else {
+  nextBtn.classList.add("hidden");
+  taskSignin.classList.remove("hidden");
 }
 
+taskSignin.addEventListener("click", (e) => {
+  e.preventDefault();
+  window.location = "auth.html";
+  localStorage.setItem("role", "setter");
+});
 
+const wrapper = document.getElementById("wrapper");
+const heroCont = document.getElementById("hero");
+const describeTaskForm = document.getElementById("describe_task");
+function describeTask() {
+  heroCont.classList.add("hidden");
+  describeTaskForm.classList.remove("hidden");
+  allTasks(taskList);
+}
 
+// Describe Task Form
+const gig = document.querySelector(".task-input");
+const gigDescription = document.querySelector("#task-description");
+const gigLocation = document.querySelector(".task-location");
+const gigOption = document.querySelector(".task-options");
 
+nextBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  runnerSlider(gig.value, gigLocation.value);
+});
+
+// Slider
+const sliderwrapper = document.querySelector(".slider_wrapper");
+const sliderContent = document.querySelector(".swiper-wrapper");
+async function runnerSlider(task, location) {
+  wrapper.innerHTML = ``;
+  sliderwrapper.classList.remove("hidden");
+  sliderContent.innerHTML = ``
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/getrunners/${task}/${location}`
+    );
+    const data = await res.json();
+    console.log(data);
+
+    data.map((dat) => {
+      let markup = `<div class="swiper-slide slide-card">
+              <div class="card-content">
+                <div class="image">
+                  <img src="${dat.photo}" alt="sample" />
+                  <h4>Trust Level: 1%</h4>
+                  <span>
+                    <button><i class="fa-solid fa-message"></i></button>
+                    <button><i class="fa-solid fa-phone"></i></button>
+                  </span>
+                </div>
+                <article>
+                  <div class="name-profession">
+                    <span class="name">${dat.name}</span>
+                    <span class="profession">3 ${dat.gig} Tasks</span>
+                  </div>
+                  <hr />
+                  <div class="about">
+                    <h3>About me</h3>
+                    <p>${dat.bio} </p>
+                  </div>
+                </article>
+              </div>
+            </div>`;
+      sliderContent.insertAdjacentHTML("afterbegin", markup);
+    });
+    wrapper.appendChild(sliderwrapper)
+  } catch (err) {
+    console.log(err);
+  }
+}
+var swiper = new Swiper(".mySwiper", {
+  slidesPerView: 1,
+  slidesPerGroup: 1,
+  loop: true,
+  loopFillGroupWithBlank: true,
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+});

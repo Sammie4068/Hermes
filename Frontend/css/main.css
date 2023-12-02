@@ -112,18 +112,16 @@ button {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.99)
-        translateY(-0.7em);
-        transform-origin: top;
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.99) translateY(-0.7em);
+    transform-origin: top;
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1)
-        translateY(0)
-    }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 .signin {
   cursor: pointer;
@@ -254,7 +252,6 @@ button {
   width: 110px;
   height: 50px;
   background-color: var(--primary-color);
-  display: block;
   font-size: 16px;
   color: #fff;
   text-transform: capitalize;
@@ -868,6 +865,151 @@ textarea {
   transform: scale(1.01);
 }
 
-.task-signinBtn{
- width: 220px;
+.task-signinBtn {
+  width: 220px;
+}
+
+/* runner slider */
+.slider_wrapper {
+  position: relative;
+  height: 450px;
+  width: 1075px;
+  /* display: flex; */
+  /* align-items: center;
+  justify-content: center; */
+  margin: -30px auto;
+}
+
+.swiper {
+  width: 800px;
+  height: 400px;
+  box-shadow: 00 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+  border-radius: 10px;
+  border: 2px solid var(--lite-color);
+}
+
+.slide-card {
+  position: relative;
+  background: #fff;
+  border-radius: 10px;
+  /* margin: 20px 0; */
+  box-shadow: 00 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+  overflow-y: scroll;
+}
+
+.slide-card .card-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+  position: relative;
+  z-index: 100;
+  width: 100%;
+}
+
+section .slide-card .image {
+  height: 140px;
+  width: 140px;
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--primary-color);
+}
+
+section .slide-card .image h4 {
+  width: 150px;
+  margin-bottom: 50px;
+  color: var(--primary-color);
+}
+
+section .slide-card .image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  margin-bottom: 20px;
+}
+
+.slide-card .image span {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.slide-card .image button {
+  background: var(--primary-color);
+  outline: none;
+  border: none;
+  color: #fff;
+  width: 63px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.slide-card .image button:hover {
+  transform: translateY(-3px);
+  background-color: var(--btn-hover-color);
+}
+
+
+.slide-card .name-profession {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.name-profession .name {
+  font-size: 30px;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.name-profession .profession {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.slide-card article {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  width: 70%;
+}
+
+.slide-card .about {
+  background-color: #f3f3f3;
+  padding: 15px;
+  width: 550px;
+}
+
+.slide-card .about h3 {
+  color: var(--primary-color);
+}
+
+.swiper-pagination {
+  position: absolute;
+}
+
+.swiper-pagination-bullet {
+  height: 7px;
+  width: 26px;
+  border-radius: 25px;
+  background: var(--primary-color);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  opacity: 0.7;
+  color: var(--primary-color);
+  transition: all 0.3s ease;
+}
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  opacity: 1;
+  color: var(--primary-color);
 }

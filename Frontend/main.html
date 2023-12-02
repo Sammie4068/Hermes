@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hermes</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="./css/main.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
@@ -39,12 +43,12 @@
               <a href="#" class="nav_menu_link">contact</a>
             </li>
             <li class="nav_menu_item hidden" id="account">
-              <a href="account.html" class="nav_menu_link ">account</a>
+              <a href="account.html" class="nav_menu_link">account</a>
             </li>
             <li class="nav_menu_item signin">
               <a href="#" class="nav_menu_link" id="signin">Sign in</a>
               <div class="dropdown__wrapper">
-                <div class="dropdown" >
+                <div class="dropdown">
                   <ul class="list-items">
                     <li id="as-setter">
                       <div class="item-title">
@@ -71,7 +75,7 @@
     </header>
 
     <section class="wrapper" id="wrapper">
-      <div class="container">
+      <div class="container" id="hero">
         <div class="grid-cols-2">
           <div class="grid-item-1">
             <h1 class="main-heading">
@@ -98,6 +102,66 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        id="describe_task"
+        class="contain hidden"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h4>Describe your Task</h4>
+        <p>
+          Tell us about your task. We use these details to get Runners in your
+          area who fit your needs.
+        </p>
+        <form action="#" class="task-info">
+          <div class="input-field">
+            <label>Task </label>
+            <input
+              type="text"
+              class="task-input"
+              placeholder="Select a task"
+              readonly
+              required
+            />
+            <ul class="task-dropdown" id="task-dropdown"></ul>
+          </div>
+          <div class="input-field">
+            <label>Task description</label>
+            <textarea
+              id="task-decription"
+              placeholder="Start the conversation and tell your Runner what you need done."
+            ></textarea>
+          </div>
+          <div class="input-field">
+            <label>Task Location</label>
+            <input type="text" class="task-location" required />
+          </div>
+          <div class="input-field">
+            <label>Task Options</label>
+            <select required class="task-options">
+              <option disabled selected>How big is your task?</option>
+              <option>Small - 1hr max</option>
+              <option>Medium - 3hrs max</option>
+              <option>Big - 4hr+ max</option>
+            </select>
+          </div>
+          <div class="button__wrapper">
+            <button class="btn next-btn hidden">Next</button>
+            <button class="btn task-signinBtn">Sign in to get runner</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="slider_wrapper hidden">
+        <div class="swiper mySwiper container">
+          <div class="swiper-wrapper content"></div>
+        </div>
+
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination"></div>
       </div>
     </section>
 
@@ -785,6 +849,7 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="./js/main.js" defer></script>
   </body>
 </html>

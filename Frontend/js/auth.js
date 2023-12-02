@@ -7,12 +7,18 @@ const setterCard = document.getElementById("setterCard");
 const runnerCard = document.getElementById("runnerCard");
 
 setterCard.addEventListener("click", () => {
-  localStorage.setItem("signuprole", setterCard.textContent.trim().toLowerCase());
+  localStorage.setItem(
+    "signuprole",
+    setterCard.textContent.trim().toLowerCase()
+  );
   panel();
   closeModal();
 });
 runnerCard.addEventListener("click", () => {
-  localStorage.setItem("signuprole", runnerCard.textContent.trim().toLowerCase());
+  localStorage.setItem(
+    "signuprole",
+    runnerCard.textContent.trim().toLowerCase()
+  );
   window.location = "runner.html";
 });
 
@@ -160,7 +166,7 @@ async function postData(url, data, userData) {
       username.value = "";
       email.value = "";
       password.value = "";
-      // confirmPassword.value = "";
+      confirmPassword.value = "";
       loginPost(`${baseURL}login`, userData);
     }
     if (bodydata.message == "Already Exists") {
@@ -189,12 +195,13 @@ async function loginPost(url, data) {
       body: JSON.stringify(data),
     });
     const bodydata = await res.json();
+    console.log(bodydata);
     if (bodydata.message == "invalid") {
       signinMsg.textContent = "Invalid Email or Password";
       signinMsg.style.color = "red";
     }
     if (bodydata.message == "logged") {
-      localStorage.setItem("token", bodydata.token)
+      localStorage.setItem("token", bodydata.token);
       window.location = "main.html";
     }
   } catch (err) {
@@ -207,7 +214,7 @@ signinForm.addEventListener("submit", (e) => {
   let userData = {
     email: signinEmail.value.trim(),
     password: signinPassword.value,
-    role: localStorage.getItem("role")
+    role: localStorage.getItem("role"),
   };
   loginPost(`${baseURL}login`, userData);
 });

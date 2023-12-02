@@ -27,6 +27,7 @@ li {
   --light-yellow: #fff2c6;
   --orange: #fd7238;
   --light-orange: #ffe0d3;
+  --transparent: #rgba(248,248,248, 0.9);
 }
 
 html {
@@ -54,7 +55,7 @@ body {
   left: 0;
   width: 280px;
   height: 100%;
-  background: rgba(248,248,248, 0.9);
+  background: var(--light);
   z-index: 2000;
   transition: 0.3s ease;
   overflow-x: hidden;
@@ -73,7 +74,7 @@ body {
   position: relative;
   top: 0;
   left: 50px;
-  background: rgba(248,248,248, 0.9);
+  background: var(--light);
   z-index: 500;
   padding-bottom: 20px;
   box-sizing: content-box;
