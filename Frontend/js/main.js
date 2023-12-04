@@ -15,56 +15,56 @@ AOS.init();
 gsap.from(".logo", {
   opacity: 0,
   y: -10,
-  delay: 0.3,
+  delay: 1,
   duration: 0.5,
 });
 
 gsap.from(".nav_menu_list .nav_menu_item", {
   opacity: 0,
   y: -10,
-  delay: 0.5,
+  delay: 1.4,
   duration: 0.5,
   stagger: 0.3,
 });
 gsap.from(".runner_btn", {
   opacity: 0,
-  y: -10,
-  delay: 1.1,
+  y: 20,
+  delay: 3,
   duration: 1,
 });
 
 gsap.from(".toggle_btn", {
   opacity: 0,
   y: -10,
-  delay: 0.5,
+  delay: 1.4,
   duration: 0.5,
 });
 
 gsap.from(".main-heading", {
   opacity: 0,
   y: 20,
-  delay: 0.7,
+  delay: 2.4,
   duration: 1,
 });
 
 gsap.from(".info-text", {
   opacity: 0,
   y: 20,
-  delay: 0.8,
+  delay: 2.8,
   duration: 1,
 });
 
 gsap.from(".btn_wrapper", {
   opacity: 0,
   y: 20,
-  delay: 0.9,
+  delay: 2.8,
   duration: 1,
 });
 
 gsap.from(".img_wrapper img", {
   opacity: 0,
   y: 20,
-  delay: 1,
+  delay: 3,
   duration: 1,
 });
 
@@ -81,6 +81,10 @@ if (token) {
 signin.addEventListener("click", () => {
   window.location = "auth.html";
 });
+
+account.addEventListener("click", () => {
+  window.location = "http://127.0.0.1:5501/account.html#dashboard";
+})
 
 const asSetter = document.getElementById("as-setter");
 const asRunner = document.getElementById("as-runner");
@@ -145,12 +149,6 @@ window.addEventListener("load", () => {
   displayTask("errands");
 });
 
-const setterBtn = document.querySelectorAll(".setter_btn");
-setterBtn.forEach((btn) =>
-  btn.addEventListener("click", () => {
-    describeTask();
-  })
-);
 // Get all taskers
 async function allTasks(parentEle) {
   try {
@@ -188,23 +186,19 @@ taskList.addEventListener("click", function (event) {
   }
 });
 
-// Button switch
-const taskBtnWrapper = document.querySelector(".button__wrapper");
+// Describe task
 const nextBtn = document.querySelector(".next-btn");
-const taskSignin = document.querySelector(".task-signinBtn");
-if (token) {
-  nextBtn.classList.remove("hidden");
-  taskSignin.classList.add("hidden");
-} else {
-  nextBtn.classList.add("hidden");
-  taskSignin.classList.remove("hidden");
-}
-
-taskSignin.addEventListener("click", (e) => {
-  e.preventDefault();
-  window.location = "auth.html";
-  localStorage.setItem("role", "setter");
-});
+const setterBtn = document.querySelectorAll(".setter_btn");
+setterBtn.forEach((btn) =>
+  btn.addEventListener("click", () => {
+    if (token) {
+      describeTask();
+    } else {
+      localStorage.setItem("role", "setter");
+      window.location = "auth.html";
+    }
+  })
+);
 
 const wrapper = document.getElementById("wrapper");
 const heroCont = document.getElementById("hero");
@@ -219,11 +213,12 @@ function describeTask() {
 const gig = document.querySelector(".task-input");
 const gigDescription = document.querySelector("#task-description");
 const gigLocation = document.querySelector(".task-location");
+const locationState = document.getElementById("states")
 const gigOption = document.querySelector(".task-options");
 
 nextBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  runnerSlider(gig.value, gigLocation.value);
+  runnerSlider(gig.value, locationState.value.toLowerCase());
 });
 
 // Slider
@@ -232,14 +227,13 @@ const sliderContent = document.querySelector(".swiper-wrapper");
 async function runnerSlider(task, location) {
   wrapper.innerHTML = ``;
   sliderwrapper.classList.remove("hidden");
-  sliderContent.innerHTML = ``
+  sliderContent.innerHTML = ``;
   try {
     const res = await fetch(
       `http://localhost:3000/api/v1/getrunners/${task}/${location}`
     );
+  
     const data = await res.json();
-    console.log(data);
-
     data.map((dat) => {
       let markup = `<div class="swiper-slide slide-card">
               <div class="card-content">
@@ -253,7 +247,10 @@ async function runnerSlider(task, location) {
                 </div>
                 <article>
                   <div class="name-profession">
-                    <span class="name">${dat.name}</span>
+                    <span class="name">${dat.name
+                      .split(" ")
+                      .map((a) => a.replace(a[0], a[0].toUpperCase()))
+                      .join(" ")}</span>
                     <span class="profession">3 ${dat.gig} Tasks</span>
                   </div>
                   <hr />
@@ -266,7 +263,7 @@ async function runnerSlider(task, location) {
             </div>`;
       sliderContent.insertAdjacentHTML("afterbegin", markup);
     });
-    wrapper.appendChild(sliderwrapper)
+    wrapper.appendChild(sliderwrapper);
   } catch (err) {
     console.log(err);
   }

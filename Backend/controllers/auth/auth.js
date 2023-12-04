@@ -21,12 +21,11 @@ exports.getUsers = async (req, res) => {
 exports.login = async (req, res, next) => {
   try {
     const foundUser = await getUser(req.body.email, req.body.role);
-
     if (foundUser.rows.length === 0 || !foundUser.rows[0].active) {
-      return res.json({ message: "Invalid" });
+      return res.json({ message: "invalid" });
     }
 
-    const { role, name, email} = foundUser.rows[0];
+    const { id, role, name, email } = foundUser.rows[0];
     const hashedPassword = await bcrypt.compare(
       req.body.password,
       foundUser.rows[0].password
@@ -39,6 +38,7 @@ exports.login = async (req, res, next) => {
     });
 
     return res.json({
+      id,
       token,
       message: "logged",
       role,
@@ -52,19 +52,33 @@ exports.login = async (req, res, next) => {
 
 exports.register = async (req, res, next) => {
   try {
-    const results = await getUserByEmail(req.body.email);
+    const { name, email, role } = req.body;
+
+    const results = await getUserByEmail(email);
     if (results.rows.length > 0) {
       res.json({ message: "Already Exists" });
     } else {
       let hashedPassword = await bcrypt.hash(req.body.password, 10);
       const user = {
-        name: req.body.name,
-        email: req.body.email,
+        name,
+        email,
         hashedPassword,
-        role: "setter"
+        role,
       };
       const result = await addUsers(user);
-      res.json({ message: "success" });
+      const { id } = result.rows[0];
+      const token = jwt.sign({ name }, secret, {
+        expiresIn: 60 * 60,
+      });
+
+      return res.json({
+        id,
+        token,
+        message: "success",
+        role,
+        name,
+        email,
+      });
     }
   } catch (err) {
     return next(err);
@@ -105,7 +119,7 @@ exports.addRunner = async (req, res, next) => {
       idcard: urls[1],
       role: "runner",
       gig: req.body.gig,
-      bio: req.body.bio
+      bio: req.body.bio,
     };
     const result = await addRunner(runner);
     res.json({ message: "success" });

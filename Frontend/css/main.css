@@ -838,6 +838,10 @@ textarea {
   background-color: #fafbfb;
 }
 
+.input-field select {
+  cursor: pointer;
+}
+
 .input-field label {
   font-weight: 500;
 }
@@ -874,9 +878,6 @@ textarea {
   position: relative;
   height: 450px;
   width: 1075px;
-  /* display: flex; */
-  /* align-items: center;
-  justify-content: center; */
   margin: -30px auto;
 }
 

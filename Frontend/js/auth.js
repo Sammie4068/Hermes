@@ -61,8 +61,6 @@ const emailErrMsg = document.getElementById("email-error-msg");
 const passwordErrMsg = document.getElementById("password-error-msg");
 const confirmPasswordErrMsg = document.getElementById("password2-error-msg");
 const signupMsg = document.getElementById("sign-up-msg");
-const passwordPattern =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const emailPattern =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -78,12 +76,9 @@ SignupForm.addEventListener("submit", (e) => {
       name: username.value.trim().toLowerCase(),
       email: email.value.trim().toLowerCase(),
       password: password.value,
+      role: "setter",
     };
-    let loginData = {
-      email: email.value.trim().toLowerCase(),
-      password: password.value,
-    };
-    postData(`${baseURL}register`, userData, loginData);
+    postData(`${baseURL}register`, userData);
   }
 });
 
@@ -118,10 +113,6 @@ function passwordValidation() {
   if (password.value === "") {
     passwordErrMsg.innerText = "Please enter a password";
     document.getElementById("signup-password-line").classList.add("error");
-  } else if (!password.value.match(passwordPattern)) {
-    passwordErrMsg.innerHTML =
-      "Please enter atleast 8 charatcer with number, symbol, small and capital letter.";
-    document.getElementById("signup-password-line").classList.add("error");
   } else {
     passwordErrMsg.innerText = "";
     document.getElementById("signup-password-line").classList.remove("error");
@@ -149,7 +140,7 @@ confirmPassword.addEventListener("input", confirmPasswordValidation);
 // Post request to server
 const baseURL = "http://localhost:3000/api/v1/";
 
-async function postData(url, data, userData) {
+async function postData(url, data) {
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -162,12 +153,9 @@ async function postData(url, data, userData) {
     const bodydata = await res.json();
     if (bodydata.message == "success") {
       signupMsg.textContent = "Registration Successful";
-      signupMsg.style.color = "green";
-      username.value = "";
-      email.value = "";
-      password.value = "";
-      confirmPassword.value = "";
-      loginPost(`${baseURL}login`, userData);
+      localStorage.setItem("token", bodydata.token);
+      localStorage.setItem("id", bodydata.id);
+      window.location = "main.html";
     }
     if (bodydata.message == "Already Exists") {
       signupMsg.textContent = "Email Already Exist";
@@ -195,13 +183,13 @@ async function loginPost(url, data) {
       body: JSON.stringify(data),
     });
     const bodydata = await res.json();
-    console.log(bodydata);
     if (bodydata.message == "invalid") {
       signinMsg.textContent = "Invalid Email or Password";
       signinMsg.style.color = "red";
     }
     if (bodydata.message == "logged") {
       localStorage.setItem("token", bodydata.token);
+      localStorage.setItem("id", bodydata.id)
       window.location = "main.html";
     }
   } catch (err) {

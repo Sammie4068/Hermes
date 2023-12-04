@@ -4,6 +4,7 @@ const dashboardDisplay = document.querySelector(".dashboard_display");
 const profileDisplay = document.querySelector(".my_profile");
 const dashboardLink = document.getElementById("dashboardLink");
 const profileLink = document.getElementById("profileLink");
+const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
 
 function displayContent(ele) {
   hideAllContents();
@@ -15,30 +16,31 @@ function hideAllContents() {
     content.classList.add("hidden");
   });
 }
-
-dashboardLink.addEventListener("click", () => {
-  displayContent(dashboardDisplay);
-});
-  displayContent(dashboardDisplay);
-
-
-profileLink.addEventListener("click", () => {
-  displayContent(profileDisplay);
-});
+updateDisplay();
+function updateDisplay() {
+  const state = window.location.hash.slice(1);
+  switch (state) {
+    case "dashboard":
+      displayContent(dashboardDisplay);
+      active(dashboardLink);
+      break;
+    case "profile":
+      displayContent(profileDisplay);
+      active(profileLink);
+      break;
+    default:
+      break;
+  }
+}
+window.addEventListener("hashchange", updateDisplay);
 
 // SideBar active
-const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
-
-allSideMenu.forEach((item) => {
-  const li = item.parentElement;
-
-  item.addEventListener("click", function () {
-    allSideMenu.forEach((i) => {
-      i.parentElement.classList.remove("active");
-    });
-    li.classList.add("active");
+function active(ele) {
+  allSideMenu.forEach((i) => {
+    i.parentElement.classList.remove("active");
   });
-});
+  ele.classList.add("active");
+}
 
 //Switch to password
 const profileCard = document.querySelector(".profile_card");
@@ -50,61 +52,105 @@ changePasswordBtn.addEventListener("click", () => {
   passwordCard.style.display = "block";
 });
 
-// Skill Tag
-const ul = document.querySelector(".tag-ul"),
-  input = document.querySelector(".tag-input"),
-  tagNumb = document.querySelector(".details span");
-
-let maxTags = 5,
-  tags = [];
-
-countTags();
-createTag();
-
-function countTags() {
-  input.focus();
-  tagNumb.innerText = maxTags - tags.length;
+// Logout
+const logoutLink = document.getElementById("logout");
+logoutLink.addEventListener("click", logout);
+function logout() {
+  localStorage.clear();
+  window.location = "main.html";
 }
 
-function createTag() {
-  ul.querySelectorAll("li").forEach((li) => li.remove());
-  tags
-    .slice()
-    .reverse()
-    .forEach((tag) => {
-      let liTag = `<li>${tag} <i class="uit uit-multiply" onclick="remove(this, '${tag}')"></i></li>`;
-      ul.insertAdjacentHTML("afterbegin", liTag);
-    });
-  countTags();
-}
-
-function remove(element, tag) {
-  let index = tags.indexOf(tag);
-  tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
-  element.parentElement.remove();
-  countTags();
-}
-
-function addTag(e) {
-  if (e.key == "Enter") {
-    let tag = e.target.value.replace(/\s+/g, " ");
-    if (tag.length > 1 && !tags.includes(tag)) {
-      if (tags.length < 10) {
-        tag.split(",").forEach((tag) => {
-          tags.push(tag);
-          createTag();
-        });
-      }
-    }
-    e.target.value = "";
+// Get User data
+const id = localStorage.getItem("id");
+async function userData() {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`);
+    const data = await res.json();
+    profileImage.attributes.src.value = data.photo
+    console.log(profileImage.attributes.src.value);
+    localStorage.setItem("photo", data.photo);
+    localStorage.setItem("name", data.name);
+    localStorage.setItem("email", data.email);
+    localStorage.setItem("task", data.gig);
+    localStorage.setItem("bio", data.bio);
+  } catch (err) {
+    console.log(err);
   }
 }
+userData();
 
-input.addEventListener("keyup", addTag);
+const username = localStorage.getItem("name");
+const email = localStorage.getItem("email");
+const photo = localStorage.getItem("photo");
+const task = localStorage.getItem("task");
+const bio = localStorage.getItem("bio");
+const editBtn = document.getElementById("edit__btn");
+const saveBtn = document.getElementById("saveBtn");
+const inputs = document.querySelectorAll("input");
+const nameInput = document.querySelector(".name");
+const emailInput = document.querySelector(".email");
+const taskInput = document.querySelector(".task");
+const bioInput = document.querySelector("#bio");
+const profileInfo = document.querySelector(".profile-info");
+const btnWrapper = document.querySelector(".btn-wrapper")
+const profileImage = document.getElementById("profile_image");
 
-const removeBtn = document.querySelector(".details button");
-removeBtn.addEventListener("click", () => {
-  tags.length = 0;
-  ul.querySelectorAll("li").forEach((li) => li.remove());
-  countTags();
-});
+nameInput.value = username
+  .split(" ")
+  .map((a) => a.replace(a[0], a[0].toUpperCase()))
+  .join(" ");
+emailInput.value = email;
+taskInput.value = task.replace(task[0], task[0].toUpperCase());
+bioInput.value = bio;
+
+function edit() {
+  inputs.forEach((input) => {
+    input.removeAttribute("readonly");
+    input.style.border = "2px solid #002b1d";
+  });
+  bioInput.removeAttribute("readonly");
+  bioInput.style.border = "2px solid #002b1d";
+  editBtn.classList.add("hidden");
+  saveBtn.classList.remove("hidden");
+}
+editBtn.addEventListener("click", edit);
+
+"dsds".toLowerCase();
+
+async function save() {
+  try {
+    const newData = {
+      name: nameInput.value.trim().toLowerCase(),
+      email: emailInput.value.trim(),
+      task: taskInput.value.trim().toLowerCase(),
+      bio: bioInput.value.trim(),
+    };
+
+    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    });
+    const data = await res.json();
+    if (data.message == "success") {
+      localStorage.setItem("name", data.name);
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("task", data.gig);
+      localStorage.setItem("bio", data.bio);
+
+      editBtn.classList.remove("hidden");
+      saveBtn.classList.add("hidden");
+      inputs.forEach((input) => {
+        input.setAttribute("readonly", "readonly");
+        input.style.border = "2px solid #68ddcb";
+      });
+      bioInput.setAttribute("readonly", "readonly");
+      bioInput.style.border = "2px solid #68ddcb";
+    }
+  } catch (err) {
+    console.error(`Error: ${err}`);
+  }
+}
+saveBtn.addEventListener("click", save);

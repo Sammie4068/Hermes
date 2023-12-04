@@ -9,7 +9,7 @@ const {
   getRunnerByEmail,
 } = require("./auth/auth");
 
-const {getRunners} = require("./users/users")
+const { getRunners, gerUsersById, updateUser } = require("./users/users");
 
 module.exports = {
   getNameTask,
@@ -22,4 +22,6 @@ module.exports = {
   getAllRunners,
   getRunnerByEmail,
   getRunners,
+  gerUsersById,
+  updateUser,
 };
