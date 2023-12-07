@@ -1,3 +1,33 @@
-const { getAllTasks, getTaskByName } = require("./admin/admin")
+const { getAllTasks, getTaskByName, getAllRunners } = require("./admin/admin");
 
-module.exports = { getAllTasks, getTaskByName };
+const {
+  getUserByEmail,
+  addUsers,
+  getAllUsers,
+  addRunner,
+  getRunnerByEmail,
+  getUser,
+} = require("./auth/auth");
+
+const {
+  getRunners,
+  gerUsersById,
+  updateUser,
+  changePassword,
+} = require("./users/users");
+
+module.exports = {
+  getAllTasks,
+  getTaskByName,
+  getUserByEmail,
+  addUsers,
+  getAllUsers,
+  addRunner,
+  getAllRunners,
+  getRunnerByEmail,
+  getUser,
+  getRunners,
+  gerUsersById,
+  updateUser,
+  changePassword,
+};

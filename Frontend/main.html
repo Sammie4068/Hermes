@@ -5,10 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hermes</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
     <link rel="stylesheet" href="./css/main.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
@@ -16,7 +27,7 @@
     <header class="container header">
       <nav class="nav">
         <div class="logo">
-          <h2>Hermes.</h2>
+          <a href="main.html"><h2>Hermes.</h2></a>
         </div>
 
         <div class="nav_menu" id="nav_menu">
@@ -26,13 +37,32 @@
 
           <ul class="nav_menu_list">
             <li class="nav_menu_item">
-              <a href="#" class="nav_menu_link">account</a>
-            </li>
-            <li class="nav_menu_item">
               <a href="#services" class="nav_menu_link">services</a>
             </li>
             <li class="nav_menu_item">
               <a href="#" class="nav_menu_link">contact</a>
+            </li>
+            <li class="nav_menu_item hidden" id="account">
+              <a href="#" class="nav_menu_link">account</a>
+            </li>
+            <li class="nav_menu_item signin">
+              <a href="#" class="nav_menu_link" id="signin">Sign in</a>
+              <div class="dropdown__wrapper">
+                <div class="dropdown">
+                  <ul class="list-items">
+                    <li id="as-setter">
+                      <div class="item-title">
+                        <h3 class="as-setter">as Setter</h3>
+                      </div>
+                    </li>
+                    <li id="as-runner">
+                      <div class="item-title">
+                        <h3>as Runner</h3>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </li>
             <button class="btn runner_btn">Become a Runner</button>
           </ul>
@@ -44,8 +74,8 @@
       </nav>
     </header>
 
-    <section class="wrapper">
-      <div class="container">
+    <section class="wrapper" id="wrapper">
+      <div class="container" id="hero">
         <div class="grid-cols-2">
           <div class="grid-item-1">
             <h1 class="main-heading">
@@ -64,11 +94,102 @@
             </div>
           </div>
           <div class="grid-item-2">
-            <div class="team_img_wrapper">
-              <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1700746670/Hermes/Architetto----Bicicletta_gfc9yf.svg" alt="team-img" />
+            <div class="img_wrapper">
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700746670/Hermes/Architetto----Bicicletta_gfc9yf.svg"
+                alt="team-img"
+              />
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        id="describe_task"
+        class="contain hidden"
+        data-aos="fade-up"
+        data-aos-duration="1000"
+      >
+        <h4>Describe your Task</h4>
+        <p>
+          Tell us about your task. We use these details to get Runners in your
+          area who fit your needs.
+        </p>
+        <form action="#" class="task-info">
+          <div class="input-field">
+            <label>Task </label>
+            <input
+              type="text"
+              class="task-input"
+              placeholder="Select a task"
+              readonly
+              required
+            />
+            <ul class="task-dropdown" id="task-dropdown"></ul>
+          </div>
+          <div class="input-field">
+            <label>Task description</label>
+            <textarea
+              id="task-decription"
+              placeholder="Start the conversation and tell your Runner what you need done."
+            ></textarea>
+          </div>
+          <div class="input-field location">
+            <label>Task Location</label>
+            <input type="text" class="task-location" placeholder="Enter Address" required />
+            <select id="states" name="states" placeholder="Enter location State">
+              <option disabled selected>Select Location State</option>
+              <option value="Abia">Abia</option>
+              <option value="Adamawa">Adamawa</option>
+              <option value="Akwa Ibom">Akwa Ibom</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Bauchi">Bauchi</option>
+              <option value="Bayelsa">Bayelsa</option>
+              <option value="Benue">Benue</option>
+              <option value="Borno">Borno</option>
+              <option value="Cross River">Cross River</option>
+              <option value="Delta">Delta</option>
+              <option value="Ebonyi">Ebonyi</option>
+              <option value="Edo">Edo</option>
+              <option value="Ekiti">Ekiti</option>
+              <option value="Enugu">Enugu</option>
+              <option value="Gombe">Gombe</option>
+              <option value="Imo">Imo</option>
+              <option value="Jigawa">Jigawa</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Kano">Kano</option>
+              <option value="Katsina">Katsina</option>
+              <option value="Kebbi">Kebbi</option>
+              <option value="Kogi">Kogi</option>
+              <option value="Kwara">Kwara</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Nasarawa">Nasarawa</option>
+              <option value="Niger">Niger</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Ondo">Ondo</option>
+              <option value="Osun">Osun</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Sokoto">Sokoto</option>
+              <option value="Taraba">Taraba</option>
+              <option value="Yobe">Yobe</option>
+              <option value="Zamfara">Zamfara</option>
+            </select>
+          </div>
+          <div class="input-field">
+            <label>Task Options</label>
+            <select required class="task-options">
+              <option disabled selected>How big is your task?</option>
+              <option>Small - 1hr max</option>
+              <option>Medium - 3hrs max</option>
+              <option>Big - 4hr+ max</option>
+            </select>
+          </div>
+          <div class="button__wrapper">
+            <button class="btn next-btn">Next</button>
+          </div>
+        </form>
       </div>
     </section>
 
@@ -78,21 +199,25 @@
         data-aos="fade-up"
         data-aos-duration="1000"
       >
+        <h1 class="sub-heading">Our Services</h1>
         <div class="feat">
           <div class="card active">
             <svg
-              width="800px"
-              height="800px"
+              fill="#000000"
               viewBox="0 0 24 24"
-              fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M16 6C17.1046 6 18 5.10457 18 4C18 2.89543 17.1046 2 16 2C14.8954 2 14 2.89543 14 4C14 5.10457 14.8954 6 16 6ZM13.2428 5.52993C13.5738 5.61279 13.8397 5.85869 13.9482 6.18222C14.13 6.72461 14.3843 7.20048 14.697 7.59998C15.5586 8.70094 16.9495 9.32795 18.8356 9.01361C19.3804 8.92281 19.8956 9.29083 19.9864 9.8356C20.0772 10.3804 19.7092 10.8956 19.1644 10.9864C17.0282 11.3424 15.1791 10.7992 13.8435 9.60462L11.1291 11.9869L12.7524 13.8413C12.912 14.0236 13 14.2577 13 14.5V19C13 19.5523 12.5523 20 12 20C11.4477 20 11 19.5523 11 19V14.8759L8.9689 12.5556L8.92455 12.5059C8.68548 12.2386 8.28531 11.7911 8.11145 11.2626C8.00463 10.9379 7.97131 10.5628 8.08578 10.1667C8.1967 9.78279 8.42374 9.45733 8.7058 9.18044L8.71971 9.16705L12.3134 5.77299C12.5614 5.53871 12.9118 5.44708 13.2428 5.52993ZM2 17C2 15.3431 3.34315 14 5 14C6.65685 14 8 15.3431 8 17C8 18.6569 6.65685 20 5 20C3.34315 20 2 18.6569 2 17ZM5 12C2.23858 12 0 14.2386 0 17C0 19.7614 2.23858 22 5 22C7.76142 22 10 19.7614 10 17C10 14.2386 7.76142 12 5 12ZM16 17C16 15.3431 17.3431 14 19 14C20.6569 14 22 15.3431 22 17C22 18.6569 20.6569 20 19 20C17.3431 20 16 18.6569 16 17ZM19 12C16.2386 12 14 14.2386 14 17C14 19.7614 16.2386 22 19 22C21.7614 22 24 19.7614 24 17C24 14.2386 21.7614 12 19 12Z"
-                fill="#000000"
-              />
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M23,17a4,4,0,1,0-4,4A4,4,0,0,0,23,17Zm-4,2a2,2,0,1,1,2-2A2,2,0,0,1,19,19ZM5,21a4,4,0,1,0-4-4A4,4,0,0,0,5,21Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,5,15ZM15.707,6.293,18.414,9H20a1,1,0,0,1,0,2H18a1,1,0,0,1-.707-.293L15,8.414,11.414,12l1.293,1.293A1,1,0,0,1,13,14v4a1,1,0,0,1-2,0V14.414L9.293,12.707a1,1,0,0,1,0-1.414l5-5A1,1,0,0,1,15.707,6.293ZM18,6a2,2,0,1,1,2-2A2,2,0,0,1,18,6Z"
+                ></path>
+              </g>
             </svg>
 
             <span><h6>Errands</h6></span>
@@ -488,87 +613,59 @@
                 <p class="aside_text">Starting Tip</p>
               </span>
             </aside>
+            <a href="#wrapper"
+              ><button class="btn setter_btn article_btn">
+                Set Task<i class="ri-arrow-right-line"></i></button
+            ></a>
           </article>
-          <button class="btn setter_btn article_btn">
-            Set Task<i class="ri-arrow-right-line"></i>
-          </button>
         </div>
       </div>
     </section>
 
     <section class="wrapper">
       <div class="container" data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="sub-heading">Customer Satisfaction is our Priority</h1>
         <div class="grid-cols-3">
           <div class="grid-col-item">
-            <!-- <div class="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
-            </div> -->
+            <div class="icon">
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954660/Hermes/trust_ftmn72.png"
+                alt="trust"
+              />
+            </div>
             <div class="featured_info">
-              <span>Built for Students </span>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
-                ratione facilis animi voluptas exercitationem molestiae.
-              </p>
+              <span>Priority pledge</span>
+              <p>If you’re not satisfied, we’ll work to make it right.</p>
             </div>
           </div>
           <div class="grid-col-item">
-            <!-- <div class="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"
-                />
-              </svg>
-            </div> -->
+            <div class="icon">
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954680/Hermes/reliable_s0zymg.png"
+                alt="reliable"
+              />
+            </div>
             <div class="featured_info">
-              <span>Provide Job Oppurtunities</span>
+              <span>Reliable Runners</span>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
-                ipsum esse corrupti. Quo, labore debitis!
+                Runners are trusted undergraduate students that have undergone
+                background checks before joining the platform.
               </p>
             </div>
           </div>
 
           <div class="grid-col-item">
-            <!-- <div class="icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
-                />
-              </svg>
-            </div> -->
+            <div class="icon">
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954693/Hermes/engagement_jfyf0z.png"
+                alt="engagement"
+              />
+            </div>
             <div class="featured_info">
-              <span>Get Help with everything</span>
+              <span>Dedicated Support</span>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
-                nostrum voluptate totam ipsa corrupti vero!
+                Friendly costumer support service when you need us – every day
+                of the week.
               </p>
             </div>
           </div>
@@ -576,7 +673,207 @@
       </div>
     </section>
 
-    <footer></footer>
+    <section class="wrapper">
+      <div class="container" data-aos="fade-up" data-aos-duration="1000">
+        <h1 class="sub-heading sub-heading-hermes">
+          Everyone's talking about <span> Hermes.</span>
+        </h1>
+        <div class="grid-cols-3">
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Fatima Ali</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I sent Ibrahim on an errand to help me pick up some goods from
+                the park, he delivered with speed and the goods were intact. He
+                was prompt, communicative, and efficient. Highly recommend!
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Chris Okereke</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                David did an awesome job assembling crib and dresser for
+                nursery. Really appreciate this! He cleaned up the area after
+                his work, organized the boxes for easy disposal and went through
+                the directions with...
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Shade Olayinka</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                Mary did a great job taking care of my kids while i was on a
+                business trip. I called to check in occasionally and Everything
+                was always fine. The kids loved her. She still comes by to say
+                hi... Thank you Mary!
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Hassan Atiku</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I hired Joseph, yusuf and ahmed to help with the cultivating
+                process on my farm which involved planting seeds, weeding and
+                applying fertilizers and pesticides. They did too good a job
+                that i had to double their tips...
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Mariam Babaji</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                Joshua has been taking my son maths lessons and it has been
+                wonderful. He communicates excellently with him and he's patient
+                with his improvement. My son is now a young scholar and it's all
+                thanks to hermes for bring joshua to our life. I've hired him
+                permanently to tutor my son.
+              </p>
+            </div>
+          </div>
+          <div class="grid-col-item">
+            <div class="feedbacks">
+              <h4>Stella Jacob</h4>
+              <div class="stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+            </div>
+            <div class="featured_info">
+              <p>
+                I needed help moving to my new apartment and hermes came to the
+                rescue. I was able to find reliable and effective runners that
+                got the job done with ease. The runners handled my things with
+                care and made sure i didn't lift a finger. Thank you Hermes!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="col">
+        <div class="i">
+          <h4>Contact</h4>
+
+          <h5>
+            <strong>Address:</strong> 5 Hong Avenue, off Gwanma Road, Kaduna
+            State
+          </h5>
+          <h5><strong>Phone:</strong> +234 807 6568 689/+234 814 2500 816</h5>
+          <div class="follow">
+            <h4>Follow Us</h4>
+
+            <div class="socials">
+              <i class="fa-brands fa-square-facebook"></i>
+              <i class="fa-brands fa-square-twitter"></i>
+              <i class="fa-brands fa-square-instagram"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="i ii">
+          <h4>About</h4>
+
+          <a href=""><h5>About Us</h5></a>
+          <a href=""><h5>Privacy Policy</h5></a>
+          <a href=""><h5>Terms & Conditions</h5></a>
+          <a href=""><h5>Contact Us</h5></a>
+        </div>
+
+        <div class="i iii">
+          <h4>My Account</h4>
+
+          <a href=""><h5>Sign In</h5></a>
+          <a href=""><h5>Set task</h5></a>
+          <a href=""><h5>My tasks</h5></a>
+          <a href=""><h5>Track My Runner</h5></a>
+          <a href=""><h5>Help</h5></a>
+        </div>
+
+        <div class="i iv">
+          <h4>Install App</h4>
+
+          <a href=""><h5>From App Store or Google Play</h5></a>
+
+          <div class="store">
+            <a href="" class="app">
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954710/Hermes/app_mibux4.jpg"
+                alt=""
+              />
+            </a>
+            <a href="" class="play">
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954728/Hermes/play_uewvzs.jpg"
+                alt=""
+              />
+            </a>
+          </div>
+
+          <a href=""><h5>Secure Payment Gateways</h5></a>
+
+          <div class="pay">
+            <img
+              src="https://res.cloudinary.com/okorosamuel/image/upload/v1700954719/Hermes/pay_kb8clp.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>

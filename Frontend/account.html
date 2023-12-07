@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css"
+    />
+    <link rel="stylesheet" href="./css/account.css" />
+
+    <title>Hermes</title>
+  </head>
+  <body>
+    <section id="sidebar">
+      <a href="main.html" class="brand">
+        <span class="text">Hermes</span>
+      </a>
+      <ul class="side-menu top">
+        <li class="active" id="dashboardLink">
+          <a href="#dashboard">
+            <i class="bx bxs-dashboard"></i>
+            <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li id="profileLink">
+          <a href="#profile">
+            <i class="bx bxs-user"></i>
+            <span class="text">My Profile</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bxs-message-dots"></i>
+            <span class="text">Message</span>
+          </a>
+        </li>
+      </ul>
+      <ul class="side-menu">
+        <li>
+          <a href="#">
+            <i class="bx bxs-cog"></i>
+            <span class="text">Settings</span>
+          </a>
+        </li>
+        <li id="logout">
+          <a href="#" class="logout">
+            <i class="bx bxs-log-out-circle"></i>
+            <span class="text">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section id="content" class="dashboard_display">
+      <main>
+        <div class="head-title">
+          <div class="left">
+            <h1>Dashboard</h1>
+          </div>
+        </div>
+        <div class="display_body">
+          <ul class="box-info">
+            <li>
+              <i class="bx bxs-calendar-check"></i>
+              <span class="text">
+                <h3>0</h3>
+                <p>Tasks Accomplished</p>
+              </span>
+            </li>
+            <li>
+              <i class="bx bxs-group"></i>
+              <span class="text">
+                <h3>0</h3>
+                <p>Setters</p>
+              </span>
+            </li>
+            <li>
+              <i class="bx bxs-hand"></i>
+              <span class="text">
+                <h3>1</h3>
+                <p>Trust Level</p>
+              </span>
+            </li>
+          </ul>
+
+          <div class="table-data">
+            <div class="order">
+              <div class="head">
+                <h3>Recent Tasks</h3>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Setter</th>
+                    <th>Date of Task</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <p>John Tigil</p>
+                    </td>
+                    <td>01-10-2023</td>
+                    <td><span class="status completed">Completed</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <p>Dorcas Sang</p>
+                    </td>
+                    <td>01-10-2023</td>
+                    <td><span class="status pending">Pending</span></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <p>Fortune Ifeanyi</p>
+                    </td>
+                    <td>01-10-2023</td>
+                    <td><span class="status process">Process</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <section id="content" class="my_profile">
+      <main>
+        <div class="head-title">
+          <div class="left">
+            <h1>Profile</h1>
+          </div>
+        </div>
+
+        <div class="display_body">
+          <div class="profile">
+            <div class="profile_card">
+              <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                alt="Profile Picture"
+                id="profile_image"
+              />
+              <div class="profile-info">
+                <span>
+                  <label>Name </label>
+                  <input class="name" type="text" readonly />
+                </span>
+                <span>
+                  <label>Email </label>
+                  <input class="email" type="text" readonly />
+                </span>
+                <span>
+                  <label>Task</label>
+                  <input
+                    type="text"
+                    class="task-input"
+                    readonly
+                    required
+                  />
+                  <ul class="task-dropdown" id="task-dropdown"></ul>
+                </span>
+                 <span>
+                  <label>Tip</label>
+                  <input class="tip" type="number" readonly />
+                </span>
+                <span>
+                  <label>Bio</label>
+                  <textarea id="bio" readonly></textarea>
+                </span>
+                <div class="btn-wrapper">
+                  <a href="#" class="change-password">Change Password </a>
+                  <a href="#" class="button edit_btn" id="edit__btn"
+                    >Edit Profile</a
+                  >
+                  <a href="#" class="button hidden" id="saveBtn">Save</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="password_card">
+              <div class="password_card_top">
+                <i class="bx bx-left-arrow-alt" id="back_arrow"></i>
+                <p id="change_password_msg"></p>
+              </div>
+              <span>
+                <label>Old Password </label>
+                <input class="password" type="password" id="old_password" />
+              </span>
+              <span>
+                <label>New Password </label>
+                <input class="password" type="password" id="new_password" />
+              </span>
+              <span>
+                <label>Confirm Password </label>
+                <input
+                  class="password"
+                  type="password"
+                  id="confirm_new_password"
+                />
+              </span>
+              <a href="#" class="button save_password" id="password_saveBtn"
+                >Save</a
+              >
+            </div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <script src="./js/account.js"></script>
+  </body>
+</html>

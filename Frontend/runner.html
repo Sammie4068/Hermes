@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <title>Hermes</title>
+  </head>
+  <body>
+    <header class="container header">
+      <nav class="nav">
+        <div class="logo">
+          <a href="main.html"><h2>Hermes.</h2></a>
+        </div>
+
+        <div class="nav_menu" id="nav_menu">
+          <button class="close_btn" id="close_btn">
+            <i class="ri-close-fill"></i>
+          </button>
+
+          <ul class="nav_menu_list">
+            <li class="nav_menu_item">
+              <a href="#" class="nav_menu_link">services</a>
+            </li>
+            <li class="nav_menu_item">
+              <a href="#" class="nav_menu_link">contact</a>
+            </li>
+            <li class="nav_menu_item" id="account">
+              <a href="account.html" class="nav_menu_link">account</a>
+            </li>
+          </ul>
+        </div>
+
+        <button class="toggle_btn" id="toggle_btn">
+          <i class="ri-menu-line"></i>
+        </button>
+      </nav>
+    </header>
+
+    <div class="assurance">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M11.5 9.00011L10 12.0001H14L12.5 15.0001M20 12.0001C20 16.4612 14.54 19.6939 12.6414 20.6831C12.4361 20.7901 12.3334 20.8436 12.191 20.8713C12.08 20.8929 11.92 20.8929 11.809 20.8713C11.6666 20.8436 11.5639 20.7901 11.3586 20.6831C9.45996 19.6939 4 16.4612 4 12.0001V8.21772C4 7.4182 4 7.01845 4.13076 6.67482C4.24627 6.37126 4.43398 6.10039 4.67766 5.88564C4.9535 5.64255 5.3278 5.50219 6.0764 5.22146L11.4382 3.21079C11.6461 3.13283 11.75 3.09385 11.857 3.07839C11.9518 3.06469 12.0482 3.06469 12.143 3.07839C12.25 3.09385 12.3539 3.13283 12.5618 3.21079L17.9236 5.22146C18.6722 5.50219 19.0465 5.64255 19.3223 5.88564C19.566 6.10039 19.7537 6.37126 19.8692 6.67482C20 7.01845 20 7.4182 20 8.21772V12.0001Z"
+              stroke="#002b1d"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </g>
+        </svg>
+
+        <h4>
+          Always have peace of mind. All Runners are students of higher
+          institutions and have undergone ID and criminal background checks.
+          <a href="#">Learn more</a>
+        </h4>
+      </span>
+    </div>
+
+    <section class="wrapper" id="wrapper_container">
+      <div class="filter_box" data-aos="fade-right"
+        data-aos-duration="1000">
+        <div class="options">
+          <h4>Choose Prefered Gender</h4>
+          <div class="gender_options">
+            <span>Male</span>
+            <span>Female</span>
+          </div>
+        </div>
+        <div class="options">
+          <h4>Runner Type</h4>
+          <div class="runner_types">
+            <span>Elite Runner</span>
+            <span>Standard Runner</span>
+            <span>New Runner</span>
+          </div>
+        </div>
+        <div class="options">
+          <h4>Pricing</h4>
+          <div class="price_options">
+            <span>1k - 3k</span>
+            <span>3k - 5k</span>
+            <span>5k - 10k</span>
+            <span>Above 10k</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="runners_wrapper">
+        <div class="sort_runners">
+          <label> Sorted by :</label>
+          <select id="sort_runners">
+            <option selected><a href="#">Recommended</a></option>
+            <option>Tasks completed</option>
+            <option>Trust Level</option>
+          </select>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M19.1416 9.92896L12.7776 16.2929C12.3871 16.6834 11.7539 16.6834 11.3634 16.2929L4.99946 9.92895"
+                stroke="#68ddcb"
+                stroke-linecap="round"
+              ></path>
+            </g>
+          </svg>
+        </div>
+        <!-- <div class="card_container">
+          <div class="slide-card">
+            <div class="card-content">
+              <div class="image">
+                <img
+                  src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                  alt="sample"
+                />
+                <h4>Trust Level: 100%</h4>
+                <span>
+                  <button><i class="fa-solid fa-message"></i></button>
+                  <button><i class="fa-solid fa-phone"></i></button>
+                </span>
+              </div>
+              <article>
+                <div class="info_top">
+                  <div class="name-profession">
+                    <span class="name">Savanna Manna</span>
+                    <span class="profession">3 Errand Tasks</span>
+                  </div>
+                  <aside class="price">NGN 1000</aside>
+                </div>
+
+                <div class="about">
+                  <h3>About me</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Ratione consequatur ducimus ipsum illum, sapiente libero
+                    soluta cum! Dolore unde, consequatur illum repudiandae
+                    adipisci omnis accusamus qui magni odit, totam fugit?
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="./js/runner.js"></script>
+  </body>
+</html>

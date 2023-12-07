@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hermes</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./css/auth.css" />
+  </head>
+  <body>
+    <div class="logo">
+      <a href="main.html"><h2>Hermes.</h2></a>
+    </div>
+    <div class="container" id="container">
+      <div class="form-container sign-up-container">
+        <form action="#" id="signup-form">
+          <h1>Sign up</h1>
+          <span id="sign-up-msg"></span>
+          <div class="infield">
+            <i class="fas fa-user"></i>
+
+            <input type="text" placeholder="Name" id="username" />
+            <label id="username-line"></label>
+            <p class="errMsg" id="name-error-msg"></p>
+          </div>
+          <div class="infield">
+            <i class="fas fa-envelope"></i>
+
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              id="signup-email"
+            />
+            <label id="email-line"></label>
+            <p class="errMsg" id="email-error-msg"></p>
+          </div>
+          <div class="infield">
+            <i class="fas fa-lock"></i>
+
+            <input
+              type="password"
+              placeholder="Password"
+              id="signup-password"
+            />
+            <span id="eyeIcon"><i class="fas fa-eye"></i></span>
+            <label id="signup-password-line"></label>
+            <p class="errMsg" id="password-error-msg"></p>
+          </div>
+          <div class="infield">
+            <i class="fas fa-lock"></i>
+
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              id="signup-confirm-password"
+            />
+            <span id="confirmEyeIcon"><i class="fas fa-eye"></i></span>
+            <label id="signup-confirm-password-line"></label>
+            <p class="errMsg" id="password2-error-msg"></p>
+          </div>
+          <button>Sign Up</button>
+          <p class="account-text">
+            Already have an account? <a href="#" id="signin-btn2">Sign in</a>
+          </p>
+        </form>
+      </div>
+      <div class="form-container sign-in-container">
+        <form action="#" id="signin-form">
+          <h1>Sign in</h1>
+          <span id="sign-in-msg"></span>
+          <div class="infield">
+            <i class="fas fa-envelope"></i>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              id="email-signin"
+            />
+            <label></label>
+          </div>
+          <div class="infield">
+            <i class="fas fa-lock"></i>
+            <input
+              type="password"
+              placeholder="Password"
+              id="password-signin"
+            />
+            <span id="signinEyeIcon"><i class="fas fa-eye"></i></span>
+            <label></label>
+          </div>
+          <a href="#" class="forgot">Forgot your password?</a>
+          <button>Sign In</button>
+          <p class="account-text">
+            Don't have an account? <a href="#" id="signup-btn2">Sign up</a>
+          </p>
+        </form>
+      </div>
+      <div class="overlay-container" id="overlayCon">
+        <div class="overlay">
+          <div class="overlay-panel overlay-left">
+            <h1>Welcome Back!</h1>
+            <p class="panel_p">
+              To keep connected with us please login with your personal info
+            </p>
+            <button>Sign In</button>
+          </div>
+          <div class="overlay-panel overlay-right">
+            <h1>Hello, Friend!</h1>
+            <p class="panel_p">
+              Enter your personal details and start journey with us
+            </p>
+            <button>Sign Up</button>
+          </div>
+        </div>
+        <button id="overlayBtn"></button>
+      </div>
+    </div>
+    <div class="overlayer hidden"></div>
+    <div class="modal hidden">
+      <div class="modal-wrapper">
+        <div class="card" id="setterCard">
+          <svg
+            fill="#000000"
+            version="1.1"
+            id="Layer_1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 256 190"
+            enable-background="new 0 0 256 190"
+            xml:space="preserve"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M48.12,27.903C48.12,13.564,59.592,2,74.023,2c14.339,0,25.903,11.564,25.903,25.903 C99.834,42.335,88.27,53.806,74.023,53.806C59.684,53.806,48.12,42.242,48.12,27.903z M191,139h-47V97c0-20.461-17.881-37-38-37H43 C20.912,60,1.99,79.14,2,98v77c-0.026,8.533,6.001,12.989,12,13c6.014,0.011,12-4.445,12-13v-75h8v88h78v-88h8l0.081,50.37 c-0.053,8.729,5.342,12.446,10.919,12.63h60C207.363,163,207.363,139,191,139z M229.571,89.055v25.009h-61.073V52.992h45.518 l12.249-12.215h-69.982v85.502h85.502V76.875L229.571,89.055z M199.076,102.274l-22.921-22.921l8.637-8.637l14.296,14.296 l46.287-46.141L254,47.521L199.076,102.274z"
+              ></path>
+            </g>
+          </svg>
+
+          <span><h6>Setter</h6></span>
+          <!-- <p>
+            Lorem ipsum dolor sit amet consectetur, 
+            dolores quo porro eveniet repellendus totam tempore vero?
+          </p> -->
+        </div>
+
+        <div class="card" id="runnerCard">
+          <svg
+            fill="#000000"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M23,17a4,4,0,1,0-4,4A4,4,0,0,0,23,17Zm-4,2a2,2,0,1,1,2-2A2,2,0,0,1,19,19ZM5,21a4,4,0,1,0-4-4A4,4,0,0,0,5,21Zm0-6a2,2,0,1,1-2,2A2,2,0,0,1,5,15ZM15.707,6.293,18.414,9H20a1,1,0,0,1,0,2H18a1,1,0,0,1-.707-.293L15,8.414,11.414,12l1.293,1.293A1,1,0,0,1,13,14v4a1,1,0,0,1-2,0V14.414L9.293,12.707a1,1,0,0,1,0-1.414l5-5A1,1,0,0,1,15.707,6.293ZM18,6a2,2,0,1,1,2-2A2,2,0,0,1,18,6Z"
+              ></path>
+            </g>
+          </svg>
+
+          <span><h6>Runner</h6></span>
+          <!-- <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aliquam
+            numquam iste fugit rem tempora recusandae sit!
+          </p> -->
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/auth.js"></script>
+  </body>
+</html>
