@@ -21,7 +21,7 @@ exports.getAllUsers = async () => {
 
 exports.addRunner = async (runner) => {
   return db.query(
-    "INSERT INTO users (name, email, gender, photo, password, school, schoolstate, field, yearenrolled, yeargrad, idcard, role, gig, bio) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14) RETURNING *",
+    "INSERT INTO users (name, email, gender, photo, password, school, schoolstate, field, yearenrolled, yeargrad, idcard, role, gig, bio, tip) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING *",
     [
       runner.name,
       runner.email,
@@ -36,7 +36,8 @@ exports.addRunner = async (runner) => {
       runner.idcard,
       runner.role,
       runner.gig,
-      runner.bio
+      runner.bio,
+      runner.tip
     ]
   );
 };

@@ -35,8 +35,8 @@ html {
 }
 
 body {
-  background-color: #baf8ba;
   background: url(https://res.cloudinary.com/okorosamuel/image/upload/v1700746623/Hermes/hill1_a7eqxd.png);
+  background-color: #f9f8f6;
   background-position: bottom;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -159,7 +159,7 @@ body {
 }
 #content main .box-info li {
   padding: 24px;
-  background: var(--light);
+  background: #fff;
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -206,7 +206,7 @@ body {
 }
 #content main .table-data > div {
   border-radius: 10px;
-  background: var(--light);
+  background: #fff;
   padding: 24px;
   overflow-x: auto;
   box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
@@ -257,6 +257,7 @@ body {
 }
 #content main .table-data .order table tbody tr:hover {
   background: var(--grey);
+  cursor: pointer;
 }
 #content main .table-data .order table tr td .status {
   font-size: 10px;
@@ -305,13 +306,29 @@ body {
   margin-top: 36px;
 }
 
+.password_card_top {
+  display: flex;
+  margin-left: -20px;
+  margin-bottom: 10px;
+}
+
+.password_card_top i {
+  font-size: 25px;
+  margin-right: 50px;
+  cursor: pointer;
+}
+
+.password_card_top p {
+  color: #db504a;
+}
+
 .profile_card img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: auto;
-  color: var(--primary);
+  border: 2px solid var(--lite);
 }
 
 .profile-info {
@@ -355,7 +372,27 @@ body {
   border: 2px solid var(--lite);
 }
 
-.profile-info .task {
+.profile-info .task-input {
+  font-size: 1rem;
+  border: 2px solid var(--lite);
+  cursor: pointer;
+}
+.task-dropdown {
+  background-color: #fafbfb;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: -0.5rem;
+}
+.task-dropdown li {
+  text-transform: capitalize;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.task-dropdown li:hover {
+  transform: scale(1.01);
+}
+
+.profile-info .tip {
   font-size: 1rem;
   border: 2px solid var(--lite);
 }
@@ -375,7 +412,7 @@ body {
 .password_card .password {
   font-size: 1rem;
   border: none;
-  border: 1px solid var(--primary);
+  border: 2px solid var(--primary);
 }
 
 .profile-info h2 {
@@ -401,7 +438,6 @@ body {
   padding: 10px 15px;
   border-radius: 5px;
   transition: background-color 0.3s ease;
-  /* width: 255; */
   font-weight: 800;
 }
 

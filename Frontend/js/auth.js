@@ -19,7 +19,7 @@ runnerCard.addEventListener("click", () => {
     "signuprole",
     runnerCard.textContent.trim().toLowerCase()
   );
-  window.location = "runner.html";
+  window.location = "reg.html";
 });
 
 overlayBtn.addEventListener("click", () => {

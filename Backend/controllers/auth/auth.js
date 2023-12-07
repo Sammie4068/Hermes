@@ -120,9 +120,14 @@ exports.addRunner = async (req, res, next) => {
       role: "runner",
       gig: req.body.gig,
       bio: req.body.bio,
+      tip: req.body.tip
     };
     const result = await addRunner(runner);
-    res.json({ message: "success" });
+    const {id} = result.rows[0]
+    res.json({
+      message: "success",
+      id
+    });
   } catch (err) {
     return next(err);
   }

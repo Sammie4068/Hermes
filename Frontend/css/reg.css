@@ -153,6 +153,22 @@ textarea {
   height: 140px;
 }
 
+.task-dropdown {
+  background-color: #fafbfb;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: -0.5rem;
+  list-style: none;
+}
+.task-dropdown li {
+  text-transform: capitalize;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+.task-dropdown li:hover {
+  transform: scale(1.01);
+}
+
 .profile_card div {
   margin-bottom: 20px;
 }

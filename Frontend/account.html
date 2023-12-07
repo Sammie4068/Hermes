@@ -22,13 +22,13 @@
       </a>
       <ul class="side-menu top">
         <li class="active" id="dashboardLink">
-          <a href="#dashboard" >
+          <a href="#dashboard">
             <i class="bx bxs-dashboard"></i>
             <span class="text">Dashboard</span>
           </a>
         </li>
         <li id="profileLink">
-          <a href="#profile" >
+          <a href="#profile">
             <i class="bx bxs-user"></i>
             <span class="text">My Profile</span>
           </a>
@@ -37,12 +37,6 @@
           <a href="#">
             <i class="bx bxs-message-dots"></i>
             <span class="text">Message</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bx bxs-group"></i>
-            <span class="text">Team</span>
           </a>
         </li>
       </ul>
@@ -98,8 +92,6 @@
             <div class="order">
               <div class="head">
                 <h3>Recent Tasks</h3>
-                <i class="bx bx-search"></i>
-                <i class="bx bx-filter"></i>
               </div>
               <table>
                 <thead>
@@ -112,26 +104,26 @@
                 <tbody>
                   <tr>
                     <td>
-                      <img src="img/people.png" />
-                      <p>John Doe</p>
+                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <p>John Tigil</p>
                     </td>
-                    <td>01-10-2021</td>
+                    <td>01-10-2023</td>
                     <td><span class="status completed">Completed</span></td>
                   </tr>
                   <tr>
                     <td>
-                      <img src="img/people.png" />
-                      <p>John Doe</p>
+                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <p>Dorcas Sang</p>
                     </td>
-                    <td>01-10-2021</td>
+                    <td>01-10-2023</td>
                     <td><span class="status pending">Pending</span></td>
                   </tr>
                   <tr>
                     <td>
-                      <img src="img/people.png" />
-                      <p>John Doe</p>
+                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <p>Fortune Ifeanyi</p>
                     </td>
-                    <td>01-10-2021</td>
+                    <td>01-10-2023</td>
                     <td><span class="status process">Process</span></td>
                   </tr>
                 </tbody>
@@ -155,32 +147,31 @@
             <div class="profile_card">
               <img
                 src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
-                alt="Profile Picture" id="profile_image"
+                alt="Profile Picture"
+                id="profile_image"
               />
               <div class="profile-info">
                 <span>
                   <label>Name </label>
-                  <input
-                    class="name"
-                    type="text"
-                    readonly
-                  />
+                  <input class="name" type="text" readonly />
                 </span>
                 <span>
                   <label>Email </label>
-                  <input
-                    class="email"
-                    type="text"
-                    readonly
-                  />
+                  <input class="email" type="text" readonly />
                 </span>
                 <span>
                   <label>Task</label>
                   <input
-                    class="task"
                     type="text"
+                    class="task-input"
                     readonly
+                    required
                   />
+                  <ul class="task-dropdown" id="task-dropdown"></ul>
+                </span>
+                 <span>
+                  <label>Tip</label>
+                  <input class="tip" type="number" readonly />
                 </span>
                 <span>
                   <label>Bio</label>
@@ -197,31 +188,29 @@
             </div>
 
             <div class="password_card">
+              <div class="password_card_top">
+                <i class="bx bx-left-arrow-alt" id="back_arrow"></i>
+                <p id="change_password_msg"></p>
+              </div>
               <span>
                 <label>Old Password </label>
-                <input
-                  class="password"
-                  type="password"
-                  value="*********"
-                />
+                <input class="password" type="password" id="old_password" />
               </span>
               <span>
                 <label>New Password </label>
-                <input
-                  class="password"
-                  type="password"
-                  value="*********"
-                />
+                <input class="password" type="password" id="new_password" />
               </span>
               <span>
                 <label>Confirm Password </label>
                 <input
                   class="password"
                   type="password"
-                  value="*********"
+                  id="confirm_new_password"
                 />
               </span>
-              <a href="#" class="button save_password" id="edit__btn">Save</a>
+              <a href="#" class="button save_password" id="password_saveBtn"
+                >Save</a
+              >
             </div>
           </div>
         </div>

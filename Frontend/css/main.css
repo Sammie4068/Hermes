@@ -16,8 +16,8 @@
 :root {
   --primary-color: #002b1d;
   --lite-color: #68ddcb;
-  --link-color: #115036;
-  --btn-hover-color: #126241;
+  --link-color: #002b1d;
+  --btn-hover-color: #003a27;
   --lg-heading: #07492eed;
   --text-content: rgba(130, 171, 154, 0.929);
   --fixed-header-height: 4.5rem;
@@ -28,6 +28,7 @@ body {
   height: 100vh;
   overflow-x: hidden;
   background: url(https://res.cloudinary.com/okorosamuel/image/upload/v1700746623/Hermes/hill1_a7eqxd.png);
+  background-color: #f9f8f6;
   background-position: center;
   background-size: cover;
 }
@@ -98,17 +99,30 @@ button {
 }
 .nav_menu_list .nav_menu_item {
   margin: 0 2rem;
+  position: relative;
 }
-.nav_menu_item .nav_menu_link {
+
+.nav_menu_link {
   font-size: 20.5px;
   line-height: 27px;
   color: var(--link-color);
   text-transform: capitalize;
   letter-spacing: 0.5px;
 }
-.nav_menu_link:hover {
-  color: var(--primary-color);
-  background-color: #fff;
+
+.nav_menu_list .nav_menu_item::after {
+  content: "";
+  height: 3px;
+  width: 0%;
+  background-color: #009688;
+  position: absolute;
+  left: 0;
+  transition: 0.5s;
+  bottom: 0px;
+}
+
+.nav_menu_item:hover::after {
+  width: 100%;
 }
 
 @keyframes fadeIn {
@@ -230,6 +244,7 @@ button {
   font-weight: 500;
   font-size: 60px;
   line-height: 55px;
+  color: var(--primary-color);
 }
 .main-heading span {
   color: var(--primary-color);
@@ -824,8 +839,8 @@ footer .follow .socials i:hover {
 }
 
 .input-field input,
-select,
-textarea {
+.input-field select,
+.input-field textarea {
   outline: none;
   font-size: 14px;
   font-weight: 400;
@@ -873,29 +888,165 @@ textarea {
   width: 220px;
 }
 
-/* runner slider */
-.slider_wrapper {
-  position: relative;
-  height: 450px;
-  width: 1075px;
-  margin: -30px auto;
+/* runner.html */
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
-.swiper {
-  width: 800px;
-  height: 400px;
-  box-shadow: 00 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+.assurance {
+  background-color: rgba(168, 238, 227, 0.6);
+  padding: 20px;
+  margin: 30px 0px;
+}
+
+.assurance span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: marquee 30s linear infinite;
+}
+
+.assurance h4 {
+  color: var(--primary-color);
+}
+.assurance svg {
+  width: 50px;
+  height: 50px;
+}
+
+#wrapper_container {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0rem;
+}
+
+.filter_box {
+  width: 400px;
+  height: 100%;
+  background-color: #fff;
+  margin: 30px;
+  padding: 30px;
   border-radius: 10px;
   border: 2px solid var(--lite-color);
+  position: relative;
+  top: 70px;
+}
+
+.options {
+  border-bottom: 1px solid var(--primary-color);
+  padding: 10px;
+}
+
+.filter_box h4 {
+  color: var(--primary-color);
+}
+
+.gender_options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px;
+  padding: 20px;
+}
+
+.gender_options span,
+.runner_types span,
+.price_options span {
+  padding: 10px 20px;
+  font-weight: 500;
+  border: 1px solid var(--lite-color);
+  color: var(--primary-color);
+  border-radius: 30px;
+  cursor: pointer;
+}
+.gender_options span:hover,
+.runner_types span:hover,
+.price_options span:hover {
+  background-color: #a8eee3;
+  transform: scale(1.07);
+}
+.active_option {
+  background-color: #a8eee3;
+  transform: scale(1.07);
+}
+.runner_types {
+  padding: 20px;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.price_options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 20px;
+}
+
+.sort_runners {
+  display: flex;
+  margin: 20px;
+  width: 50%;
+  position: relative;
+  left: 150px;
+}
+
+.sort_runners label {
+  text-wrap: nowrap;
+  margin: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.sort_runners select {
+  width: 100%;
+  padding: 0px 20px;
+  outline: none;
+  height: 50px;
+  border-radius: 30px;
+  border: 1px solid var(--lite-color);
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.sort_runners svg {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  left: -50px;
+  top: -5px;
+  cursor: pointer;
+  z-index: 0;
+}
+
+.runners_wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card_container {
+  width: 800px;
+  border-radius: 10px;
+  border: 2px solid var(--lite-color);
+  margin-bottom: 30px;
 }
 
 .slide-card {
   position: relative;
   background: #fff;
   border-radius: 10px;
-  /* margin: 20px 0; */
-  box-shadow: 00 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
-  overflow-y: scroll;
+  height: 394px;
 }
 
 .slide-card .card-content {
@@ -909,11 +1060,8 @@ textarea {
 }
 
 section .slide-card .image {
-  height: 140px;
   width: 140px;
   border-radius: 50%;
-  padding: 3px;
-  background: var(--primary-color);
 }
 
 section .slide-card .image h4 {
@@ -923,12 +1071,11 @@ section .slide-card .image h4 {
 }
 
 section .slide-card .image img {
-  height: 100%;
-  width: 100%;
+  height: 200px;
+  width: 200px;
   object-fit: cover;
   border-radius: 50%;
   border: 3px solid #fff;
-  margin-bottom: 20px;
 }
 
 .slide-card .image span {
@@ -955,6 +1102,19 @@ section .slide-card .image img {
   background-color: var(--btn-hover-color);
 }
 
+.slide-card article .info_top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.slide-card article .info_top aside {
+  position: relative;
+  top: -100px;
+  left: 70px;
+  font-size: 25px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
 
 .slide-card .name-profession {
   display: flex;
@@ -989,28 +1149,5 @@ section .slide-card .image img {
 }
 
 .slide-card .about h3 {
-  color: var(--primary-color);
-}
-
-.swiper-pagination {
-  position: absolute;
-}
-
-.swiper-pagination-bullet {
-  height: 7px;
-  width: 26px;
-  border-radius: 25px;
-  background: var(--primary-color);
-}
-
-.swiper-button-next,
-.swiper-button-prev {
-  opacity: 0.7;
-  color: var(--primary-color);
-  transition: all 0.3s ease;
-}
-.swiper-button-next:hover,
-.swiper-button-prev:hover {
-  opacity: 1;
   color: var(--primary-color);
 }

@@ -1,234 +1,152 @@
-const signin = document.getElementById("signin");
-signin.addEventListener("click", () => {
-  localStorage.setItem("role", "runner");
-  window.location = "auth.html";
-});
-
 AOS.init();
-
-const infoForm = document.querySelector(".personal_info");
-const profileForm = document.querySelector(".profile_card");
-const schoolForm = document.querySelector(".school_info");
-const fullName = document.getElementById("fullname");
-const gender = document.getElementById("gender");
-const photo = document.getElementById("profilePic");
-const email = document.getElementById("email");
-const password = document.getElementById("password");
-const confirmPassword = document.getElementById("cpassword");
-const showCheckbox = document.getElementById("showpassword");
-const choosenTask = document.getElementById("choose_task");
-const bio = document.getElementById("description");
-const schoolName = document.getElementById("uni");
-const schoolState = document.getElementById("states");
-const field = document.getElementById("study");
-const yearEnrolled = document.getElementById("date-enrolled");
-const yearGrad = document.getElementById("date-grad");
-const idCard = document.getElementById("idCard");
-const oathCheckbox = document.getElementById("oath");
-const nextBtn1 = document.getElementById("nextBtn1");
-const nextBtn2 = document.getElementById("nextBtn2");
-const backBtn1 = document.getElementById("backBtn1");
-const backBtn2 = document.getElementById("backBtn2");
-const submitBtn = document.getElementById("submitBtn");
-const errorMsg = document.getElementById("msg-i");
-const errorMsg2 = document.getElementById("msg-ii");
-const errorMsg3 = document.getElementById("msg-iii");
-const showLabel = document.getElementById("show_label");
-const passwordPattern =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-const emailPattern =
-  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-// Show Password
-showCheckbox.addEventListener("click", () => {
-  if (showCheckbox.checked) {
-    password.type = "text";
-    confirmPassword.type = "text";
-    showLabel.innerText = "Hide Password";
-  } else {
-    password.type = "password";
-    confirmPassword.type = "password";
-    showLabel.innerText = "Show Password";
-  }
-});
-
-//Form validation
-function infoFormIsEmpty() {
-  if (
-    fullName.value == "" ||
-    email.value == "" ||
-    password.value == "" ||
-    confirmPassword.value == "" ||
-    photo.files.length < 1
-  ) {
-    errorMsg.innerText = "Please fill all inputs";
-  } else {
-    errorMsg.innerText = "";
-    return true;
-  }
+// Filter Active Switch
+function active(parentEle, ele) {
+  parentEle.forEach((i) => i.classList.remove("active_option"));
+  ele.classList.add("active_option");
 }
 
-function emailValidation() {
-  if (!email.value.match(emailPattern)) {
-    errorMsg.innerText = "Please enter a valid email";
-  } else {
-    errorMsg.innerText = "";
-    return true;
-  }
+// Display runners
+const wrapper = document.querySelector(".runners_wrapper");
+const gig = localStorage.getItem("gig");
+const gigLocation = localStorage.getItem("location");
+
+function displayRunners(data) {
+  data.map((dat) => {
+    let markup = `<div class="card_container" data-aos="fade-left"
+        data-aos-duration="1000">
+          <div class="slide-card">
+            <div class="card-content">
+              <div class="image">
+                <img
+                  src="${dat.photo}"
+                  alt="sample"
+                />
+                <h4>Trust Level: ${dat.trust}%</h4>
+                <span>
+                  <button><i class="fa-solid fa-message"></i></button>
+                  <button><i class="fa-solid fa-phone"></i></button>
+                </span>
+              </div>
+              <article>
+                <div class="info_top">
+                  <div class="name-profession">
+                    <span class="name">${dat.name
+                      .split(" ")
+                      .map((a) => a.replace(a[0], a[0].toUpperCase()))
+                      .join(" ")}</span>
+                    <span class="profession">${dat.completed} ${
+      dat.gig
+    } completed</span>
+                  </div>
+                  <aside class="price">NGN ${dat.tip}</aside>
+                </div>
+                <div class="about">
+                  <h3>About me</h3>
+                  <p>${dat.bio}</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>`;
+    wrapper.insertAdjacentHTML("beforeend", markup);
+  });
 }
 
-async function checkEmail() {
+function emptyCardDiv() {
+  const cardcontainer = document.querySelectorAll(".card_container");
+  cardcontainer.forEach((card) => (card.style.display = "none"));
+}
+
+async function getData() {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/runners/email/${email.value}`
+      `http://localhost:3000/api/v1/getrunners/${gig}/${gigLocation}`
     );
     const data = await res.json();
-    if (data.message === "exists") {
-      errorMsg.innerText = "Email already exists";
-      return false;
-    } else {
-      return true;
-    }
+    return data;
   } catch (err) {
     console.log(err);
   }
 }
 
-function passwordValidation() {
-  if (!password.value.match(passwordPattern)) {
-    errorMsg.innerHTML =
-      "Please enter atleast 8 charatcer with number, symbol, small and capital letter.";
-  } else {
-    errorMsg.innerText = "";
-    return true;
-  }
+async function getRunners() {
+  const data = await getData();
+  displayRunners(data);
+}
+window.addEventListener("load", getRunners);
+
+// Sorting runners
+async function sortByTaskCompleted() {
+  const data = await getData();
+  const sortedArr = data.sort((a, b) => b.completed - a.completed);
+  displayRunners(sortedArr);
 }
 
-function confirmPasswordValidation() {
-  if (confirmPassword.value !== password.value) {
-    errorMsg.innerText = "Password don't match";
-  } else {
-    errorMsg.innerText = "";
-    return true;
-  }
-}
+const sortInput = document.getElementById("sort_runners");
 
-function profileFormIsEmpty() {
-  if (choosenTask.value == "" || bio.value == "") {
-    errorMsg2.innerText = "Please fill all inputs";
-  } else {
-    errorMsg2.innerText = "";
-    return true;
-  }
-}
-
-function yearIsValid() {
-  if (yearEnrolled.value.length > 4 || yearGrad.value.length > 4) {
-    errorMsg3.innerText = "Please enter a valid year";
-  } else {
-    errorMsg.innerText = "";
-    return true;
-  }
-}
-
-function schoolFormIsEmpty() {
-  if (
-    schoolName.value == "" ||
-    schoolState.value == "" ||
-    field.value == "" ||
-    yearEnrolled.value == "" ||
-    yearGrad.value == "" ||
-    idCard.files.length < 1
-  ) {
-    errorMsg3.innerText = "Please fill all inputs";
-  } else {
-    errorMsg3.innerText = "";
-    return true;
-  }
-}
-
-function isChecked() {
-  if (!oathCheckbox.checked) {
-    errorMsg3.innerText = "Please check the oath box";
-  } else {
-    errorMsg3.innerText = "";
-    return true;
-  }
-}
-
-backBtn1.addEventListener("click", (e) => {
-  e.preventDefault();
-  infoForm.classList.remove("hidden");
-  profileForm.classList.add("hidden");
-  schoolForm.classList.add("hidden");
+sortInput.addEventListener("change", function () {
+  const selectedValue = sortInput.value;
+  sortItems(selectedValue);
 });
 
-backBtn2.addEventListener("click", (e) => {
-  e.preventDefault();
-  profileForm.classList.remove("hidden");
-  schoolForm.classList.add("hidden");
-  infoForm.classList.add("hidden");
-});
-
-nextBtn1.addEventListener("click", async (e) => {
-  e.preventDefault();
-  if (
-    infoFormIsEmpty() &&
-    emailValidation() &&
-    passwordValidation() &&
-    confirmPasswordValidation() &&
-    (await checkEmail())
-  ) {
-    infoForm.classList.add("hidden");
-    profileForm.classList.remove("hidden");
+function sortItems(selectedValue) {
+  if (selectedValue === "Recommended") {
+    emptyCardDiv();
+    getRunners(gig, gigLocation);
+  } else if (selectedValue === "Tasks completed") {
+    emptyCardDiv();
+    sortByTaskCompleted();
+  } else if (selectedValue === "Trust Level") {
   }
+}
+
+const genderOptions = document.querySelectorAll(".gender_options span");
+genderOptions.forEach((option) => {
+  option.addEventListener("click", async () => {
+    active(genderOptions, option);
+    const gender = option.textContent.toLowerCase();
+    const data = await getData();
+    const filterArr = data.filter((runner) => runner.gender == gender);
+    emptyCardDiv();
+    displayRunners(filterArr);
+  });
 });
 
-nextBtn2.addEventListener("click", async (e) => {
-  e.preventDefault();
-  if (profileFormIsEmpty()) {
-    profileForm.classList.add("hidden");
-    schoolForm.classList.remove("hidden");
-  }
+const runnerType = document.querySelectorAll(".runner_types span");
+runnerType.forEach((option) => {
+  option.addEventListener("click", async () => {
+    active(runnerType, option);
+    const type = option.textContent.toLowerCase().split(" ")[0];
+    const data = await getData();
+    const filterArr = data.filter((runner) => runner.level == type);
+    emptyCardDiv();
+    displayRunners(filterArr);
+  });
 });
 
-submitBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  if (schoolFormIsEmpty() && yearIsValid() && isChecked()) {
-    const formData = new FormData();
-
-    formData.append("name", fullName.value.toLowerCase());
-    formData.append("email", email.value);
-    formData.append("gender", gender.value);
-    formData.append("image", photo.files[0]);
-    formData.append("password", password.value);
-    formData.append("gig", choosenTask.value.toLowerCase());
-    formData.append("bio", bio.value.toLowerCase());
-    formData.append("school", schoolName.value.toLowerCase());
-    formData.append("schoolstate", schoolState.value.toLowerCase());
-    formData.append("field", field.value.toLowerCase());
-    formData.append("yearenrolled", yearEnrolled.value);
-    formData.append("yeargrad", yearGrad.value);
-    formData.append("image", idCard.files[0]);
-
-    postData(formData);
-    window.location = "account.html";
-  }
-});
-
-async function postData(data) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/v1/runners`, {
-      method: "POST",
-      body: data,
-    });
-    const bodydata = await res.json();
-    console.log(bodydata);
-    if (bodydata.message == "success") {
-      window.location = "account.html";
+const prices = document.querySelectorAll(".price_options span");
+prices.forEach((price) => {
+  price.addEventListener("click", async () => {
+    active(prices, price);
+    const tip = price.textContent.trim();
+    data = await getData();
+    let filterArr;
+    if (tip == "1k - 3k") {
+      filterArr = data.filter(
+        (runner) => runner.tip >= 1000 && runner.tip <= 3000
+      );
+    } else if (tip == "3k - 5k") {
+      filterArr = data.filter(
+        (runner) => runner.tip >= 3000 && runner.tip <= 5000
+      );
+    } else if (tip == "5k - 10k") {
+      filterArr = data.filter(
+        (runner) => runner.tip >= 5000 && runner.tip <= 10000
+      );
+    } else if (tip == "Above 10k") {
+      filterArr = data.filter((runner) => runner.tip > 10000);
     }
-  } catch (err) {
-    console.error(`Error: ${err}`);
-  }
-}
+    emptyCardDiv();
+    displayRunners(filterArr);
+  });
+});

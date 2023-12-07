@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="./css/reg.css" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  </head>
+  <body>
+    <div class="logo">
+      <a href="main.html"><h2>Hermes.</h2></a>
+    </div>
+    <div class="container" data-aos="fade-left" data-aos-duration="1000">
+      <div class="first">
+        <img
+          src="https://res.cloudinary.com/okorosamuel/image/upload/v1701085284/Hermes/linkedin-sales-solutions-jJFrkJP_-RA-unsplash_znizu3.jpg"
+          alt="test"
+        />
+        <h4>
+          Are you a student looking for a job to meet ends? <br />
+          <p>
+            join our community of runners and start to
+            <strong>EARN YOUR WAY</strong>
+          </p>
+        </h4>
+      </div>
+      <form action="#">
+        <div class="form-left">
+          <div class="personal_info">
+            <h1>Personal information</h1>
+            <p class="msg" id="msg-i"></p>
+            <div>
+              <label for="fullname">Full Name </label>
+              <input type="text" name="fullname" id="fullname" required />
+            </div>
+            <div class="subs">
+              <div>
+                <label for="gender">Gender</label>
+                <select name="gender" id="gender">
+                  <option disabled selected></option>
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </select>
+              </div>
+              <div>
+                <label for="picture">Profile Picture</label>
+                <input type="file" id="profilePic" />
+              </div>
+            </div>
+            <div>
+              <label for="email">Email Address </label>
+              <input type="email" name="email" id="email" required />
+            </div>
+            <div>
+              <label for="password">Password </label>
+              <input type="password" name="password" id="password" required />
+            </div>
+            <div>
+              <label for="cpassword">Confirm Password </label>
+              <input type="password" name="cpassword" id="cpassword" required />
+            </div>
+            <div class="show">
+              <label for="showpassword" id="show_label">Show Password</label>
+              <input type="checkbox" name="showpassword" id="showpassword" />
+            </div>
+            <div>
+              <input type="submit" value="Next" id="nextBtn1" />
+            </div>
+            <p class="signin">
+              Already have an account? <a href="#" id="signin">Sign in</a>
+            </p>
+          </div>
+
+          <div class="profile_card hidden">
+            <h1>Profile card</h1>
+            <p class="msg" id="msg-ii"></p>
+            <div>
+            <label>Task </label>
+            <input
+              type="text"
+              class="task-input"
+              placeholder="Select a task"
+              readonly
+              required
+            />
+            <ul class="task-dropdown" id="task-dropdown"></ul>
+              <p>
+                Choose the task you want to run. This can be change anytime.
+              </p>
+            </div>
+            <div>
+              <label>Describe yourself</label>
+              <textarea name="description" id="description"></textarea>
+              <p>
+                Describe yourself for setters to know you better. This can be
+                changed anytime.
+              </p>
+            </div>
+            <div class="btnCont">
+              <input type="submit" value="Back" id="backBtn1" class="back_btn" />
+              <input type="submit" value="Next" id="nextBtn2" />
+            </div>
+          </div>
+
+          <div class="school_info hidden">
+            <h1>Academy Details</h1>
+            <p class="msg" id="msg-iii"></p>
+            <div>
+              <label>School Name</label>
+              <input type="text" name="uni" id="uni" required />
+            </div>
+            <div>
+              <label for="states">Select State:</label>
+              <select id="states" name="states">
+                <option disabled selected>
+                  What state is your school located?
+                </option>
+                <option value="Abia">Abia</option>
+                <option value="Adamawa">Adamawa</option>
+                <option value="Akwa Ibom">Akwa Ibom</option>
+                <option value="Anambra">Anambra</option>
+                <option value="Bauchi">Bauchi</option>
+                <option value="Bayelsa">Bayelsa</option>
+                <option value="Benue">Benue</option>
+                <option value="Borno">Borno</option>
+                <option value="Cross River">Cross River</option>
+                <option value="Delta">Delta</option>
+                <option value="Ebonyi">Ebonyi</option>
+                <option value="Edo">Edo</option>
+                <option value="Ekiti">Ekiti</option>
+                <option value="Enugu">Enugu</option>
+                <option value="Gombe">Gombe</option>
+                <option value="Imo">Imo</option>
+                <option value="Jigawa">Jigawa</option>
+                <option value="Kaduna">Kaduna</option>
+                <option value="Kano">Kano</option>
+                <option value="Katsina">Katsina</option>
+                <option value="Kebbi">Kebbi</option>
+                <option value="Kogi">Kogi</option>
+                <option value="Kwara">Kwara</option>
+                <option value="Lagos">Lagos</option>
+                <option value="Nasarawa">Nasarawa</option>
+                <option value="Niger">Niger</option>
+                <option value="Ogun">Ogun</option>
+                <option value="Ondo">Ondo</option>
+                <option value="Osun">Osun</option>
+                <option value="Oyo">Oyo</option>
+                <option value="Plateau">Plateau</option>
+                <option value="Rivers">Rivers</option>
+                <option value="Sokoto">Sokoto</option>
+                <option value="Taraba">Taraba</option>
+                <option value="Yobe">Yobe</option>
+                <option value="Zamfara">Zamfara</option>
+              </select>
+            </div>
+            <div>
+              <label>Field of Study</label>
+              <input type="text" id="study" required />
+            </div>
+            <div class="dates">
+              <div>
+                <label>Enrolling Year</label>
+                <input type="number" id="date-enrolled" />
+              </div>
+              <div>
+                <label>Graduating Year</label>
+                <input type="number" id="date-grad" />
+              </div>
+            </div>
+            <div>
+              <label>ID Card</label>
+              <input type="file" id="idCard" required />
+            </div>
+            <div class="show">
+              <input type="checkbox" name="oath" id="oath" />
+              <label for="oath"
+                >I hereby swear that the above information is true</label
+              >
+            </div>
+            <div class="btnCont">
+              <input type="submit" value="Back" id="backBtn2" class="back_btn"/>
+              <input type="submit" value="Submit" id="submitBtn" />
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="./js/reg.js"></script>
+  </body>
+</html>

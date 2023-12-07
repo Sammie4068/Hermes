@@ -4,188 +4,173 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registration Form</title>
-    <link rel="stylesheet" href="./css/runner.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="./css/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <title>Hermes</title>
   </head>
   <body>
-    <div class="logo">
-      <a href="main.html"><h2>Hermes.</h2></a>
-    </div>
-    <div class="container" data-aos="fade-left" data-aos-duration="1000">
-      <div class="first">
-        <img
-          src="https://res.cloudinary.com/okorosamuel/image/upload/v1701085284/Hermes/linkedin-sales-solutions-jJFrkJP_-RA-unsplash_znizu3.jpg"
-          alt="test"
-        />
+    <header class="container header">
+      <nav class="nav">
+        <div class="logo">
+          <a href="main.html"><h2>Hermes.</h2></a>
+        </div>
+
+        <div class="nav_menu" id="nav_menu">
+          <button class="close_btn" id="close_btn">
+            <i class="ri-close-fill"></i>
+          </button>
+
+          <ul class="nav_menu_list">
+            <li class="nav_menu_item">
+              <a href="#" class="nav_menu_link">services</a>
+            </li>
+            <li class="nav_menu_item">
+              <a href="#" class="nav_menu_link">contact</a>
+            </li>
+            <li class="nav_menu_item" id="account">
+              <a href="account.html" class="nav_menu_link">account</a>
+            </li>
+          </ul>
+        </div>
+
+        <button class="toggle_btn" id="toggle_btn">
+          <i class="ri-menu-line"></i>
+        </button>
+      </nav>
+    </header>
+
+    <div class="assurance">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M11.5 9.00011L10 12.0001H14L12.5 15.0001M20 12.0001C20 16.4612 14.54 19.6939 12.6414 20.6831C12.4361 20.7901 12.3334 20.8436 12.191 20.8713C12.08 20.8929 11.92 20.8929 11.809 20.8713C11.6666 20.8436 11.5639 20.7901 11.3586 20.6831C9.45996 19.6939 4 16.4612 4 12.0001V8.21772C4 7.4182 4 7.01845 4.13076 6.67482C4.24627 6.37126 4.43398 6.10039 4.67766 5.88564C4.9535 5.64255 5.3278 5.50219 6.0764 5.22146L11.4382 3.21079C11.6461 3.13283 11.75 3.09385 11.857 3.07839C11.9518 3.06469 12.0482 3.06469 12.143 3.07839C12.25 3.09385 12.3539 3.13283 12.5618 3.21079L17.9236 5.22146C18.6722 5.50219 19.0465 5.64255 19.3223 5.88564C19.566 6.10039 19.7537 6.37126 19.8692 6.67482C20 7.01845 20 7.4182 20 8.21772V12.0001Z"
+              stroke="#002b1d"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </g>
+        </svg>
+
         <h4>
-          Are you a student looking for a job to meet ends? <br />
-          <p>
-            join our community of runners and start to
-            <strong>EARN YOUR WAY</strong>
-          </p>
+          Always have peace of mind. All Runners are students of higher
+          institutions and have undergone ID and criminal background checks.
+          <a href="#">Learn more</a>
         </h4>
-      </div>
-      <form action="#">
-        <div class="form-left">
-          <div class="personal_info">
-            <h1>Personal information</h1>
-            <p class="msg" id="msg-i"></p>
-            <div>
-              <label for="fullname">Full Name </label>
-              <input type="text" name="fullname" id="fullname" required />
-            </div>
-            <div class="subs">
-              <div>
-                <label for="gender">Gender</label>
-                <select name="gender" id="gender">
-                  <option disabled selected></option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-              <div>
-                <label for="picture">Profile Picture</label>
-                <input type="file" id="profilePic" />
-              </div>
-            </div>
-            <div>
-              <label for="email">Email Address </label>
-              <input type="email" name="email" id="email" required />
-            </div>
-            <div>
-              <label for="password">Password </label>
-              <input type="password" name="password" id="password" required />
-            </div>
-            <div>
-              <label for="cpassword">Confirm Password </label>
-              <input type="password" name="cpassword" id="cpassword" required />
-            </div>
-            <div class="show">
-              <label for="showpassword" id="show_label">Show Password</label>
-              <input type="checkbox" name="showpassword" id="showpassword" />
-            </div>
-            <div>
-              <input type="submit" value="Next" id="nextBtn1" />
-            </div>
-            <p class="signin">
-              Already have an account? <a href="#" id="signin">Sign in</a>
-            </p>
-          </div>
+      </span>
+    </div>
 
-          <div class="profile_card hidden">
-            <h1>Profile card</h1>
-            <p class="msg" id="msg-ii"></p>
-            <div>
-              <label for="task">Task</label>
-              <select name="task" id="choose_task">
-                <option disabled selected></option>
-                <option value="errands">Errands</option>
-                <option value="baby sitting">Baby Sitting</option>
-                <option value="moving">Moving</option>
-              </select>
-              <p>
-                Choose the task you want to run. This can be change anytime.
-              </p>
-            </div>
-            <div>
-              <label>Describe yourself</label>
-              <textarea name="description" id="description"></textarea>
-              <p>
-                Describe yourself for setters to know you better. This can be
-                changed anytime.
-              </p>
-            </div>
-            <div class="btnCont">
-              <input type="submit" value="Back" id="backBtn1" class="back_btn" />
-              <input type="submit" value="Next" id="nextBtn2" />
-            </div>
-          </div>
-
-          <div class="school_info hidden">
-            <h1>Academy Details</h1>
-            <p class="msg" id="msg-iii"></p>
-            <div>
-              <label>School Name</label>
-              <input type="text" name="uni" id="uni" required />
-            </div>
-            <div>
-              <label for="states">Select State:</label>
-              <select id="states" name="states">
-                <option disabled selected>
-                  What state is your school located?
-                </option>
-                <option value="Abia">Abia</option>
-                <option value="Adamawa">Adamawa</option>
-                <option value="Akwa Ibom">Akwa Ibom</option>
-                <option value="Anambra">Anambra</option>
-                <option value="Bauchi">Bauchi</option>
-                <option value="Bayelsa">Bayelsa</option>
-                <option value="Benue">Benue</option>
-                <option value="Borno">Borno</option>
-                <option value="Cross River">Cross River</option>
-                <option value="Delta">Delta</option>
-                <option value="Ebonyi">Ebonyi</option>
-                <option value="Edo">Edo</option>
-                <option value="Ekiti">Ekiti</option>
-                <option value="Enugu">Enugu</option>
-                <option value="Gombe">Gombe</option>
-                <option value="Imo">Imo</option>
-                <option value="Jigawa">Jigawa</option>
-                <option value="Kaduna">Kaduna</option>
-                <option value="Kano">Kano</option>
-                <option value="Katsina">Katsina</option>
-                <option value="Kebbi">Kebbi</option>
-                <option value="Kogi">Kogi</option>
-                <option value="Kwara">Kwara</option>
-                <option value="Lagos">Lagos</option>
-                <option value="Nasarawa">Nasarawa</option>
-                <option value="Niger">Niger</option>
-                <option value="Ogun">Ogun</option>
-                <option value="Ondo">Ondo</option>
-                <option value="Osun">Osun</option>
-                <option value="Oyo">Oyo</option>
-                <option value="Plateau">Plateau</option>
-                <option value="Rivers">Rivers</option>
-                <option value="Sokoto">Sokoto</option>
-                <option value="Taraba">Taraba</option>
-                <option value="Yobe">Yobe</option>
-                <option value="Zamfara">Zamfara</option>
-              </select>
-            </div>
-            <div>
-              <label>Field of Study</label>
-              <input type="text" id="study" required />
-            </div>
-            <div class="dates">
-              <div>
-                <label>Enrolling Year</label>
-                <input type="number" id="date-enrolled" />
-              </div>
-              <div>
-                <label>Graduating Year</label>
-                <input type="number" id="date-grad" />
-              </div>
-            </div>
-            <div>
-              <label>ID Card</label>
-              <input type="file" id="idCard" required />
-            </div>
-            <div class="show">
-              <input type="checkbox" name="oath" id="oath" />
-              <label for="oath"
-                >I hereby swear that the above information is true</label
-              >
-            </div>
-            <div class="btnCont">
-              <input type="submit" value="Back" id="backBtn2" class="back_btn"/>
-              <input type="submit" value="Submit" id="submitBtn" />
-            </div>
+    <section class="wrapper" id="wrapper_container">
+      <div class="filter_box" data-aos="fade-right"
+        data-aos-duration="1000">
+        <div class="options">
+          <h4>Choose Prefered Gender</h4>
+          <div class="gender_options">
+            <span>Male</span>
+            <span>Female</span>
           </div>
         </div>
-      </form>
-    </div>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <div class="options">
+          <h4>Runner Type</h4>
+          <div class="runner_types">
+            <span>Elite Runner</span>
+            <span>Standard Runner</span>
+            <span>New Runner</span>
+          </div>
+        </div>
+        <div class="options">
+          <h4>Pricing</h4>
+          <div class="price_options">
+            <span>1k - 3k</span>
+            <span>3k - 5k</span>
+            <span>5k - 10k</span>
+            <span>Above 10k</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="runners_wrapper">
+        <div class="sort_runners">
+          <label> Sorted by :</label>
+          <select id="sort_runners">
+            <option selected><a href="#">Recommended</a></option>
+            <option>Tasks completed</option>
+            <option>Trust Level</option>
+          </select>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g
+              id="SVGRepo_tracerCarrier"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></g>
+            <g id="SVGRepo_iconCarrier">
+              <path
+                d="M19.1416 9.92896L12.7776 16.2929C12.3871 16.6834 11.7539 16.6834 11.3634 16.2929L4.99946 9.92895"
+                stroke="#68ddcb"
+                stroke-linecap="round"
+              ></path>
+            </g>
+          </svg>
+        </div>
+        <!-- <div class="card_container">
+          <div class="slide-card">
+            <div class="card-content">
+              <div class="image">
+                <img
+                  src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                  alt="sample"
+                />
+                <h4>Trust Level: 100%</h4>
+                <span>
+                  <button><i class="fa-solid fa-message"></i></button>
+                  <button><i class="fa-solid fa-phone"></i></button>
+                </span>
+              </div>
+              <article>
+                <div class="info_top">
+                  <div class="name-profession">
+                    <span class="name">Savanna Manna</span>
+                    <span class="profession">3 Errand Tasks</span>
+                  </div>
+                  <aside class="price">NGN 1000</aside>
+                </div>
+
+                <div class="about">
+                  <h3>About me</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Ratione consequatur ducimus ipsum illum, sapiente libero
+                    soluta cum! Dolore unde, consequatur illum repudiandae
+                    adipisci omnis accusamus qui magni odit, totam fugit?
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="./js/runner.js"></script>
   </body>
 </html>

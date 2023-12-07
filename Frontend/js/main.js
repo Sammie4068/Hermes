@@ -84,7 +84,7 @@ signin.addEventListener("click", () => {
 
 account.addEventListener("click", () => {
   window.location = "http://127.0.0.1:5501/account.html#dashboard";
-})
+});
 
 const asSetter = document.getElementById("as-setter");
 const asRunner = document.getElementById("as-runner");
@@ -104,8 +104,16 @@ asRunner.addEventListener("click", () => {
   setRole(asRunner);
 });
 
-document.querySelector(".runner_btn").addEventListener("click", () => {
-  window.location = "runner.html";
+
+// Role Based
+const role = localStorage.getItem("role")
+const runnerBtn = document.querySelector(".runner_btn");
+if(role){
+  runnerBtn.classList.add("hidden")
+}
+
+runnerBtn.addEventListener("click", () => {
+  window.location = "reg.html";
 });
 
 // Task cards
@@ -149,7 +157,7 @@ window.addEventListener("load", () => {
   displayTask("errands");
 });
 
-// Get all taskers
+// Get all tasks
 async function allTasks(parentEle) {
   try {
     const res = await fetch(`http://localhost:3000/api/v1/tasks`);
@@ -213,72 +221,12 @@ function describeTask() {
 const gig = document.querySelector(".task-input");
 const gigDescription = document.querySelector("#task-description");
 const gigLocation = document.querySelector(".task-location");
-const locationState = document.getElementById("states")
+const locationState = document.getElementById("states");
 const gigOption = document.querySelector(".task-options");
 
 nextBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  runnerSlider(gig.value, locationState.value.toLowerCase());
-});
-
-// Slider
-const sliderwrapper = document.querySelector(".slider_wrapper");
-const sliderContent = document.querySelector(".swiper-wrapper");
-async function runnerSlider(task, location) {
-  wrapper.innerHTML = ``;
-  sliderwrapper.classList.remove("hidden");
-  sliderContent.innerHTML = ``;
-  try {
-    const res = await fetch(
-      `http://localhost:3000/api/v1/getrunners/${task}/${location}`
-    );
-  
-    const data = await res.json();
-    data.map((dat) => {
-      let markup = `<div class="swiper-slide slide-card">
-              <div class="card-content">
-                <div class="image">
-                  <img src="${dat.photo}" alt="sample" />
-                  <h4>Trust Level: 1%</h4>
-                  <span>
-                    <button><i class="fa-solid fa-message"></i></button>
-                    <button><i class="fa-solid fa-phone"></i></button>
-                  </span>
-                </div>
-                <article>
-                  <div class="name-profession">
-                    <span class="name">${dat.name
-                      .split(" ")
-                      .map((a) => a.replace(a[0], a[0].toUpperCase()))
-                      .join(" ")}</span>
-                    <span class="profession">3 ${dat.gig} Tasks</span>
-                  </div>
-                  <hr />
-                  <div class="about">
-                    <h3>About me</h3>
-                    <p>${dat.bio} </p>
-                  </div>
-                </article>
-              </div>
-            </div>`;
-      sliderContent.insertAdjacentHTML("afterbegin", markup);
-    });
-    wrapper.appendChild(sliderwrapper);
-  } catch (err) {
-    console.log(err);
-  }
-}
-var swiper = new Swiper(".mySwiper", {
-  slidesPerView: 1,
-  slidesPerGroup: 1,
-  loop: true,
-  loopFillGroupWithBlank: true,
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-  },
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
+  localStorage.setItem("gig", gig.value);
+  localStorage.setItem("location", locationState.value.toLowerCase());
+  window.location = "runner.html";
 });
