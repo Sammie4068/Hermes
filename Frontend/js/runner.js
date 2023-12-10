@@ -5,6 +5,30 @@ function active(parentEle, ele) {
   ele.classList.add("active_option");
 }
 
+//Services
+const services = document.getElementById("services");
+services.addEventListener("click", () => {
+  window.location = "http://127.0.0.1:5501/main.html#services";
+});
+
+//Account
+const role = localStorage.getItem("role");
+const account = document.getElementById("account");
+account.addEventListener("click", () => {
+  if (role == "setter") {
+    window.location = "http://127.0.0.1:5501/profile.html";
+  } else if (role == "runner") {
+    window.location = "http://127.0.0.1:5501/account.html#dashboard";
+  }
+});
+
+// Render Error
+const errorContainer = document.querySelector(".render_error");
+
+function renderError() {
+  errorContainer.style.display = "flex";
+}
+
 // Display runners
 const wrapper = document.querySelector(".runners_wrapper");
 const gig = localStorage.getItem("gig");
@@ -55,6 +79,7 @@ function displayRunners(data) {
 function emptyCardDiv() {
   const cardcontainer = document.querySelectorAll(".card_container");
   cardcontainer.forEach((card) => (card.style.display = "none"));
+  errorContainer.style.display = "none";
 }
 
 async function getData() {
@@ -71,6 +96,7 @@ async function getData() {
 
 async function getRunners() {
   const data = await getData();
+  if (data.length <= 0) renderError();
   displayRunners(data);
 }
 window.addEventListener("load", getRunners);
@@ -79,6 +105,7 @@ window.addEventListener("load", getRunners);
 async function sortByTaskCompleted() {
   const data = await getData();
   const sortedArr = data.sort((a, b) => b.completed - a.completed);
+  if (sortedArr.length <= 0) renderError();
   displayRunners(sortedArr);
 }
 
@@ -108,6 +135,7 @@ genderOptions.forEach((option) => {
     const data = await getData();
     const filterArr = data.filter((runner) => runner.gender == gender);
     emptyCardDiv();
+    if (filterArr.length <= 0) renderError();
     displayRunners(filterArr);
   });
 });
@@ -120,6 +148,7 @@ runnerType.forEach((option) => {
     const data = await getData();
     const filterArr = data.filter((runner) => runner.level == type);
     emptyCardDiv();
+    if (filterArr.length <= 0) renderError();
     displayRunners(filterArr);
   });
 });
@@ -147,6 +176,7 @@ prices.forEach((price) => {
       filterArr = data.filter((runner) => runner.tip > 10000);
     }
     emptyCardDiv();
+    if (filterArr.length <= 0) renderError();
     displayRunners(filterArr);
   });
 });

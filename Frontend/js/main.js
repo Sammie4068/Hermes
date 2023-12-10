@@ -70,20 +70,31 @@ gsap.from(".img_wrapper img", {
 
 // Authentication
 const token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
 const account = document.getElementById("account");
 const signin = document.getElementById("signin");
+const runnerBtn = document.querySelector(".runner_btn");
 
 if (token) {
   signin.classList.add("hidden");
   account.classList.remove("hidden");
+  runnerBtn.classList.add("hidden");
 }
+
+runnerBtn.addEventListener("click", () => {
+  window.location = "reg.html";
+});
 
 signin.addEventListener("click", () => {
   window.location = "auth.html";
 });
 
 account.addEventListener("click", () => {
-  window.location = "http://127.0.0.1:5501/account.html#dashboard";
+  if (role == "setter") {
+    window.location = "http://127.0.0.1:5501/profile.html#profile";
+  } else if (role == "runner") {
+    window.location = "http://127.0.0.1:5501/account.html#dashboard";
+  }
 });
 
 const asSetter = document.getElementById("as-setter");
@@ -102,18 +113,6 @@ asSetter.addEventListener("click", () => {
 });
 asRunner.addEventListener("click", () => {
   setRole(asRunner);
-});
-
-
-// Role Based
-const role = localStorage.getItem("role")
-const runnerBtn = document.querySelector(".runner_btn");
-if(role){
-  runnerBtn.classList.add("hidden")
-}
-
-runnerBtn.addEventListener("click", () => {
-  window.location = "reg.html";
 });
 
 // Task cards

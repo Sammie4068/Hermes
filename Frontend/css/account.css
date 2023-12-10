@@ -322,12 +322,49 @@ body {
   color: #db504a;
 }
 
-.profile_card img {
+.profile_card_img {
+  display: flex;
+  flex-direction: column;
+}
+
+.edit_dp {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  top: -235px;
+  opacity: 0;
+    visibility: none;
+  background-color: #db504a;
+}
+
+.change_photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  top: -100px;
+  opacity: 0;
+    visibility: none;
+  background-color: #db504a;
+}
+
+.dp {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: auto;
+  border: 2px solid var(--lite);
+  position: relative;
+  top: -135px;
+}
+
+.photo {
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
   border: 2px solid var(--lite);
 }
 

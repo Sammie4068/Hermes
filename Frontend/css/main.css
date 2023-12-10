@@ -915,6 +915,7 @@ footer .follow .socials i:hover {
 
 .assurance h4 {
   color: var(--primary-color);
+  /* letter-spacing: 1px; */
 }
 .assurance svg {
   width: 50px;
@@ -1033,6 +1034,8 @@ footer .follow .socials i:hover {
   display: flex;
   align-items: center;
   flex-direction: column;
+  /* width: 100%; */
+  width: 800px;
 }
 
 .card_container {
@@ -1040,6 +1043,29 @@ footer .follow .socials i:hover {
   border-radius: 10px;
   border: 2px solid var(--lite-color);
   margin-bottom: 30px;
+}
+
+.render_error {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0px;
+  padding: 60px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 2px solid var(--lite-color);
+}
+
+.render_error svg {
+  width: 80px;
+  height: 80px;
+}
+
+.render_error p {
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .slide-card {

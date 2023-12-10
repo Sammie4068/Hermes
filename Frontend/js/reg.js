@@ -278,6 +278,8 @@ async function postData(data) {
     const bodydata = await res.json();
     if (bodydata.message == "success") {
       localStorage.setItem("id", bodydata.id);
+      localStorage.setItem("token", bodydata.token);
+      localStorage.setItem("role", bodydata.role)
       window.location = "account.html";
     }
   } catch (err) {

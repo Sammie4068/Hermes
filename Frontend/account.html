@@ -33,16 +33,16 @@
             <span class="text">My Profile</span>
           </a>
         </li>
-        <li>
-          <a href="#">
+        <li id="messagesLink">
+          <a href="#messages">
             <i class="bx bxs-message-dots"></i>
-            <span class="text">Message</span>
+            <span class="text">Messages</span>
           </a>
         </li>
       </ul>
       <ul class="side-menu">
-        <li>
-          <a href="#">
+        <li id="settings">
+          <a href="#settings">
             <i class="bx bxs-cog"></i>
             <span class="text">Settings</span>
           </a>
@@ -66,6 +66,13 @@
         <div class="display_body">
           <ul class="box-info">
             <li>
+              <i class="bx bxs-zap"></i>
+              <span class="text">
+                <h3>3</h3>
+                <p>Bolts</p>
+              </span>
+            </li>
+            <li>
               <i class="bx bxs-calendar-check"></i>
               <span class="text">
                 <h3>0</h3>
@@ -77,13 +84,6 @@
               <span class="text">
                 <h3>0</h3>
                 <p>Setters</p>
-              </span>
-            </li>
-            <li>
-              <i class="bx bxs-hand"></i>
-              <span class="text">
-                <h3>1</h3>
-                <p>Trust Level</p>
               </span>
             </li>
           </ul>
@@ -104,7 +104,9 @@
                 <tbody>
                   <tr>
                     <td>
-                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <img
+                        src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                      />
                       <p>John Tigil</p>
                     </td>
                     <td>01-10-2023</td>
@@ -112,7 +114,9 @@
                   </tr>
                   <tr>
                     <td>
-                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <img
+                        src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                      />
                       <p>Dorcas Sang</p>
                     </td>
                     <td>01-10-2023</td>
@@ -120,7 +124,9 @@
                   </tr>
                   <tr>
                     <td>
-                      <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" />
+                      <img
+                        src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                      />
                       <p>Fortune Ifeanyi</p>
                     </td>
                     <td>01-10-2023</td>
@@ -145,11 +151,15 @@
         <div class="display_body">
           <div class="profile">
             <div class="profile_card">
-              <img
-                src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
-                alt="Profile Picture"
-                id="profile_image"
-              />
+              <div class="profile_card_img">
+                <img
+                  src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                  alt="Profile Picture"
+                  id="profile_image"
+                  class="dp"
+                />
+                <input type="file" class="edit_dp" id="edit_dp" disabled />
+              </div>
               <div class="profile-info">
                 <span>
                   <label>Name </label>
@@ -161,15 +171,10 @@
                 </span>
                 <span>
                   <label>Task</label>
-                  <input
-                    type="text"
-                    class="task-input"
-                    readonly
-                    required
-                  />
+                  <input type="text" class="task-input" readonly required />
                   <ul class="task-dropdown" id="task-dropdown"></ul>
                 </span>
-                 <span>
+                <span>
                   <label>Tip</label>
                   <input class="tip" type="number" readonly />
                 </span>
@@ -215,6 +220,13 @@
           </div>
         </div>
       </main>
+    </section>
+    <section id="content" class="messages">
+      <h1>Coming Soon...</h1>
+    </section>
+
+    <section id="content" class="settings">
+      <h1>Coming Soon...</h1>
     </section>
 
     <script src="./js/account.js"></script>

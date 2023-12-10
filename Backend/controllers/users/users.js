@@ -6,6 +6,7 @@ const {
   changePassword,
 } = require("../../models/index");
 const bcrypt = require("bcrypt");
+const uploadImage = require("../../utilities/index");
 
 exports.getRunners = async (req, res, next) => {
   try {
@@ -29,6 +30,16 @@ exports.gerUsersById = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
+    // const urls = [];
+    // const files = req.files;
+
+    // for (const file of files) {
+    //   const { path } = file;
+    //   const newPath = await uploadImage(path);
+    //   const { secure_url } = newPath;
+    //   urls.push(secure_url);
+    // }
+
     const { name, email, task, bio, tip } = req.body;
     const data = {
       name,
@@ -36,11 +47,11 @@ exports.updateUser = async (req, res, next) => {
       task,
       bio,
       tip,
+    //   photo: urls[0],
       id: req.params.id,
     };
     const results = await updateUser(data);
-    console.log(results)
-    res.json({ message: "success", name, email, task, bio, tip });
+    res.json({ message: "success", name, email, task, bio, tip});
   } catch (err) {
     return next(err);
   }
