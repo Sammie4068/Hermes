@@ -110,7 +110,8 @@ button {
   letter-spacing: 0.5px;
 }
 
-.nav_menu_list .nav_menu_item::after {
+.nav_menu_list .nav_menu_item::after,
+.active_nav_link::after {
   content: "";
   height: 3px;
   width: 0%;
@@ -121,7 +122,8 @@ button {
   bottom: 0px;
 }
 
-.nav_menu_item:hover::after {
+.nav_menu_item:hover::after,
+.active_nav_link::after {
   width: 100%;
 }
 
@@ -1176,4 +1178,201 @@ section .slide-card .image img {
 
 .slide-card .about h3 {
   color: var(--primary-color);
+}
+
+/* Contact.html */
+.s1 {
+  width: 100%;
+  display: block;
+}
+
+.shop header {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  place-content: center;
+  height: 260px;
+}
+.shop header h1,
+.shop header p {
+  color: var(--primary-color);
+  font-size: 30px;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: row;
+  place-content: space-between;
+  padding: 40px 80px;
+  margin: 40px 0px;
+  width: 100%;
+  max-width: 1450px;
+  background-color: #f9f8f6;
+}
+.contact-details .txt {
+  width: 40%;
+}
+.contact-details .txt span {
+  font-size: 12px;
+}
+.contact-details .txt h2 {
+  font-size: 24px;
+  line-height: 30px;
+  padding: 20px 0;
+}
+.contact-details .txt h3 {
+  font-size: 16px;
+  padding-bottom: 15px;
+}
+.contact-details .txt li {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 10px 0;
+}
+.contact-details .txt li ion-icon {
+  font-size: 14px;
+  padding-right: 22px;
+}
+.contact-details .txt li p {
+  font-size: 14px;
+  margin: 0;
+}
+.contact-details .map {
+  width: 55%;
+  height: 400px;
+}
+.contact-details .map iframe {
+  width: 100%;
+  height: 100%;
+}
+
+.form-details {
+  background-color: #f9f8f6;
+  display: flex;
+  flex-direction: row;
+  place-content: space-between;
+  border: 3px solid #e1e1e1;
+  padding: 80px;
+  margin-block: 30px;
+  max-width: 1450px;
+  width: 100%;
+}
+.form-details form {
+  display: flex;
+  flex-direction: column;
+  place-items: flex-start;
+  width: 65%;
+  font-family: "Poppins", sans-serif;
+}
+.form-details form span {
+  font-size: 12px;
+}
+.form-details form h2 {
+  font-size: 24px;
+  line-height: 30px;
+  padding: 20px 0;
+}
+.form-details form input,
+.form-details form textarea {
+  outline: none;
+  border: solid #e1e1e1;
+  resize: none;
+  margin-bottom: 20px;
+  padding: 20px 15px;
+  width: 100%;
+}
+.form-details form button {
+  background: #088178;
+  color: #fff;
+}
+.form-details .people div {
+  display: flex;
+  place-items: flex-start;
+  padding-bottom: 25px;
+}
+.form-details .people div img {
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 65px;
+  height: 65px;
+  margin-right: 15px;
+}
+.form-details .people div p {
+  font-size: 13px;
+  line-height: 25px;
+  margin: 0;
+}
+.form-details .people div p span {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+}
+button.normal {
+  font-size: 14px;
+  font-weight: 600;
+  padding: 15px 30px;
+  color: #000;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: 0.2s;
+}
+
+.s6 {
+  background-color: var(--primary-color);
+  background-position: 20% 30%;
+  margin-top: 20px;
+}
+.s6 .newsletter {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 40px 80px;
+  max-width: 1450px;
+}
+.s6 .newsletter .txt h1 {
+  font-size: 22px;
+  color: #fff;
+  font-weight: 700;
+}
+.s6 .newsletter .txt p {
+  font-size: 14px;
+  font-weight: 600;
+  color: #818ea0;
+  margin-top: 20px;
+}
+.s6 .newsletter .txt p span {
+  color: #ffbd27;
+}
+.s6 .newsletter .input {
+  display: flex;
+  flex-direction: row;
+  place-items: center;
+  place-content: center;
+}
+.s6 .newsletter .input input {
+  font-size: 14px;
+  padding: 0 1.25rem;
+  border: solid transparent;
+  outline: none;
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  height: 3.1rem;
+  width: 310px;
+}
+.s6 .newsletter .input button {
+  color: #fff;
+  background-color: #088178;
+  white-space: nowrap;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  height: 3.1rem;
 }

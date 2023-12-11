@@ -91,9 +91,9 @@ signin.addEventListener("click", () => {
 
 account.addEventListener("click", () => {
   if (role == "setter") {
-    window.location = "http://127.0.0.1:5501/profile.html#profile";
+    window.location = "profile.html#profile";
   } else if (role == "runner") {
-    window.location = "http://127.0.0.1:5501/account.html#dashboard";
+    window.location = "account.html#dashboard";
   }
 });
 
