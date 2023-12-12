@@ -1,4 +1,5 @@
 // Init
+// location.reload();
 const id = localStorage.getItem("id");
 async function userData() {
   try {
@@ -9,11 +10,11 @@ async function userData() {
     localStorage.setItem("email", data.email);
     localStorage.setItem("task", data.gig);
     localStorage.setItem("bio", data.bio);
+    localStorage.setItem("tip", data.tip);
   } catch (err) {
     console.log(err);
   }
 }
-
 userData();
 
 // Display Contents
@@ -22,6 +23,10 @@ const dashboardDisplay = document.querySelector(".dashboard_display");
 const profileDisplay = document.querySelector(".my_profile");
 const dashboardLink = document.getElementById("dashboardLink");
 const profileLink = document.getElementById("profileLink");
+const messagesDisplay = document.querySelector(".messages");
+const messagesLink = document.getElementById("messagesLink");
+const settingsDisplay = document.querySelector(".settings");
+const settingsLink = document.getElementById("settings");
 const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
 
 function displayContent(ele) {
@@ -45,6 +50,13 @@ function updateDisplay() {
     case "profile":
       displayContent(profileDisplay);
       active(profileLink);
+      break;
+    case "messages":
+      displayContent(messagesDisplay);
+      active(messagesLink);
+      break;
+    case "settings":
+      displayContent(settingsDisplay);
       break;
     default:
       break;
@@ -164,8 +176,6 @@ function logout() {
   window.location = "main.html";
 }
 
-// Get Tip
-
 // Get all taskers
 async function allTasks(parentEle) {
   try {
@@ -219,6 +229,7 @@ const bioInput = document.querySelector("#bio");
 const profileInfo = document.querySelector(".profile-info");
 const btnWrapper = document.querySelector(".btn-wrapper");
 const profileImage = document.getElementById("profile_image");
+const editDp = document.getElementById("edit_dp");
 const tip = localStorage.getItem("tip");
 const tipInput = document.querySelector(".tip");
 
@@ -239,6 +250,8 @@ function edit() {
   });
   bioInput.removeAttribute("readonly");
   bioInput.style.border = "2px solid #002b1d";
+  profileImage.style.border = "2px solid #002b1d";
+  editDp.disabled = false;
   editBtn.classList.add("hidden");
   saveBtn.classList.remove("hidden");
 }
@@ -280,6 +293,8 @@ async function save() {
         input.setAttribute("readonly", "readonly");
         input.style.border = "2px solid #68ddcb";
       });
+      profileImage.style.border = "2px solid #68ddcb";
+      editDp.disabled = true;
       bioInput.setAttribute("readonly", "readonly");
       bioInput.style.border = "2px solid #68ddcb";
     }

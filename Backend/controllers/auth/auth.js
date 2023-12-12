@@ -105,8 +105,9 @@ exports.addRunner = async (req, res, next) => {
       urls.push(secure_url);
     }
     let hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const name = req.body.name
     const runner = {
-      name: req.body.name,
+      name,
       email: req.body.email,
       gender: req.body.gender,
       photo: urls[0],
@@ -123,10 +124,15 @@ exports.addRunner = async (req, res, next) => {
       tip: req.body.tip
     };
     const result = await addRunner(runner);
+    const token = jwt.sign({ name }, secret, {
+      expiresIn: 60 * 60,
+    });
     const {id} = result.rows[0]
     res.json({
       message: "success",
-      id
+      id,
+      token,
+      role: "runner"
     });
   } catch (err) {
     return next(err);
