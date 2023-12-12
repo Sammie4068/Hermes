@@ -27,15 +27,37 @@
           </button>
 
           <ul class="nav_menu_list">
-            <li class="nav_menu_item">
-              <a href="#" class="nav_menu_link" id="services">services</a>
+            <li class="nav_menu_item" id="services">
+              <a href="#services" class="nav_menu_link">services</a>
             </li>
             <li class="nav_menu_item">
-              <a href="#" class="nav_menu_link active_nav_link">contact</a>
+              <a href="contact.html" class="nav_menu_link active_nav_link"
+                >contact</a
+              >
             </li>
-            <li class="nav_menu_item" id="account">
+            <li class="nav_menu_item hidden" id="account">
               <a href="#" class="nav_menu_link">account</a>
             </li>
+            <li class="nav_menu_item signin">
+              <a href="#" class="nav_menu_link" id="signin">Sign in</a>
+              <div class="dropdown__wrapper">
+                <div class="dropdown">
+                  <ul class="list-items">
+                    <li id="as-setter">
+                      <div class="item-title">
+                        <h3 class="as-setter">as Setter</h3>
+                      </div>
+                    </li>
+                    <li id="as-runner">
+                      <div class="item-title">
+                        <h3>as Runner</h3>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <button class="btn runner_btn">Become a Runner</button>
           </ul>
         </div>
 
@@ -165,5 +187,7 @@
         </div>
       </div>
     </section>
+
+    <script src="./js/contact.js"></script>
   </body>
 </html>

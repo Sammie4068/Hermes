@@ -244,6 +244,8 @@ nextBtn2.addEventListener("click", async (e) => {
   }
 });
 
+const container = document.querySelector(".container");
+const overlay = document.querySelector(".overlay");
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
@@ -271,6 +273,7 @@ submitBtn.addEventListener("click", (e) => {
 
 async function postData(data) {
   try {
+    renderSpinner(overlay);
     const res = await fetch(`http://localhost:3000/api/v1/runners`, {
       method: "POST",
       body: data,
@@ -279,10 +282,19 @@ async function postData(data) {
     if (bodydata.message == "success") {
       localStorage.setItem("id", bodydata.id);
       localStorage.setItem("token", bodydata.token);
-      localStorage.setItem("role", bodydata.role)
-      window.location = "account.html";
+      localStorage.setItem("role", bodydata.role);
+      window.location = "account.html#dashboard";
     }
   } catch (err) {
     console.error(`Error: ${err}`);
   }
+}
+
+function renderSpinner(parentEle) {
+  overlay.style.display = "flex"
+  parentEle.innerHTML = ``;
+  const html = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  <p class="wait">Please wait..</p>
+  `;
+  parentEle.insertAdjacentHTML("beforeend", html);
 }

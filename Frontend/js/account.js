@@ -10,11 +10,11 @@ async function userData() {
     localStorage.setItem("email", data.email);
     localStorage.setItem("task", data.gig);
     localStorage.setItem("bio", data.bio);
+    localStorage.setItem("tip", data.tip);
   } catch (err) {
     console.log(err);
   }
 }
-
 userData();
 
 // Display Contents

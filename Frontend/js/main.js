@@ -207,6 +207,7 @@ setterBtn.forEach((btn) =>
   })
 );
 
+const overlay = document.querySelector(".overlay");
 const wrapper = document.getElementById("wrapper");
 const heroCont = document.getElementById("hero");
 const describeTaskForm = document.getElementById("describe_task");
@@ -227,5 +228,17 @@ nextBtn.addEventListener("click", (e) => {
   e.preventDefault();
   localStorage.setItem("gig", gig.value);
   localStorage.setItem("location", locationState.value.toLowerCase());
-  window.location = "runner.html";
+  renderSpinner(overlay);
+  setTimeout(() => {
+    window.location = "runner.html";
+  }, 1500);
 });
+
+function renderSpinner(parentEle) {
+  overlay.style.display = "flex";
+  parentEle.innerHTML = ``;
+  const html = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  <p class="wait">Please wait..</p>
+  `;
+  parentEle.insertAdjacentHTML("beforeend", html);
+}

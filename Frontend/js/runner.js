@@ -16,9 +16,9 @@ const role = localStorage.getItem("role");
 const account = document.getElementById("account");
 account.addEventListener("click", () => {
   if (role == "setter") {
-    window.location = "http://127.0.0.1:5501/profile.html";
+    window.location = "profile.html";
   } else if (role == "runner") {
-    window.location = "http://127.0.0.1:5501/account.html#dashboard";
+    window.location = "account.html#dashboard";
   }
 });
 
