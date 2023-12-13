@@ -9,7 +9,7 @@ const runnerCard = document.getElementById("runnerCard");
 setterCard.addEventListener("click", () => {
   localStorage.setItem(
     "signuprole",
-    setterCard.textContent.trim().toLowerCase()
+    setterCard.textContent.trim().split(" ")[0].toLowerCase()
   );
   panel();
   closeModal();
@@ -17,7 +17,7 @@ setterCard.addEventListener("click", () => {
 runnerCard.addEventListener("click", () => {
   localStorage.setItem(
     "signuprole",
-    runnerCard.textContent.trim().toLowerCase()
+    runnerCard.textContent.trim().split(" ")[0].toLowerCase()
   );
   window.location = "reg.html";
 });
