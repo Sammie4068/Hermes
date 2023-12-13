@@ -337,33 +337,14 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 50%;
-  background-color: #f3f7f9;
+  /* background-color: #f3f7f9; */
   border-radius: 9px;
   padding: 5rem 6rem;
-  box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
+  /* box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25); */
   z-index: 1000;
   transition: all 0.5s;
   font-family: "Poppins", sans-serif;
   overflow-y: scroll;
-}
-
-.modal .close-modal {
-  font-family: "Poppins", sans-serif;
-  color: inherit;
-  position: absolute;
-  top: 0.5rem;
-  right: 1.6rem;
-  font-size: 3.5rem;
-  cursor: pointer;
-  border: none;
-  background: none;
-}
-.close-modal {
-  width: 8%;
-}
-
-.close-modal:hover {
-  color: #2980b9;
 }
 
 .overlayer {
@@ -385,16 +366,17 @@ button {
 
 .modal-wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   place-items: center;
   place-content: space-between;
   /* flex-wrap: wrap; */
   /* padding: 40px 80px; */
   width: 100%;
+  gap: 30px;
 }
 .modal-wrapper .card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   place-items: center;
   place-content: center;
   border-radius: 4px;
@@ -402,27 +384,33 @@ button {
   cursor: pointer;
   padding: 20px 7px;
   height: 150px;
-  width: 150px;
+  width: 130%;
+  gap: 20px;
+  transition: transform 1s ease-out;
+  background-color: #f3f7f9;
+
 }
 
-.modal-wrapper .card span {
-  /* background: var(--grad-clr2); */
-  padding: 7px 10px;
-  margin-top: 20px;
-  border-radius: 3px;
+.modal-wrapper .card:hover {
+  transform: scale(1.05);
 }
-.modal-wrapper .card span h6 {
-  font-size: 15px;
+
+.modal-wrapper .card aside h6 {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 10px;
   color: var(--grad-clr1);
 }
 
-.modal-wrapper .card p{
-  font-size: 10px;
+.modal-wrapper .card aside p{
+  width: 80%;
+  color: var(--grad-clr1);
+  font-size: 15px;
 }
 
 .modal-wrapper svg {
-  width: 40px;
-  height: 40px;
+  width: 50%;
+  height: 70%;
   fill: var(--grad-clr1);
 }
 
