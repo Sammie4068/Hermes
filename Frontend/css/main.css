@@ -971,12 +971,11 @@ footer .follow .socials i:hover {
   align-items: center;
   white-space: nowrap;
   overflow: hidden;
-  animation: marquee 30s linear infinite;
+  /* animation: marquee 30s linear infinite; */
 }
 
 .assurance h4 {
   color: var(--primary-color);
-  /* letter-spacing: 1px; */
 }
 .assurance svg {
   width: 50px;
@@ -1005,9 +1004,16 @@ footer .follow .socials i:hover {
   border-bottom: 1px solid var(--primary-color);
   padding: 10px;
 }
-
+.filter_box .heading h3,
 .filter_box h4 {
   color: var(--primary-color);
+}
+
+.filter_box .heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 }
 
 .gender_options {
@@ -1017,7 +1023,7 @@ footer .follow .socials i:hover {
   margin: 20px;
   padding: 20px;
 }
-
+.clear_btn,
 .gender_options span,
 .runner_types span,
 .price_options span {
@@ -1028,6 +1034,7 @@ footer .follow .socials i:hover {
   border-radius: 30px;
   cursor: pointer;
 }
+.clear_btn:hover,
 .gender_options span:hover,
 .runner_types span:hover,
 .price_options span:hover {
@@ -1088,14 +1095,12 @@ footer .follow .socials i:hover {
   left: -50px;
   top: -5px;
   cursor: pointer;
-  z-index: 0;
 }
 
 .runners_wrapper {
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* width: 100%; */
   width: 800px;
 }
 
@@ -1147,13 +1152,15 @@ footer .follow .socials i:hover {
 }
 
 section .slide-card .image {
-  width: 140px;
-  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
 section .slide-card .image h4 {
   width: 150px;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
   color: var(--primary-color);
 }
 
@@ -1168,18 +1175,20 @@ section .slide-card .image img {
 .slide-card .image span {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
 .slide-card .image button {
+  padding: 10px;
   background: var(--primary-color);
   outline: none;
   border: none;
   color: #fff;
-  width: 63px;
-  height: 40px;
-  border-radius: 10px;
-  font-size: 20px;
+  width: 100%;
+  /* height: 40px; */
+  border-radius: 50px;
+  font-size: 15px;
   transition: all 0.3s ease;
   cursor: pointer;
 }

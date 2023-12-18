@@ -1,4 +1,7 @@
 AOS.init();
+// Url instance
+const urlParams = new URLSearchParams(window.location.search);
+
 // Filter Active Switch
 function active(parentEle, ele) {
   parentEle.forEach((i) => i.classList.remove("active_option"));
@@ -8,7 +11,7 @@ function active(parentEle, ele) {
 //Services
 const services = document.getElementById("services");
 services.addEventListener("click", () => {
-  window.location = "http://127.0.0.1:5501/main.html#services";
+  window.location = "main.html#services";
 });
 
 //Account
@@ -16,7 +19,7 @@ const role = localStorage.getItem("role");
 const account = document.getElementById("account");
 account.addEventListener("click", () => {
   if (role == "setter") {
-    window.location = "profile.html";
+    window.location = "profile.html#profile";
   } else if (role == "runner") {
     window.location = "account.html#dashboard";
   }
@@ -47,8 +50,8 @@ function displayRunners(data) {
                 />
                 <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
-                  <button><i class="fa-solid fa-message"></i></button>
-                  <button><i class="fa-solid fa-phone"></i></button>
+                  <button>Request</button>
+
                 </span>
               </div>
               <article>
@@ -62,7 +65,6 @@ function displayRunners(data) {
       dat.gig
     } completed</span>
                   </div>
-                  <aside class="price">NGN ${dat.tip}</aside>
                 </div>
                 <div class="about">
                   <h3>About me</h3>
@@ -129,54 +131,67 @@ function sortItems(selectedValue) {
 
 const genderOptions = document.querySelectorAll(".gender_options span");
 genderOptions.forEach((option) => {
-  option.addEventListener("click", async () => {
+  option.addEventListener("click", () => {
     active(genderOptions, option);
     const gender = option.textContent.toLowerCase();
-    const data = await getData();
-    const filterArr = data.filter((runner) => runner.gender == gender);
-    emptyCardDiv();
-    if (filterArr.length <= 0) renderError();
-    displayRunners(filterArr);
+    addURLParam("gender", gender);
   });
 });
 
 const runnerType = document.querySelectorAll(".runner_types span");
 runnerType.forEach((option) => {
-  option.addEventListener("click", async () => {
+  option.addEventListener("click", () => {
     active(runnerType, option);
     const type = option.textContent.toLowerCase().split(" ")[0];
-    const data = await getData();
-    const filterArr = data.filter((runner) => runner.level == type);
-    emptyCardDiv();
-    if (filterArr.length <= 0) renderError();
-    displayRunners(filterArr);
+    addURLParam("runnerType", type);
   });
 });
 
-const prices = document.querySelectorAll(".price_options span");
-prices.forEach((price) => {
-  price.addEventListener("click", async () => {
-    active(prices, price);
-    const tip = price.textContent.trim();
-    data = await getData();
-    let filterArr;
-    if (tip == "1k - 3k") {
-      filterArr = data.filter(
-        (runner) => runner.tip >= 1000 && runner.tip <= 3000
-      );
-    } else if (tip == "3k - 5k") {
-      filterArr = data.filter(
-        (runner) => runner.tip >= 3000 && runner.tip <= 5000
-      );
-    } else if (tip == "5k - 10k") {
-      filterArr = data.filter(
-        (runner) => runner.tip >= 5000 && runner.tip <= 10000
-      );
-    } else if (tip == "Above 10k") {
-      filterArr = data.filter((runner) => runner.tip > 10000);
-    }
-    emptyCardDiv();
-    if (filterArr.length <= 0) renderError();
-    displayRunners(filterArr);
-  });
+// Update url params
+function addURLParam(key, value) {
+  urlParams.set(key, value);
+  const newUrl = `${window.location.origin}${
+    window.location.pathname
+  }?${urlParams.toString()}`;
+  window.history.replaceState({}, "", newUrl);
+  window.dispatchEvent(new Event("popstate"));
+}
+
+function clearFilters() {
+  const newUrl = `${window.location.origin}${window.location.pathname}`;
+  window.history.replaceState({}, "", newUrl);
+  emptyCardDiv();
+  getRunners();
+}
+// clearFilters();
+document.querySelector(".clear_btn").addEventListener("click", () => {
+  clearFilters();
+  location.reload()
 });
+
+async function displayData() {
+  let gender = urlParams.get("gender");
+  let type = urlParams.get("runnerType");
+  data = await getData();
+  let filterArr;
+  if(gender && type){
+    filterArr = data.filter((runner) => {
+      return runner.gender == gender && runner.level == type;
+    });
+  }
+  if(gender && !type) {
+    filterArr = data.filter((runner) => {
+      return runner.gender == gender
+    });
+  }
+  if(type && !gender) {
+    filterArr = data.filter((runner) => {
+      return runner.level == type
+    });
+  }
+
+  emptyCardDiv();
+  if (filterArr.length <= 0) renderError();
+  displayRunners(filterArr);
+}
+window.addEventListener("popstate", displayData);
