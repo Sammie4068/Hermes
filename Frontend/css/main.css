@@ -816,15 +816,39 @@ footer .follow .socials i:hover {
   }
 }
 
-/* task.html */
-.contain {
+/* describeTask.html */
+.task_container {
+  margin: 20px 0px;
+  background-color: #f9f8f6;
+  display: flex;
+  justify-content: space-around;
+}
+.describe_task_display {
+  background-color: #e6e4e0;
+  width: 50%;
+}
+
+.describe_task_display span {
+  color: #002b1d;
   position: relative;
-  top: -4rem;
-  height: 100%;
-  background-color: #a8ede2;
+  left: 20px;
+  top: 20px;
+}
+.describe_task_display span p {
+  font-size: 20px;
+}
+.describe_task_display img {
+  width: 100%;
+  object-fit: contain;
+}
+
+.contain {
+  /* background-color: #a8ede2; */
+  background: linear-gradient(to bottom, #e6e4e0, #d1d8da);
   color: var(--primary-color);
-  border-radius: 10px;
-  padding: 20px;
+  padding: 25px;
+  width: 50%;
+  height: 100%;
 }
 
 .contain h4 {
@@ -832,6 +856,7 @@ footer .follow .socials i:hover {
 }
 .contain p {
   margin-bottom: 2rem;
+  font-size: 20px;
 }
 
 .input-field {
@@ -927,7 +952,7 @@ footer .follow .socials i:hover {
   }
 }
 
-.wait{
+.wait {
   color: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -971,7 +996,7 @@ footer .follow .socials i:hover {
   align-items: center;
   white-space: nowrap;
   overflow: hidden;
-  /* animation: marquee 30s linear infinite; */
+  animation: marquee 30s linear infinite;
 }
 
 .assurance h4 {
@@ -1186,7 +1211,6 @@ section .slide-card .image img {
   border: none;
   color: #fff;
   width: 100%;
-  /* height: 40px; */
   border-radius: 50px;
   font-size: 15px;
   transition: all 0.3s ease;
