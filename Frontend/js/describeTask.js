@@ -4,6 +4,7 @@ AOS.init();
 // Get all tasks
 async function allTasks(parentEle) {
   try {
+    parentEle.innerHTML = ``;
     const res = await fetch(`http://localhost:3000/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
@@ -43,26 +44,74 @@ taskList.addEventListener("click", function (event) {
 // Describe task
 const nextBtn = document.querySelector(".next-btn");
 const overlay = document.querySelector(".overlay");
+const modal = document.querySelector(".modal");
 const taskCont = document.querySelector(".task_container");
-const runnerCont = document.querySelector(".runner_section");
 const describeTaskForm = document.getElementById("describe_task");
 
 // Describe Task Form
 const gig = document.querySelector(".task-input");
-const gigDescription = document.querySelector("#task-description");
+const gigDescription = document.getElementById("task-decription");
 const gigLocation = document.querySelector(".task-location");
 const locationState = document.getElementById("states");
 const gigOption = document.querySelector(".task-options");
+const gigDate = document.getElementById("date");
+const gigTime = document.getElementById("time");
 
-nextBtn.addEventListener("click", (e) => {
+nextBtn.addEventListener("click", async(e) => {
   e.preventDefault();
-  localStorage.setItem("gig", gig.value);
-  localStorage.setItem("location", locationState.value.toLowerCase());
+
+  const data = {
+    task: gig.value,
+    description: gigDescription.value,
+    location: gigLocation.value + " " + locationState.value.toLowerCase(),
+    option: gigOption.value,
+    date: gigDate.value,
+    time: gigTime.value,
+  };
+
+  const res = await fetch(`http://localhost:3000/api/v1/tasks/${gig.value}`);
+  const bodydata = await res.json()
+  const apiData =  bodydata[0]
+
+  let html = `<div class="card_body">
+        <div class="task_side">
+          <span>
+            <h1>${data.task.replace(
+              data.task[0],
+              data.task[0].toUpperCase()
+            )}</h1>
+            <img src="${apiData.icons}" alt="${apiData.title}"/>
+          </span>
+          <span> <strong>Location:</strong> ${data.location}</span>
+          <span>
+            <p> <strong>Date:</strong> ${data.date}</p>
+            <p> <strong>Time:</strong> ${data.time}</p>
+          </span>
+        </div>
+        <div class="billing">
+          <h2>Pricing</h2>
+          <p>Tip: NGN 1000</p>
+          <p>Transportation: NGN 1000</p>
+          <p> <strong>Total:</strong> <strong>NGN 2000</strong> </p>
+        </div>
+      </div>
+      <div class="button__wrapper">
+        <button class="cancel_btn" onclick="closeModal()">Cancel</button>
+        <button class="proceed_btn">Proceed</button>
+      </div>`;
+  modal.insertAdjacentHTML("beforeend", html);
+  modal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+});
+
+function createTask(data) {
+  localStorage.setItem("gig", data.task);
+  localStorage.setItem("state", locationState.value.toLowerCase());
   renderSpinner(overlay);
   setTimeout(() => {
     window.location = "runner.html";
   }, 1500);
-});
+}
 
 function renderSpinner(parentEle) {
   overlay.style.display = "flex";
@@ -71,6 +120,12 @@ function renderSpinner(parentEle) {
   <p class="wait">Please wait..</p>
   `;
   parentEle.insertAdjacentHTML("beforeend", html);
+}
+
+function closeModal() {
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+  modal.innerHTML = "";
 }
 
 //Services

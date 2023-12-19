@@ -46,20 +46,18 @@
       </nav>
     </header>
 
-    <div class="task_container" data-aos="fade-up"
-        data-aos-duration="1000">
+    <div class="task_container" data-aos="fade-up" data-aos-duration="1000">
       <div class="describe_task_display">
         <span>
           <h1>Live with Ease...</h1>
           <p>let our trusted runners run for you</p>
         </span>
-        <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1702932493/Hermes/goodness_kpa1ln.jpg" alt="test" />
+        <img
+          src="https://res.cloudinary.com/okorosamuel/image/upload/v1702932493/Hermes/goodness_kpa1ln.jpg"
+          alt="test"
+        />
       </div>
-      <div
-        id="describe_task"
-        class="contain"
-        
-      >
+      <div id="describe_task" class="contain">
         <h1>Describe your Task</h1>
         <p>
           Tell us about your task. We use these details to get Runners in your
@@ -145,9 +143,14 @@
               <option>Big - 3hrs+</option>
             </select>
             <div class="input-field">
-              <label>Task Date and time</label>
-              <input type="date">
-              <input type="time">
+              <label for="date"
+                >Task Date
+                <input type="date" id="date" />
+              </label>
+              <label for="time">
+                Task Time
+                <input type="time" id="time" />
+              </label>
             </div>
           </div>
           <div class="button__wrapper">
@@ -157,7 +160,32 @@
       </div>
     </div>
     <div class="overlay hidden"></div>
-    
+    <div class="modal hidden">
+      <!-- <div class="card_body">
+        <div class="task_side">
+          <span>
+            <h1>Errand</h1>
+            <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1703005535/Hermes/bicycle-svgrepo-com_udv9jl.svg" alt="errand" />
+          </span>
+          <span> <strong>Location:</strong>  12 Hong avenue, Gwanna rd. Kaduna </span>
+          <span>
+            <p> <strong>Date:</strong> 12-12-2024</p>
+            <p> <strong>Time:</strong> 10:12 AM</p>
+          </span>
+        </div>
+        <div class="billing">
+          <h2>Pricing</h2>
+          <p>Tip: NGN 1000</p>
+          <p>Transportation: NGN 1000</p>
+          <p> <strong>Total:</strong> <strong>NGN 2000</strong> </p>
+        </div>
+      </div>
+      <div class="button__wrapper">
+        <button class="cancel_btn">Cancel</button>
+        <button class="proceed_btn">Proceed</button>
+      </div> -->
+    </div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="./js/describeTask.js"></script>
   </body>

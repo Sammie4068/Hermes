@@ -35,7 +35,7 @@ function renderError() {
 // Display runners
 const wrapper = document.querySelector(".runners_wrapper");
 const gig = localStorage.getItem("gig");
-const gigLocation = localStorage.getItem("location");
+const gigLocation = localStorage.getItem("state");
 
 function displayRunners(data) {
   data.map((dat) => {
@@ -51,7 +51,6 @@ function displayRunners(data) {
                 <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
                   <button>Request</button>
-
                 </span>
               </div>
               <article>
@@ -160,13 +159,13 @@ function addURLParam(key, value) {
 function clearFilters() {
   const newUrl = `${window.location.origin}${window.location.pathname}`;
   window.history.replaceState({}, "", newUrl);
-  emptyCardDiv();
-  getRunners();
+ 
 }
 // clearFilters();
-document.querySelector(".clear_btn").addEventListener("click", () => {
+document.querySelector(".filter_clear").addEventListener("click", () => {
   clearFilters();
-  location.reload()
+   emptyCardDiv();
+   getRunners();
 });
 
 async function displayData() {
