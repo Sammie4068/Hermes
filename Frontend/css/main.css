@@ -822,9 +822,11 @@ footer .follow .socials i:hover {
   background-color: #f9f8f6;
   display: flex;
   justify-content: space-around;
+  /* height: 890px; */
 }
 .describe_task_display {
-  background-color: #e6e4e0;
+  /* background-color: #e6e4e0; */
+   background: linear-gradient(to bottom, #E6E4E0 50%, #007d5c 50%);
   width: 50%;
 }
 
@@ -840,15 +842,19 @@ footer .follow .socials i:hover {
 .describe_task_display img {
   width: 100%;
   object-fit: contain;
+  /* height: 800px; */
 }
 
 .contain {
   background-color: #007d5c;
   /* background: linear-gradient(to bottom, #e6e4e0, #d1d8da); */
+  /* columns: var(--primary-color); */
   color: #fff;
   padding: 25px;
   width: 50%;
-  height: 100%;
+  /* height: 100%; */
+  height: 890px;
+  overflow: scroll;
 }
 
 .contain h4 {
@@ -894,6 +900,17 @@ footer .follow .socials i:hover {
   padding-top: 5px;
   height: 5rem;
 }
+
+.location .route {
+  /* display: flex; */
+  justify-content: space-between;
+  align-items: center;
+  /* width: 80%; */
+}
+.location .route  input {
+  width: 40%;
+}
+
 .task-input {
   text-transform: capitalize;
   cursor: pointer;

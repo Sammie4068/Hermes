@@ -1,4 +1,9 @@
-const { getAllTasks, getTaskByName, getAllRunners } = require("./admin/admin");
+const {
+  getAllTasks,
+  getTaskByName,
+  getAllRunners,
+  addActivity,
+} = require("./admin/admin");
 
 const {
   getUserByEmail,
@@ -30,4 +35,5 @@ module.exports = {
   gerUsersById,
   updateUser,
   changePassword,
+  addActivity,
 };

@@ -57,21 +57,22 @@ const gigOption = document.querySelector(".task-options");
 const gigDate = document.getElementById("date");
 const gigTime = document.getElementById("time");
 
-nextBtn.addEventListener("click", async(e) => {
+nextBtn.addEventListener("click", async (e) => {
   e.preventDefault();
+  const option = gigOption.value;
 
   const data = {
     task: gig.value,
     description: gigDescription.value,
     location: gigLocation.value + " " + locationState.value.toLowerCase(),
-    option: gigOption.value,
     date: gigDate.value,
     time: gigTime.value,
+    status: "pending",
   };
 
   const res = await fetch(`http://localhost:3000/api/v1/tasks/${gig.value}`);
-  const bodydata = await res.json()
-  const apiData =  bodydata[0]
+  const bodydata = await res.json();
+  const apiData = bodydata[0];
 
   let html = `<div class="card_body">
         <div class="task_side">
@@ -102,19 +103,43 @@ nextBtn.addEventListener("click", async(e) => {
   modal.insertAdjacentHTML("beforeend", html);
   modal.classList.remove("hidden");
   overlay.classList.remove("hidden");
+
+  document.querySelector(".proceed_btn").addEventListener("click", () => {
+   createTask(data);
+  });
 });
 
-function createTask(data) {
-  localStorage.setItem("gig", data.task);
-  localStorage.setItem("state", locationState.value.toLowerCase());
-  renderSpinner(overlay);
-  setTimeout(() => {
-    window.location = "runner.html";
-  }, 1500);
+function log(data) {
+  console.log(data);
+}
+
+async function createTask(data) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/activity`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const apiData = await res.json();
+    if (apiData.id) {
+      localStorage.setItem("gig", data.task);
+      localStorage.setItem("state", locationState.value.toLowerCase());
+      localStorage.setItem("taskID", apiData.id)
+      renderSpinner(overlay);
+      setTimeout(() => {
+        window.location = "runner.html";
+      }, 1500);
+    }
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function renderSpinner(parentEle) {
   overlay.style.display = "flex";
+  modal.classList.add("hidden")
   parentEle.innerHTML = ``;
   const html = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   <p class="wait">Please wait..</p>
