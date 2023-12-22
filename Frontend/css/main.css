@@ -817,7 +817,7 @@ footer .follow .socials i:hover {
 }
 
 /* describeTask.html */
-.task_container{
+.task_container {
   margin: 20px 0px;
   background-color: #f9f8f6;
   display: flex;
@@ -826,7 +826,7 @@ footer .follow .socials i:hover {
 }
 .describe_task_display {
   /* background-color: #e6e4e0; */
-   background: linear-gradient(to bottom, #E6E4E0 50%, #007d5c 50%);
+  background: linear-gradient(to bottom, #e6e4e0 50%, #007d5c 50%);
   width: 50%;
 }
 
@@ -847,9 +847,9 @@ footer .follow .socials i:hover {
 
 .contain {
   background-color: #007d5c;
+  color: #fff;
   /* background: linear-gradient(to bottom, #e6e4e0, #d1d8da); */
   /* columns: var(--primary-color); */
-  color: #fff;
   padding: 25px;
   width: 50%;
   /* height: 100%; */
@@ -907,7 +907,7 @@ footer .follow .socials i:hover {
   align-items: center;
   /* width: 80%; */
 }
-.location .route  input {
+.location .route input {
   width: 40%;
 }
 
@@ -935,7 +935,8 @@ footer .follow .socials i:hover {
   width: 220px;
 }
 
-#date, #time {
+#date,
+#time {
   cursor: pointer;
 }
 
@@ -1015,11 +1016,10 @@ footer .follow .socials i:hover {
   width: 50%;
   background-color: #f3f7f9;
   border-radius: 9px;
-  /* padding: 5rem 6rem; */
   padding: 25px;
   box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.25);
   z-index: 1000;
-  transition: all 0.5s;
+  transition: all 1s ease-out;
   font-family: "Poppins", sans-serif;
 }
 
@@ -1035,17 +1035,17 @@ footer .follow .socials i:hover {
   color: #333;
 }
 
-.modal .card_body .task_side{
+.modal .card_body .task_side {
   width: 60%;
 }
 
-.modal .card_body .task_side span{
+.modal .card_body .task_side span {
   display: flex;
   margin: 10px 0px;
   gap: 10px;
 }
 
-.modal .card_body .task_side span img{
+.modal .card_body .task_side span img {
   width: 50px;
   height: 50px;
   color: var(--primary-color);
@@ -1067,14 +1067,14 @@ footer .follow .socials i:hover {
   align-items: center;
   margin: 20px;
 }
-.button__wrapper button{
+.button__wrapper button {
   font-size: 15px;
   font-weight: 500;
   color: #fff;
   padding: 10px 20px;
   border-radius: 50px;
   width: 100px;
-  transition: transform .5s ease-out;
+  transition: transform 0.5s ease-out;
 }
 
 .button__wrapper button:hover {
@@ -1084,10 +1084,117 @@ footer .follow .socials i:hover {
   background-color: #800000;
 }
 .button__wrapper .edit_btn {
-  background-color: #F99F00;
+  background-color: #f99f00;
 }
 .button__wrapper .proceed_btn {
   background-color: #002b1d;
+}
+
+.modal .status {
+  /* background-color: #32d2c6; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #333;
+}
+
+.modal .status p span {
+  text-transform: uppercase;
+  background-color: #fd7238;
+  color: #fff;
+  padding: 5px 20px;
+  border-radius:5px;
+  margin: 0px 10px;
+  font-weight: 600;
+}
+
+.modal .heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.modal .heading img {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.modal .heading .runner-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal .heading .runner-info h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+.modal .heading .runner-info p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333;
+  position: relative;
+  top: -10px;
+}
+
+.modal .heading .runner-info .contact_icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 5px 15px;
+  width: 70%;
+  gap: 30px;
+}
+
+.modal .heading .runner-info .contact_icons span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 15px;
+  transition: transform 0.5s ease-out;
+  height: 30px;
+  cursor: pointer;
+  transition: transform 0.5s ease-out;
+}
+
+.modal .heading .runner-info .contact_icons span:hover {
+  transform: translateY(-3px);
+}
+
+.modal .about_runner {
+  background-color: #f3f3f3;
+  padding: 15px;
+  color: var(--primary-color);
+}
+
+.modal .review_runner{
+  padding: 15px;
+ color: var(--primary-color);
+}
+
+.modal .review_runner h3 {
+  margin-bottom: 10px;
+}
+
+.modal .review_runner .reviewer {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.modal .review_runner .reviewer img{
+  height: 50px;
+  width: 50px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 @keyframes marquee {

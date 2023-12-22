@@ -35,7 +35,7 @@ exports.getAllRunners = async (req, res, next) => {
 
 exports.addActivity = async (req, res, next) => {
   try {
-    const { task, description, location, date, time, status } = req.body;
+    const { task, description, location, date, time, status, setterid } = req.body;
     const data = {
       task,
       description,
@@ -43,6 +43,7 @@ exports.addActivity = async (req, res, next) => {
       date,
       time,
       status,
+      setterid
     };
     const result = await addActivity(data);
     const { id } = result.rows[0];
