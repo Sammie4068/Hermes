@@ -39,6 +39,7 @@ const gigLocation = localStorage.getItem("state");
 
 function displayRunners(data) {
   data.map((dat) => {
+    let value = JSON.stringify(dat);
     let markup = `<div class="card_container" data-aos="fade-left"
         data-aos-duration="1000">
           <div class="slide-card">
@@ -50,7 +51,7 @@ function displayRunners(data) {
                 />
                 <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
-                  <button>Request</button>
+                  <button value='${value}' id="reqBtn">Request</button>
                 </span>
               </div>
               <article>
@@ -73,8 +74,74 @@ function displayRunners(data) {
             </div>
           </div>
         </div>`;
+
     wrapper.insertAdjacentHTML("beforeend", markup);
   });
+  // Request Button
+  const reqBtn = document.querySelectorAll("#reqBtn");
+  reqBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      btn.textContent = "Pending..." 
+      btn.style.background = "#fd7238";
+      const runnerData = JSON.parse(e.target.value);
+       statusDisplay(runnerData);
+    });
+  });
+}
+
+
+
+const overlay = document.querySelector(".overlay");
+const modal = document.querySelector(".modal");
+function statusDisplay(data) {
+  let html = `<div class="status">
+        <p>Status: <span>pending</span> </p>
+        <p>Waiting for the runner to confirm....</p>
+      </div>
+      <div class="heading">
+        <img src="${data.photo}" alt="sample" />
+        <div class="runner-info">
+          <h1>${data.name
+            .split(" ")
+            .map((a) => a.replace(a[0], a[0].toUpperCase()))
+            .join(" ")}</h1>
+          <p>${data.completed} ${data.gig} completed</p>
+          <div class="contact_icons">
+            <span><i class="fa-solid fa-message"></i> message</span>
+            <span><i class="fa-solid fa-phone"></i> call</span>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div class="about_runner">
+        <h3>About</h3>
+        <p>${data.bio}</p>
+      </div>
+      <hr />
+      <div class="review_runner">
+        <h3>Reviews (1)</h3>
+        <div class="reviewer">
+          <img src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg" alt="sample" />
+          <div class="review">
+            <h4>Joe Biden</h4>
+            <div class="stars">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p>
+              This person is a very good person. They are a honest person and highly diligent. 
+            </p>
+          </div>
+        </div>
+      </div>`;
+
+  modal.insertAdjacentHTML("beforeend", html);
+  modal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
 }
 
 function emptyCardDiv() {
@@ -159,13 +226,12 @@ function addURLParam(key, value) {
 function clearFilters() {
   const newUrl = `${window.location.origin}${window.location.pathname}`;
   window.history.replaceState({}, "", newUrl);
- 
 }
 // clearFilters();
 document.querySelector(".filter_clear").addEventListener("click", () => {
   clearFilters();
-   emptyCardDiv();
-   getRunners();
+  emptyCardDiv();
+  getRunners();
 });
 
 async function displayData() {
@@ -173,19 +239,19 @@ async function displayData() {
   let type = urlParams.get("runnerType");
   data = await getData();
   let filterArr;
-  if(gender && type){
+  if (gender && type) {
     filterArr = data.filter((runner) => {
       return runner.gender == gender && runner.level == type;
     });
   }
-  if(gender && !type) {
+  if (gender && !type) {
     filterArr = data.filter((runner) => {
-      return runner.gender == gender
+      return runner.gender == gender;
     });
   }
-  if(type && !gender) {
+  if (type && !gender) {
     filterArr = data.filter((runner) => {
-      return runner.level == type
+      return runner.level == type;
     });
   }
 

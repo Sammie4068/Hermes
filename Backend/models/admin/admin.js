@@ -14,14 +14,15 @@ exports.getAllRunners = async () => {
 
 exports.addActivity = async (data) => {
   return db.query(
-    "INSERT INTO activity VALUES (DEFAULT,$1,0,$2,$3,$4,$5,$6) RETURNING *",
+    "INSERT INTO activity VALUES (DEFAULT,$1,0,$2,$3,$4,$5,$6,$7) RETURNING *",
     [
       data.task,
       data.description,
       data.location,
       data.date,
       data.time,
-      data.status
+      data.status,
+      data.setterid
     ]
   );
 };

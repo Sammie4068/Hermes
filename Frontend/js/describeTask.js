@@ -56,6 +56,7 @@ const locationState = document.getElementById("states");
 const gigOption = document.querySelector(".task-options");
 const gigDate = document.getElementById("date");
 const gigTime = document.getElementById("time");
+const id = localStorage.getItem("id")
 
 nextBtn.addEventListener("click", async (e) => {
   e.preventDefault();
@@ -68,6 +69,7 @@ nextBtn.addEventListener("click", async (e) => {
     date: gigDate.value,
     time: gigTime.value,
     status: "pending",
+    setterid: id
   };
 
   const res = await fetch(`http://localhost:3000/api/v1/tasks/${gig.value}`);
