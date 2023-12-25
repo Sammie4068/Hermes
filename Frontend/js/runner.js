@@ -8,16 +8,25 @@ function active(parentEle, ele) {
   ele.classList.add("active_option");
 }
 
+function removeAllactive(parentEle) {
+  parentEle.forEach((i) => i.classList.remove("active_option"));
+}
+
 //Services
 const services = document.getElementById("services");
 services.addEventListener("click", () => {
   window.location = "main.html#services";
 });
 
-//Account
+//userprofile
 const role = localStorage.getItem("role");
-const account = document.getElementById("account");
-account.addEventListener("click", () => {
+const username = localStorage.getItem("name");
+// const account = document.getElementById("account");
+const userProfile = document.querySelector(".user");
+const user = document.querySelector(".user p");
+  userProfile.style.display = "flex";
+  user.innerText = `${username}`;
+userProfile.addEventListener("click", () => {
   if (role == "setter") {
     window.location = "profile.html#profile";
   } else if (role == "runner") {
@@ -51,7 +60,7 @@ function displayRunners(data) {
                 />
                 <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
-                  <button value='${value}' id="reqBtn">Request</button>
+                  <button id="reqBtn">Request</button>
                 </span>
               </div>
               <article>
@@ -70,6 +79,7 @@ function displayRunners(data) {
                   <h3>About me</h3>
                   <p>${dat.bio}</p>
                 </div>
+                <button value='${value}' class="see_more">See More...</button>
               </article>
             </div>
           </div>
@@ -78,29 +88,25 @@ function displayRunners(data) {
     wrapper.insertAdjacentHTML("beforeend", markup);
   });
   // Request Button
-  const reqBtn = document.querySelectorAll("#reqBtn");
-  reqBtn.forEach((btn) => {
+  const seeMoreBtn = document.querySelectorAll(".see_more");
+  seeMoreBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
-      btn.textContent = "Pending..." 
-      btn.style.background = "#fd7238";
       const runnerData = JSON.parse(e.target.value);
        statusDisplay(runnerData);
     });
   });
 }
 
-
-
 const overlay = document.querySelector(".overlay");
 const modal = document.querySelector(".modal");
 function statusDisplay(data) {
-  let html = `<div class="status">
-        <p>Status: <span>pending</span> </p>
-        <p>Waiting for the runner to confirm....</p>
-      </div>
+  let html = `
       <div class="heading">
+      <div class="status">
         <img src="${data.photo}" alt="sample" />
+        <p><span>Request</span> </p>
+      </div>
         <div class="runner-info">
           <h1>${data.name
             .split(" ")
@@ -143,6 +149,12 @@ function statusDisplay(data) {
   modal.classList.remove("hidden");
   overlay.classList.remove("hidden");
 }
+
+overlay.addEventListener("click", () => {
+  modal.innerHTML = ``;
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+})
 
 function emptyCardDiv() {
   const cardcontainer = document.querySelectorAll(".card_container");
@@ -232,6 +244,8 @@ document.querySelector(".filter_clear").addEventListener("click", () => {
   clearFilters();
   emptyCardDiv();
   getRunners();
+  removeAllactive(genderOptions);
+  removeAllactive(runnerType);
 });
 
 async function displayData() {

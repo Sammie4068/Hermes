@@ -132,7 +132,8 @@ exports.addRunner = async (req, res, next) => {
       message: "success",
       id,
       token,
-      role: "runner"
+      role: "runner",
+      name
     });
   } catch (err) {
     return next(err);

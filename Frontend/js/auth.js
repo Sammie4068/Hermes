@@ -155,6 +155,7 @@ async function postData(url, data) {
       signupMsg.textContent = "Registration Successful";
       localStorage.setItem("token", bodydata.token);
       localStorage.setItem("id", bodydata.id);
+      localStorage.setItem("name", bodydata.name);
       window.location = "main.html";
     }
     if (bodydata.message == "Already Exists") {
@@ -190,6 +191,7 @@ async function loginPost(url, data) {
     if (bodydata.message == "logged") {
       localStorage.setItem("token", bodydata.token);
       localStorage.setItem("id", bodydata.id)
+      localStorage.setItem("name", bodydata.name)
       window.location = "main.html";
     }
   } catch (err) {

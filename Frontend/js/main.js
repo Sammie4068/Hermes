@@ -26,6 +26,14 @@ gsap.from(".nav_menu_list .nav_menu_item", {
   duration: 0.5,
   stagger: 0.3,
 });
+
+gsap.from(".user", {
+  opacity: 0,
+  y: -10,
+  delay: .5,
+  duration: 0.5,
+  stagger: 0.3,
+});
 gsap.from(".runner_btn", {
   opacity: 0,
   y: 20,
@@ -71,14 +79,19 @@ gsap.from(".img_wrapper img", {
 // Authentication
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
+const username = localStorage.getItem("name")
 const account = document.getElementById("account");
 const signin = document.getElementById("signin");
 const runnerBtn = document.querySelector(".runner_btn");
+const userProfile = document.querySelector(".user")
+const user = document.querySelector(".user p")
 
 if (token) {
   signin.classList.add("hidden");
   account.classList.remove("hidden");
   runnerBtn.classList.add("hidden");
+  userProfile.style.display = "flex"
+  user.innerText = `${username}`
 }
 
 runnerBtn.addEventListener("click", () => {
@@ -89,7 +102,7 @@ signin.addEventListener("click", () => {
   window.location = "auth.html";
 });
 
-account.addEventListener("click", () => {
+userProfile.addEventListener("click", () => {
   if (role == "setter") {
     window.location = "profile.html#profile";
   } else if (role == "runner") {

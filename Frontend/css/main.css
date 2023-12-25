@@ -223,6 +223,25 @@ button {
 .show {
   right: 3% !important;
 }
+.user {
+  /* display: none; */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary-color);
+  font-weight: 600;
+  position: relative;
+  left: 100px;
+  cursor: pointer;
+}
+.user p {
+  text-transform: capitalize;
+}
+
+.user img{
+width: 50px;
+height: 50px;
+}
 
 .wrapper {
   width: 100%;
@@ -1091,22 +1110,26 @@ footer .follow .socials i:hover {
 }
 
 .modal .status {
-  /* background-color: #32d2c6; */
-  padding: 10px;
+  /* padding: 10px; */
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   color: #333;
 }
 
 .modal .status p span {
-  text-transform: uppercase;
-  background-color: #fd7238;
+  background-color: var(--primary-color);
   color: #fff;
   padding: 5px 20px;
   border-radius:5px;
   margin: 0px 10px;
-  font-weight: 600;
+  transition: transform 0.5s ease-out;
+  cursor: pointer;
+}
+.modal .status p span:hover {
+  transform: scale(1.07);
+  background-color: var(--btn-hover-color);
 }
 
 .modal .heading {
@@ -1504,6 +1527,20 @@ section .slide-card .image img {
   color: var(--primary-color);
 }
 
+.see_more {
+  font-size: 18px;
+  font-weight: 500;
+  color: #002b1d;
+  transition: all .5s ease-out;
+  position: relative;
+  top: 30px;
+}
+
+.see_more:hover {
+  color: #333;
+  transform: scale(1.07);
+}
+
 /* Contact.html */
 .s1 {
   width: 100%;
@@ -1735,4 +1772,51 @@ button.normal {
   100% {
     transform: rotate(360deg);
   }
+}
+
+/* Tasks.html */
+.box-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 24px;
+  margin-top: 36px;
+  padding: 20px;
+}
+.box-info li {
+  padding: 24px;
+  background: #fff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  grid-gap: 24px;
+}
+.box-info li .bx {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+}
+.box-info li:nth-child(1) .bx {
+  background: var(--lite);
+  color: var(--primary);
+}
+.box-info li:nth-child(2) .bx {
+  background: var(--light-yellow);
+  color: var(--yellow);
+}
+.box-info li:nth-child(3) .bx {
+  background: var(--light-orange);
+  color: var(--orange);
+}
+.box-info li .text h3 {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--dark);
+}
+.box-info li .text p {
+  color: var(--dark);
 }
