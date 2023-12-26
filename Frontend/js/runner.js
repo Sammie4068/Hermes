@@ -24,9 +24,17 @@ const username = localStorage.getItem("name");
 // const account = document.getElementById("account");
 const userProfile = document.querySelector(".user");
 const user = document.querySelector(".user p");
+const userImg = document.querySelector(".user img")
   userProfile.style.display = "flex";
   user.innerText = `${username}`;
-userProfile.addEventListener("click", () => {
+user.addEventListener("click", () => {
+  if (role == "setter") {
+    window.location = "profile.html#profile";
+  } else if (role == "runner") {
+    window.location = "account.html#dashboard";
+  }
+});
+userImg.addEventListener("click", () => {
   if (role == "setter") {
     window.location = "profile.html#profile";
   } else if (role == "runner") {

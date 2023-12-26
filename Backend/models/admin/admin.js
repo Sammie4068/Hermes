@@ -22,7 +22,21 @@ exports.addActivity = async (data) => {
       data.date,
       data.time,
       data.status,
-      data.setterid
+      data.setterid,
     ]
+  );
+};
+
+exports.updateRunnerID = async (runnerID, id) => {
+  return db.query("UPDATE activity SET runnerid = $1 WHERE id=$2", [
+    runnerID,
+    id,
+  ]);
+};
+
+exports.getUserActivity = async (id) => {
+  return db.query(
+    "SELECT activity.*, users.photo, users.name, users.email, users.gig, users.bio, users.tip FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.setterid = $1",
+    [id]
   );
 };
