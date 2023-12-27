@@ -1344,6 +1344,7 @@ footer .follow .socials i:hover {
   cursor: pointer;
 }
 .gender_options span:hover,
+.gender_options select:hover,
 .runner_types span:hover,
 .price_options span:hover {
   background-color: #a8eee3;
@@ -1420,7 +1421,7 @@ footer .follow .socials i:hover {
 }
 
 .render_error {
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
@@ -1817,6 +1818,7 @@ button.normal {
   background-color: #fff;
   cursor: pointer;
   font-size: 18px;
+  text-transform: capitalize;
 }
 
 .table_wrapper {

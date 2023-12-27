@@ -46,14 +46,13 @@ const table = document.getElementById("table_container");
 const id = localStorage.getItem("id");
 function displayTask(data) {
   const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
-  console.log(sortedData);
   sortedData.map((dat) => {
     const originalDate = new Date(dat.date);
     const options = { year: "numeric", month: "short", day: "numeric" };
     const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
       originalDate
     );
-    let markup = `<tr>
+    let markup = `<tr id="table_element">
                 <td>
                   <img
                     src="${dat.photo}"
@@ -84,3 +83,41 @@ async function getTasks() {
   displayTask(data);
 }
 window.addEventListener("load", getTasks);
+
+// filter Table
+
+// empty table
+function emptyCardDiv() {
+  const tableEle = document.querySelectorAll("#table_element");
+  tableEle.forEach((card) => (card.style.display = "none"));
+}
+
+// all Tasks
+const filterTask = document.querySelector(".task_filter_options");
+async function allTasks(parentEle) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const data = await res.json();
+    data.forEach((dt) => {
+      const html = `<option>${dt.title}</option>`;
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+allTasks(filterTask);
+
+filterTask.addEventListener("change", () => {
+  const selectedValue = filterTask.value;
+  if (selectedValue == "All Tasks") getTasks();
+  filterByTasks(selectedValue);
+});
+
+// filter by tasks
+async function filterByTasks(task) {
+  emptyCardDiv();
+  const data = await getTableData();
+  const filteredArr = data.filter(dat => dat.task == task)
+  displayTask(filteredArr);
+}
