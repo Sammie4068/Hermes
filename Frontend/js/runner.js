@@ -57,6 +57,7 @@ const gigLocation = localStorage.getItem("state");
 function displayRunners(data) {
   data.map((dat) => {
     let value = JSON.stringify(dat);
+    let reqBtnValue = JSON.stringify(dat.id)
     let markup = `<div class="card_container" data-aos="fade-left"
         data-aos-duration="1000">
           <div class="slide-card">
@@ -68,16 +69,14 @@ function displayRunners(data) {
                 />
                 <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
-                  <button id="reqBtn">Request</button>
+                  <button id="reqBtn" value='${reqBtnValue}'>Request</button>
                 </span>
               </div>
               <article>
                 <div class="info_top">
                   <div class="name-profession">
                     <span class="name">${dat.name}</span>
-                    <span class="profession">${dat.completed} ${
-      dat.gig
-    } completed</span>
+                    <span class="profession">${dat.completed} ${dat.gig} completed</span>
                   </div>
                 </div>
                 <div class="about">
@@ -92,7 +91,7 @@ function displayRunners(data) {
 
     wrapper.insertAdjacentHTML("beforeend", markup);
   });
-  // Request Button
+  // see more Button
   const seeMoreBtn = document.querySelectorAll(".see_more");
   seeMoreBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
@@ -101,22 +100,56 @@ function displayRunners(data) {
        statusDisplay(runnerData);
     });
   });
+
+  // Request button
+  const reqBtn = document.querySelectorAll("#reqBtn")
+  reqBtn.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const id = localStorage.getItem("taskID")
+      const requestData = {
+        runnerID: JSON.parse(e.target.value),
+      };
+      requestRunner(requestData, id)
+    })
+  })
+}
+
+// Request function
+async function requestRunner(requestData, id) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/runner/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      }
+    );
+    const data = await res.json();
+
+    if(data.message == "success"){
+      window.location = "tasks.html"
+    }
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 const overlay = document.querySelector(".overlay");
 const modal = document.querySelector(".modal");
 function statusDisplay(data) {
+  let reqBtnValue = JSON.stringify(data.id);
+
   let html = `
       <div class="heading">
-      <div class="status">
+      <div class="image_side">
         <img src="${data.photo}" alt="sample" />
-        <p><span>Request</span> </p>
+        <button class="btn" id="reqBtn" value='${reqBtnValue}'> Request </button>
       </div>
         <div class="runner-info">
-          <h1>${data.name
-            .split(" ")
-            .map((a) => a.replace(a[0], a[0].toUpperCase()))
-            .join(" ")}</h1>
+          <h1>${data.name}</h1>
           <p>${data.completed} ${data.gig} completed</p>
           <div class="contact_icons">
             <span><i class="fa-solid fa-message"></i> message</span>
@@ -153,6 +186,18 @@ function statusDisplay(data) {
   modal.insertAdjacentHTML("beforeend", html);
   modal.classList.remove("hidden");
   overlay.classList.remove("hidden");
+
+  // Request button
+    const reqBtn = document.querySelectorAll("#reqBtn");
+    reqBtn.forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const id = localStorage.getItem("taskID");
+        const requestData = {
+          runnerID: JSON.parse(e.target.value),
+        };
+        requestRunner(requestData, id);
+      });
+    });
 }
 
 overlay.addEventListener("click", () => {

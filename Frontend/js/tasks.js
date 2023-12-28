@@ -160,6 +160,11 @@ const modal = document.querySelector(".modal");
 function statusDisplay(data, taskImgData) {
   modal.innerHTML = ``;
 
+    const originalDate = new Date(data.date);
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
+      originalDate
+    );
   let html = `<div class="card_body">
         <div class="task__info">
           <span>
@@ -172,7 +177,7 @@ function statusDisplay(data, taskImgData) {
           <span>
             <strong>Location:</strong>${data.location}</span>
           <span>
-            <p> <strong>Date:</strong> ${data.date}</p>
+            <p> <strong>Date:</strong> ${formattedDate}</p>
             <p> <strong>Time:</strong> ${data.time}</p>
           </span>
         </div>

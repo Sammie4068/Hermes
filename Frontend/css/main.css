@@ -1203,6 +1203,20 @@ footer .follow .socials i:hover {
   margin-bottom: 10px;
 }
 
+.modal .heading .image_side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal .heading .image_side button {
+  height: 30px;
+  width: 100%;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .modal .heading img {
   height: 100px;
   width: 100px;
@@ -1463,7 +1477,7 @@ footer .follow .socials i:hover {
 }
 
 .render_error {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   gap: 15px;
@@ -1567,6 +1581,7 @@ section .slide-card .image img {
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
+  text-transform: capitalize;
 }
 
 .name-profession .name {
