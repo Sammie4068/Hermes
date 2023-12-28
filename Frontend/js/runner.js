@@ -74,10 +74,7 @@ function displayRunners(data) {
               <article>
                 <div class="info_top">
                   <div class="name-profession">
-                    <span class="name">${dat.name
-                      .split(" ")
-                      .map((a) => a.replace(a[0], a[0].toUpperCase()))
-                      .join(" ")}</span>
+                    <span class="name">${dat.name}</span>
                     <span class="profession">${dat.completed} ${
       dat.gig
     } completed</span>

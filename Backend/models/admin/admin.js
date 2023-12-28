@@ -40,3 +40,10 @@ exports.getUserActivity = async (id) => {
     [id]
   );
 };
+
+exports.getActivityByID = async (id) => {
+  return db.query(
+    "SELECT activity.*, users.photo, users.name, users.email, users.school, users.gig, users.bio, users.tip FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.id = $1",
+    [id]
+  );
+};

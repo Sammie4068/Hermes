@@ -5,6 +5,7 @@ const {
   addActivity,
   updateRunnerID,
   getUserActivity,
+  getActivityByID,
 } = require("./admin/admin");
 
 const {
@@ -40,4 +41,5 @@ module.exports = {
   addActivity,
   updateRunnerID,
   getUserActivity,
+  getActivityByID,
 };

@@ -1060,6 +1060,7 @@ footer .follow .socials i:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  /* height: inherit; */
   width: 50%;
   background-color: #f3f7f9;
   border-radius: 9px;
@@ -1068,9 +1069,10 @@ footer .follow .socials i:hover {
   z-index: 1000;
   transition: all 1s ease-out;
   font-family: "Poppins", sans-serif;
+  overflow: scroll;
 }
 
-.modal h2 {
+.modal .billing h2 {
   display: flex;
   justify-content: center;
   color: #002b1d;
@@ -1093,6 +1095,27 @@ footer .follow .socials i:hover {
 }
 
 .modal .card_body .task_side span img {
+  width: 50px;
+  height: 50px;
+  color: var(--primary-color);
+}
+
+.modal .task__info{
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.modal .task__info h1 {
+  text-transform: capitalize;
+}
+
+.modal .task__info span {
+ display: flex;
+  margin: 10px 0px;
+  gap: 10px;
+}
+
+.modal .task__info span img {
   width: 50px;
   height: 50px;
   color: var(--primary-color);
@@ -1130,34 +1153,45 @@ footer .follow .socials i:hover {
 .button__wrapper .cancel_btn {
   background-color: #800000;
 }
-.button__wrapper .edit_btn {
-  background-color: #f99f00;
-}
 .button__wrapper .proceed_btn {
   background-color: #002b1d;
 }
 
 .modal .status {
-  /* padding: 10px; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   color: #333;
+  position: relative;
+  left: 10rem;
+}
+
+.modal .status p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
 }
 
 .modal .status p span {
-  background-color: var(--primary-color);
   color: #fff;
   padding: 5px 20px;
   border-radius:5px;
   margin: 0px 10px;
   transition: transform 0.5s ease-out;
   cursor: pointer;
+  font-weight: 600;
 }
+
+.modal .status p span.completed {
+	background: var(--primary-color);
+}
+.modal .status p span.process {
+	background: #FFCE26;
+}
+.modal .status p span.pending {
+	background: #FD7238;
+}
+
 .modal .status p span:hover {
   transform: scale(1.07);
-  background-color: var(--btn-hover-color);
 }
 
 .modal .heading {
@@ -1176,6 +1210,10 @@ footer .follow .socials i:hover {
   border-radius: 50%;
 }
 
+.modal h2{
+  color: #333;
+}
+
 .modal .heading .runner-info {
   display: flex;
   flex-direction: column;
@@ -1186,6 +1224,7 @@ footer .follow .socials i:hover {
 .modal .heading .runner-info h1 {
   font-size: 30px;
   margin-bottom: 10px;
+  text-transform: capitalize;
 }
 .modal .heading .runner-info p {
   display: flex;
@@ -1194,6 +1233,9 @@ footer .follow .socials i:hover {
   color: #333;
   position: relative;
   top: -10px;
+  font-weight: 600;
+  text-transform: capitalize;
+
 }
 
 .modal .heading .runner-info .contact_icons {
@@ -1824,7 +1866,7 @@ button.normal {
 .table_wrapper {
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  /* align-items: center; */
 }
 .table-data {
 	display: flex;
@@ -1936,6 +1978,7 @@ button.normal {
 	color: #f9f9f9;
 	border-radius: 20px;
 	font-weight: 700;
+  text-transform: capitalize;
 }
 .table-data .order table tr td .status.completed {
 	background: var(--primary-color);

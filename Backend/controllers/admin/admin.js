@@ -6,7 +6,7 @@ const {
   addActivity,
   updateRunnerID,
   getUserActivity,
-  gerUsersById,
+  getActivityByID,
 } = require("../../models/index");
 
 exports.getTasks = async (req, res, next) => {
@@ -71,9 +71,17 @@ exports.updateRunnerID = async (req, res, next) => {
 exports.getUserActivity = async (req, res, next) => {
   try {
     const results = await getUserActivity(req.params.id);
-    // const {}
     return res.json(results.rows)
   } catch (err) {
     return next(err);
   }
 };
+
+exports.getActivityByID = async (req, res, next) => {
+  try {
+    const results = await getActivityByID(req.params.id);
+    return res.json(results.rows);
+  } catch (err) {
+    return next(err)
+  }
+}
