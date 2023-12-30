@@ -31,13 +31,13 @@
             <span class="text">Tasks</span>
           </a>
         </li>
-       <li id="profileLink">
+        <li id="profileLink">
           <a href="#profile">
             <i class="bx bxs-user"></i>
             <span class="text">My Profile</span>
           </a>
         </li>
-         <!-- <li id="messagesLink">
+        <!-- <li id="messagesLink">
           <a href="#messages">
             <i class="bx bxs-message-dots"></i>
             <span class="text">Messages</span>
@@ -192,7 +192,7 @@
         </div>
       </div>
 
-      <div class="content_display" id="profile_display"> 
+      <div class="content_display" id="profile_display">
         <div class="head-title">
           <div class="left">
             <h1>My Profile</h1>
@@ -214,24 +214,24 @@
               <div class="profile-info">
                 <span>
                   <label>Name </label>
-                  <input class="name" type="text" readonly />
+                  <input type="text" id="name" class="name profileInputs" disabled/>
+                  <label class="underline"></label>
                 </span>
                 <span>
-                  <label>Email </label>
-                  <input class="email" type="text" readonly />
+                  <label>Email</label>
+                  <input type="email" id="email" class="email profileInputs" disabled/>
+                  <label class="underline"></label>
                 </span>
                 <span>
                   <label>Task</label>
-                  <input type="text" class="task-input" readonly required />
-                  <ul class="task-dropdown" id="task-dropdown"></ul>
-                </span>
-                <span>
-                  <label>Tip</label>
-                  <input class="tip" type="number" readonly />
+                  <select class="task-input profileInputs" id="task-input" disabled>
+                  </select>
+                  <label class="underline"></label>
                 </span>
                 <span>
                   <label>Bio</label>
-                  <textarea id="bio" readonly></textarea>
+                  <textarea id="bio" class="profileInputs" disabled></textarea>
+                  <label class="underline"></label>
                 </span>
                 <div class="btn-wrapper">
                   <a href="#" class="change-password">Change Password </a>

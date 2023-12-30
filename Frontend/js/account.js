@@ -6,16 +6,24 @@ const walletAmt = document.getElementById("wallet__amount");
 const taskCompleted = document.getElementById("task__completed");
 const taskPending = document.getElementById("task__pending");
 
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const taskInput = document.getElementById("task-input");
+const bioInput = document.getElementById("bio");
+const profileImage = document.getElementById("profile_image");
+const underline = document.querySelectorAll(".underline")
+const editBtn = document.getElementById("edit__btn");
+const saveBtn = document.getElementById("saveBtn");
+
+
 const username = localStorage.getItem("name");
 const photo = localStorage.getItem("photo");
 const wallet = localStorage.getItem("wallet");
+const email = localStorage.getItem("email");
+const task = localStorage.getItem("task");
+const bio = localStorage.getItem("bio");
+const inputs = document.querySelectorAll(".profileInputs");
 
-// const email = localStorage.getItem("email");
-// const task = localStorage.getItem("task");
-// const bio = localStorage.getItem("bio");
-// const editBtn = document.getElementById("edit__btn");
-// const saveBtn = document.getElementById("saveBtn");
-// const inputs = document.querySelectorAll("input");
 // const nameInput = document.querySelector(".name");
 // const emailInput = document.querySelector(".email");
 // const bioInput = document.querySelector("#bio");
@@ -48,14 +56,29 @@ async function init() {
   dashboardTableDisplay(runnerActivityData);
   displayTask(runnerActivityData);
 
-  // profileImage.attributes.src.value = photo;
-  // nameInput.value = username;
-  // emailInput.value = email;
-  // taskInput.value = task.replace(task[0], task[0].toUpperCase());
-
-  // bioInput.value = bio;
+  // Profile
+  profileImage.attributes.src.value = photo;
+  nameInput.value = username;
+  emailInput.value = email;
+  taskInput.innerHTML = `<option>${task}</option>`;
+  bioInput.value = bio;
+  allTasks(taskInput);
 }
 init();
+
+// All Tasks
+async function allTasks(parentEle) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const data = await res.json();
+    data.forEach((dt) => {
+      const html = `<option>${dt.title}</option>`;
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 async function runnerActivity() {
   try {
@@ -354,100 +377,100 @@ overlay.addEventListener("click", () => {
 });
 
 // //Switch to password
-// const profileCard = document.querySelector(".profile_card");
-// const passwordCard = document.querySelector(".password_card");
-// const changePasswordBtn = document.querySelector(".change-password");
-// const backArrow = document.getElementById("back_arrow");
+const profileCard = document.querySelector(".profile_card");
+const passwordCard = document.querySelector(".password_card");
+const changePasswordBtn = document.querySelector(".change-password");
+const backArrow = document.getElementById("back_arrow");
 
-// changePasswordBtn.addEventListener("click", () => {
-//   profileCard.style.display = "none";
-//   passwordCard.style.display = "block";
-// });
+changePasswordBtn.addEventListener("click", () => {
+  profileCard.style.display = "none";
+  passwordCard.style.display = "block";
+});
 
-// backArrow.addEventListener("click", () => {
-//   profileCard.style.display = "flex";
-//   passwordCard.style.display = "none";
-// });
+backArrow.addEventListener("click", () => {
+  profileCard.style.display = "flex";
+  passwordCard.style.display = "none";
+});
 
-// // Change Password
-// const oldPassword = document.getElementById("old_password");
-// const newPassword = document.getElementById("new_password");
-// const cNewPassword = document.getElementById("confirm_new_password");
-// const changePasswordMsg = document.getElementById("change_password_msg");
-// const passwordSaveBtn = document.getElementById("password_saveBtn");
+// Change Password
+const oldPassword = document.getElementById("old_password");
+const newPassword = document.getElementById("new_password");
+const cNewPassword = document.getElementById("confirm_new_password");
+const changePasswordMsg = document.getElementById("change_password_msg");
+const passwordSaveBtn = document.getElementById("password_saveBtn");
 
-// function oldpasswordValidation() {
-//   if (oldPassword.value === "") {
-//     changePasswordMsg.innerText = "Please fill all inputs";
-//   } else {
-//     changePasswordMsg.innerText = "";
-//     return true;
-//   }
-// }
+function oldpasswordValidation() {
+  if (oldPassword.value === "") {
+    changePasswordMsg.innerText = "Please fill all inputs";
+  } else {
+    changePasswordMsg.innerText = "";
+    return true;
+  }
+}
 
-// function newpasswordValidation() {
-//   if (newPassword.value === "") {
-//     changePasswordMsg.innerText = "Please fill all inputs";
-//   } else {
-//     changePasswordMsg.innerText = "";
-//     return true;
-//   }
-// }
+function newpasswordValidation() {
+  if (newPassword.value === "") {
+    changePasswordMsg.innerText = "Please fill all inputs";
+  } else {
+    changePasswordMsg.innerText = "";
+    return true;
+  }
+}
 
-// function confirmPasswordValidation() {
-//   if (cNewPassword.value !== newPassword.value) {
-//     changePasswordMsg.innerText = "Password don't match";
-//     document;
-//   } else {
-//     changePasswordMsg.innerText = "";
-//     return true;
-//   }
-// }
+function confirmPasswordValidation() {
+  if (cNewPassword.value !== newPassword.value) {
+    changePasswordMsg.innerText = "Password don't match";
+    document;
+  } else {
+    changePasswordMsg.innerText = "";
+    return true;
+  }
+}
 
-// passwordSaveBtn.addEventListener("click", (e) => {
-//   e.preventDefault();
-//   if (
-//     oldpasswordValidation() &&
-//     newpasswordValidation() &&
-//     confirmPasswordValidation()
-//   ) {
-//     changePassword();
-//   }
-// });
+passwordSaveBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (
+    oldpasswordValidation() &&
+    newpasswordValidation() &&
+    confirmPasswordValidation()
+  ) {
+    changePassword();
+  }
+});
 
-// async function changePassword() {
-//   try {
-//     const newData = {
-//       oldPassword: oldPassword.value,
-//       newPassword: newPassword.value,
-//     };
+async function changePassword() {
+  try {
+    const newData = {
+      oldPassword: oldPassword.value,
+      newPassword: newPassword.value,
+    };
 
-//     const res = await fetch(
-//       `http://localhost:3000/api/v1/users/password/${id}`,
-//       {
-//         method: "PATCH",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(newData),
-//       }
-//     );
-//     const data = await res.json();
+    const res = await fetch(
+      `http://localhost:3000/api/v1/users/password/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newData),
+      }
+    );
+    const data = await res.json();
 
-//     if (data.message == "success") {
-//       changePasswordMsg.innerText = "Password change";
-//       changePasswordMsg.style.color = "#002b1d";
-//       oldPassword.value = "";
-//       newPassword.value = "";
-//       cNewPassword.value = "";
-//     }
-//     if (data.message == "invalid") {
-//       changePasswordMsg.innerText = "Invalid Password";
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+    if (data.message == "success") {
+      changePasswordMsg.innerText = "Password change";
+      changePasswordMsg.style.color = "#002b1d";
+      oldPassword.value = "";
+      newPassword.value = "";
+      cNewPassword.value = "";
+    }
+    if (data.message == "invalid") {
+      changePasswordMsg.innerText = "Invalid Password";
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 // Logout
 const logoutLink = document.getElementById("logout");
@@ -457,99 +480,55 @@ function logout() {
   window.location = "main.html";
 }
 
-// // Get all taskers
-// async function allTasks(parentEle) {
-//   try {
-//     const res = await fetch(`http://localhost:3000/api/v1/tasks`);
-//     const data = await res.json();
-//     parentEle.innerHTML = ``;
-//     data.forEach((dt) => {
-//       const html = `<li>${dt.title}</li>`;
-//       parentEle.insertAdjacentHTML("afterbegin", html);
-//     });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+// Profile
+function edit() {
+  inputs.forEach((input) => {
+    input.disabled = false;
+  });
+  underline.forEach(line => {
+    line.style.width = "100%"
+  })
+  editBtn.classList.add("hidden");
+  saveBtn.classList.remove("hidden");
+}
+editBtn.addEventListener("click", edit);
 
-// taskInput.addEventListener("click", function () {
-//   if (taskList.style.display == "none") {
-//     taskList.style.display = "block";
-//   } else {
-//     taskList.style.display = "none";
-//   }
-// });
+async function save() {
+  try {
+    const newData = {
+      name: nameInput.value.trim(),
+      email: emailInput.value.trim(),
+      task: taskInput.value.trim().toLowerCase(),
+      bio: bioInput.value.trim(),
+    };
+    console.log(newData)
 
-// document.addEventListener("click", function (event) {
-//   if (event.target !== taskInput && event.target !== taskList) {
-//     taskList.style.display = "none";
-//   }
-// });
+    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newData),
+    });
+    const data = await res.json();
 
-// taskList.addEventListener("click", function (event) {
-//   if (event.target.tagName === "LI") {
-//     taskInput.value = event.target.textContent;
-//     taskList.style.display = "none";
-//   }
-// });
+    if (data.message == "success") {
+      localStorage.setItem("name", data.name);
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("task", data.task);
+      localStorage.setItem("bio", data.bio);
 
-// function edit() {
-//   inputs.forEach((input) => {
-//     input.removeAttribute("readonly");
-//     input.style.border = "2px solid #002b1d";
-//   });
-//   bioInput.removeAttribute("readonly");
-//   bioInput.style.border = "2px solid #002b1d";
-//   profileImage.style.border = "2px solid #002b1d";
-//   editDp.disabled = false;
-//   editBtn.classList.add("hidden");
-//   saveBtn.classList.remove("hidden");
-// }
-// editBtn.addEventListener("click", () => {
-//   edit();
-//   allTasks(taskList);
-// });
-
-// async function save() {
-//   try {
-//     const newData = {
-//       name: nameInput.value.trim().toLowerCase(),
-//       email: emailInput.value.trim(),
-//       task: taskInput.value.trim().toLowerCase(),
-//       bio: bioInput.value.trim(),
-//       tip: tipInput.value,
-//     };
-
-//     const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
-//       method: "PATCH",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify(newData),
-//     });
-//     const data = await res.json();
-//     console.log(data);
-
-//     if (data.message == "success") {
-//       localStorage.setItem("name", data.name);
-//       localStorage.setItem("email", data.email);
-//       localStorage.setItem("task", data.task);
-//       localStorage.setItem("bio", data.bio);
-//       localStorage.setItem("tip", data.tip);
-
-//       editBtn.classList.remove("hidden");
-//       saveBtn.classList.add("hidden");
-//       inputs.forEach((input) => {
-//         input.setAttribute("readonly", "readonly");
-//         input.style.border = "2px solid #68ddcb";
-//       });
-//       profileImage.style.border = "2px solid #68ddcb";
-//       editDp.disabled = true;
-//       bioInput.setAttribute("readonly", "readonly");
-//       bioInput.style.border = "2px solid #68ddcb";
-//     }
-//   } catch (err) {
-//     console.error(`Error: ${err}`);
-//   }
-// }
-// saveBtn.addEventListener("click", save);
+      editBtn.classList.remove("hidden");
+      saveBtn.classList.add("hidden");
+        inputs.forEach((input) => {
+          input.disabled = true;
+        });
+        underline.forEach((line) => {
+          line.style.width = "0%";
+        });
+    }
+  } catch (err) {
+    console.error(`Error: ${err}`);
+  }
+}
+saveBtn.addEventListener("click", save);

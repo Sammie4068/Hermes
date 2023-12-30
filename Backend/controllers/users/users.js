@@ -30,28 +30,16 @@ exports.gerUsersById = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    // const urls = [];
-    // const files = req.files;
-
-    // for (const file of files) {
-    //   const { path } = file;
-    //   const newPath = await uploadImage(path);
-    //   const { secure_url } = newPath;
-    //   urls.push(secure_url);
-    // }
-
-    const { name, email, task, bio, tip } = req.body;
+    const { name, email, task, bio } = req.body;
     const data = {
       name,
       email,
       task,
       bio,
-      tip,
-    //   photo: urls[0],
       id: req.params.id,
     };
     const results = await updateUser(data);
-    res.json({ message: "success", name, email, task, bio, tip});
+    res.json({ message: "success", name, email, task, bio});
   } catch (err) {
     return next(err);
   }
