@@ -449,12 +449,16 @@ body {
 #content .content_display .table-data .order table tr td .status.completed, .task_table .order table tr td .status.status.completed {
   background: var(--primary);
 }
-#content .content_display .table-data .order table tr td .status.process, .task_table .order table tr td .status.process {
+#content .content_display .table-data .order table tr td .status.processing, .task_table .order table tr td .status.processing {
   background: var(--yellow);
 }
 #content .content_display .table-data .order table tr td .status.pending, .task_table .order table tr td .status.pending {
   background: var(--orange);
 }
+
+#content .content_display .table-data .order table tr td .status.cancelled, .task_table .order table tr td .status.cancelled {
+  background-color: #800000;
+} 
 
 /* .content_display */
 
@@ -557,11 +561,15 @@ body {
 .modal .status p span.completed {
 	background: var(--primary-color);
 }
-.modal .status p span.process {
+.modal .status p span.processing {
 	background: #FFCE26;
 }
 .modal .status p span.pending {
 	background: #FD7238;
+}
+
+.modal .status p span.cancelled {
+  background-color: #800000;
 }
 
 .modal .status p span:hover {
@@ -687,9 +695,8 @@ body {
   background-color: var(--light);
   border-radius: 10px;
   padding: 30px;
-  width: 70%;
+  width: 500px;
   margin: 0px auto;
-  margin-top: 36px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.06);
 }
 

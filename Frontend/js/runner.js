@@ -24,9 +24,9 @@ const username = localStorage.getItem("name");
 // const account = document.getElementById("account");
 const userProfile = document.querySelector(".user");
 const user = document.querySelector(".user p");
-const userImg = document.querySelector(".user img")
-  userProfile.style.display = "flex";
-  user.innerText = `${username}`;
+const userImg = document.querySelector(".user img");
+userProfile.style.display = "flex";
+user.innerText = `${username}`;
 user.addEventListener("click", () => {
   if (role == "setter") {
     window.location = "profile.html#profile";
@@ -57,7 +57,7 @@ const gigLocation = localStorage.getItem("state");
 function displayRunners(data) {
   data.map((dat) => {
     let value = JSON.stringify(dat);
-    let reqBtnValue = JSON.stringify(dat.id)
+    let reqBtnValue = JSON.stringify(dat.id);
     let markup = `<div class="card_container" data-aos="fade-left"
         data-aos-duration="1000">
           <div class="slide-card">
@@ -97,21 +97,21 @@ function displayRunners(data) {
     btn.addEventListener("click", (e) => {
       e.preventDefault();
       const runnerData = JSON.parse(e.target.value);
-       statusDisplay(runnerData);
+      statusDisplay(runnerData);
     });
   });
 
   // Request button
-  const reqBtn = document.querySelectorAll("#reqBtn")
-  reqBtn.forEach(btn => {
+  const reqBtn = document.querySelectorAll("#reqBtn");
+  reqBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      const id = localStorage.getItem("taskID")
+      const id = localStorage.getItem("taskID");
       const requestData = {
         runnerID: JSON.parse(e.target.value),
       };
-      requestRunner(requestData, id)
-    })
-  })
+      requestRunner(requestData, id);
+    });
+  });
 }
 
 // Request function
@@ -129,11 +129,11 @@ async function requestRunner(requestData, id) {
     );
     const data = await res.json();
 
-    if(data.message == "success"){
-      window.location = "tasks.html"
+    if (data.message == "success") {
+      window.location = "tasks.html";
     }
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
@@ -188,23 +188,23 @@ function statusDisplay(data) {
   overlay.classList.remove("hidden");
 
   // Request button
-    const reqBtn = document.querySelectorAll("#reqBtn");
-    reqBtn.forEach((btn) => {
-      btn.addEventListener("click", (e) => {
-        const id = localStorage.getItem("taskID");
-        const requestData = {
-          runnerID: JSON.parse(e.target.value),
-        };
-        requestRunner(requestData, id);
-      });
+  const reqBtn = document.querySelectorAll("#reqBtn");
+  reqBtn.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const id = localStorage.getItem("taskID");
+      const requestData = {
+        runnerID: JSON.parse(e.target.value),
+      };
+      requestRunner(requestData, id);
     });
+  });
 }
 
 overlay.addEventListener("click", () => {
   modal.innerHTML = ``;
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
-})
+});
 
 function emptyCardDiv() {
   const cardcontainer = document.querySelectorAll(".card_container");

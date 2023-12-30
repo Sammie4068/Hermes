@@ -9,6 +9,7 @@ const {
   getActivityByID,
   getRunnerActivity,
   getActivityBySetterID,
+  updateStatus,
 } = require("../../models/index");
 
 exports.getTasks = async (req, res, next) => {
@@ -64,7 +65,18 @@ exports.updateRunnerID = async (req, res, next) => {
     const { runnerID } = req.body;
     const id = req.params.id;
     const result = await updateRunnerID(runnerID, id);
-    return res.json({ message: "success", data: result.rows });
+    return res.json({ message: "success"});
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.updateStatus = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+    const id = req.params.id;
+    const result = await updateStatus(status, id);
+    return res.json({ message: "success"});
   } catch (err) {
     return next(err);
   }
@@ -73,7 +85,7 @@ exports.updateRunnerID = async (req, res, next) => {
 exports.getUserActivity = async (req, res, next) => {
   try {
     const results = await getUserActivity(req.params.id);
-    return res.json(results.rows)
+    return res.json(results.rows);
   } catch (err) {
     return next(err);
   }
@@ -88,16 +100,14 @@ exports.getRunnerActivity = async (req, res, next) => {
   }
 };
 
-
-
 exports.getActivityByID = async (req, res, next) => {
   try {
     const results = await getActivityByID(req.params.id);
     return res.json(results.rows);
   } catch (err) {
-    return next(err)
+    return next(err);
   }
-}
+};
 
 exports.getActivityBySetterID = async (req, res, next) => {
   try {
@@ -107,4 +117,3 @@ exports.getActivityBySetterID = async (req, res, next) => {
     return next(err);
   }
 };
-

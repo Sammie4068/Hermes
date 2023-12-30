@@ -87,7 +87,7 @@ function reformatTime(time) {
     minute: "2-digit",
   });
 
-  return formattedTime
+  return formattedTime;
 }
 
 // Activity Data
@@ -95,31 +95,10 @@ const dashboardTable = document.getElementById("dashboard_table");
 const taskTable = document.getElementById("task_table");
 
 function dashboardTableDisplay(data) {
-    const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
-    sortedData.map((dat) => {
-      let value = JSON.stringify(dat);
-
-      let markup = `<tr id="table_element">
-                <td>
-                <img src="${
-                  dat.photo ||
-                  "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
-                }" />
-                   <p>${dat.name}</p>
-                      </td>
-                <td>${reformatDate(dat.date)}</td>
-                <td><button class="status ${dat.status}" value='${value}'>${
-        dat.status
-      }</button>
-              </tr>`;
-      dashboardTable.insertAdjacentHTML("beforeend", markup);
-    });
-}
-
-function displayTask(data) {
-  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedData = data
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 3);
   sortedData.map((dat) => {
-
     let value = JSON.stringify(dat);
 
     let markup = `<tr id="table_element">
@@ -133,43 +112,114 @@ function displayTask(data) {
                 <td>${reformatDate(dat.date)}</td>
                 <td><button class="status ${dat.status}" value='${value}'>${
       dat.status
-    }</button></td>
+    }</button>
+              </tr>`;
+    dashboardTable.insertAdjacentHTML("beforeend", markup);
+  });
+}
+
+function displayTask(data) {
+  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  sortedData.map((dat) => {
+    let value = JSON.stringify(dat);
+
+    let markup = `<tr id="table_tab">
+                <td id="table_element">
+                <img src="${
+                  dat.photo ||
+                  "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                }" />
+                   <p>${dat.name}</p>
+                      </td>
+                <td id="table_element">${reformatDate(dat.date)}</td>
+                <td id="table_element"> <button class="status ${
+                  dat.status
+                }" value='${value}'>${dat.status}</button></td>
     <td class="dropdown-cell">
                 <i class='bx bx-dots-vertical-rounded' ></i>
                 <div class="dropdown-content">
-                  <a href="#">confirm task</a>
-                  <a href="#">reject task</a>
-                  <a href="#">delete</a>
+                ${
+                  dat.status == "pending"
+                    ? `<a id="confirm_task" href="#">confirm task</a>
+                  <a id="reject_task" href="#">reject task</a>`
+                    : dat.status == "processing"
+                    ? `<a id="reject_task" href="#">cancel task</a>`
+                    : `<a id="confirm_task" href="#">confirm task</a>`
+                }
                 </div>
               </td>
               </tr>`;
     taskTable.insertAdjacentHTML("beforeend", markup);
   });
 
-  const tableEle = document.querySelectorAll("#table_element");
-  tableEle.forEach((tab) => {
-    tab.addEventListener("click", () => {
-      let taskData;
-
-      const statusBtn = tab.querySelectorAll(".status");
-      statusBtn.forEach((btn) => {
-        taskData = JSON.parse(btn.value);
+  const tableTab = document.querySelectorAll("#table_tab");
+  tableTab.forEach((tab) => {
+    const statusBtn = tab.querySelectorAll(".status");
+    let taskData;
+    const statusData = { status: "pending" };
+    const confirmOpt = tab.querySelectorAll("#confirm_task");
+    confirmOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          statusData.status = "processing";
+          updateStatus(taskData.id, statusData);
+          location.reload();
+        });
       });
-      taskTableInfo(taskData.id, taskData.task);
+    });
+
+    const rejectOpt = tab.querySelectorAll("#reject_task");
+    rejectOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          statusData.status = "cancelled";
+          updateStatus(taskData.id, statusData);
+          location.reload();
+        });
+      });
+    });
+
+    const tableEle = tab.querySelectorAll("#table_element");
+    tableEle.forEach((ele) => {
+      ele.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+        });
+        taskTableInfo(taskData.id, taskData.task);
+      });
     });
   });
 }
 
-
+// Update status
+async function updateStatus(id, statusData) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/status/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(statusData),
+      }
+    );
+    const data = await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 // Display Contents
 const contents = document.querySelectorAll(".content_display");
 const dashboardDisplay = document.getElementById("dashboard_display");
 const tasksDisplay = document.getElementById("tasks_display");
-// const profileDisplay = document.querySelector(".my_profile");
+const profileDisplay = document.getElementById("profile_display");
 const dashboardLink = document.getElementById("dashboardLink");
 const tasksLink = document.getElementById("tasksLink");
-// const profileLink = document.getElementById("profileLink");
+const profileLink = document.getElementById("profileLink");
 // const messagesDisplay = document.querySelector(".messages");
 // const messagesLink = document.getElementById("messagesLink");
 // const settingsDisplay = document.querySelector(".settings");
@@ -198,10 +248,10 @@ function updateDisplay() {
       displayContent(tasksDisplay);
       active(tasksLink);
       break;
-    // case "profile":
-    //   displayContent(profileDisplay);
-    //   active(tasksLink);
-    //   break;
+    case "profile":
+      displayContent(profileDisplay);
+      active(profileLink);
+      break;
     // case "messages":
     //   displayContent(messagesDisplay);
     //   active(messagesLink);
@@ -281,7 +331,9 @@ function seeMore(data, taskImgData) {
 // more Info
 async function taskTableInfo(id, gig) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity/setter/${id}`);
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/setter/${id}`
+    );
     const data = await res.json();
 
     const result = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);

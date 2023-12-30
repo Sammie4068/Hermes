@@ -61,3 +61,10 @@ exports.getActivityBySetterID = async (id) => {
     [id]
   );
 };
+
+exports.updateStatus = async (status, id) => {
+    return db.query("UPDATE activity SET status = $1 WHERE id=$2", [
+      status,
+      id,
+    ]);
+}

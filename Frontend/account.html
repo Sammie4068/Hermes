@@ -31,13 +31,13 @@
             <span class="text">Tasks</span>
           </a>
         </li>
-        <!-- <li id="profileLink">
+       <li id="profileLink">
           <a href="#profile">
             <i class="bx bxs-user"></i>
             <span class="text">My Profile</span>
           </a>
         </li>
-        <li id="messagesLink">
+         <!-- <li id="messagesLink">
           <a href="#messages">
             <i class="bx bxs-message-dots"></i>
             <span class="text">Messages</span>
@@ -188,6 +188,86 @@
                   </tr> -->
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="content_display" id="profile_display"> 
+        <div class="head-title">
+          <div class="left">
+            <h1>My Profile</h1>
+          </div>
+        </div>
+
+        <div class="display_body">
+          <div class="profile">
+            <div class="profile_card">
+              <div class="profile_card_img">
+                <img
+                  src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                  alt="Profile Picture"
+                  id="profile_image"
+                  class="dp"
+                />
+                <input type="file" class="edit_dp" id="edit_dp" disabled />
+              </div>
+              <div class="profile-info">
+                <span>
+                  <label>Name </label>
+                  <input class="name" type="text" readonly />
+                </span>
+                <span>
+                  <label>Email </label>
+                  <input class="email" type="text" readonly />
+                </span>
+                <span>
+                  <label>Task</label>
+                  <input type="text" class="task-input" readonly required />
+                  <ul class="task-dropdown" id="task-dropdown"></ul>
+                </span>
+                <span>
+                  <label>Tip</label>
+                  <input class="tip" type="number" readonly />
+                </span>
+                <span>
+                  <label>Bio</label>
+                  <textarea id="bio" readonly></textarea>
+                </span>
+                <div class="btn-wrapper">
+                  <a href="#" class="change-password">Change Password </a>
+                  <a href="#" class="button edit_btn" id="edit__btn"
+                    >Edit Profile</a
+                  >
+                  <a href="#" class="button hidden" id="saveBtn">Save</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="password_card">
+              <div class="password_card_top">
+                <i class="bx bx-left-arrow-alt" id="back_arrow"></i>
+                <p id="change_password_msg"></p>
+              </div>
+              <span>
+                <label>Old Password </label>
+                <input class="password" type="password" id="old_password" />
+              </span>
+              <span>
+                <label>New Password </label>
+                <input class="password" type="password" id="new_password" />
+              </span>
+              <span>
+                <label>Confirm Password </label>
+                <input
+                  class="password"
+                  type="password"
+                  id="confirm_new_password"
+                />
+              </span>
+              <a href="#" class="button save_password" id="password_saveBtn"
+                >Save</a
+              >
+            </div>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ const {
   getActivityByID,
   getRunnerActivity,
   getActivityBySetterID,
+  updateStatus,
 } = require("./admin/admin");
 
 const {
@@ -46,4 +47,5 @@ module.exports = {
   getActivityByID,
   getRunnerActivity,
   getActivityBySetterID,
+  updateStatus,
 };
