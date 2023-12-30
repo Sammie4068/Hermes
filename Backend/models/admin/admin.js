@@ -36,14 +36,28 @@ exports.updateRunnerID = async (runnerID, id) => {
 
 exports.getUserActivity = async (id) => {
   return db.query(
-    "SELECT activity.*, users.photo, users.name, users.email, users.gig, users.bio, users.tip FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.setterid = $1",
+    "SELECT activity.*, users.photo, users.name, users.email, users.gig, users.bio, users.wallet FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.setterid = $1",
+    [id]
+  );
+};
+
+exports.getRunnerActivity = async (id) => {
+  return db.query(
+    "SELECT activity.*, users.photo, users.name, users.email FROM activity INNER JOIN users ON activity.setterid = users.id WHERE activity.runnerid = $1",
     [id]
   );
 };
 
 exports.getActivityByID = async (id) => {
   return db.query(
-    "SELECT activity.*, users.photo, users.name, users.email, users.school, users.gig, users.bio, users.tip FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.id = $1",
+    "SELECT activity.*, users.photo, users.name, users.email, users.school, users.gig, users.bio, users.wallet FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.id = $1",
+    [id]
+  );
+};
+
+exports.getActivityBySetterID = async (id) => {
+  return db.query(
+    "SELECT activity.*, users.photo, users.name, users.email FROM activity INNER JOIN users ON activity.setterid = users.id WHERE activity.id = $1",
     [id]
   );
 };

@@ -224,16 +224,16 @@ backBtn2.addEventListener("click", (e) => {
 
 nextBtn1.addEventListener("click", async (e) => {
   e.preventDefault();
-  // if (
-  // infoFormIsEmpty() &&
-  // emailValidation() &&
-  // passwordValidation() &&
-  // confirmPasswordValidation() &&
-  // (await checkEmail())
-  // ) {
+  if (
+  infoFormIsEmpty() &&
+  emailValidation() &&
+  passwordValidation() &&
+  confirmPasswordValidation() &&
+  (await checkEmail())
+  ) {
   infoForm.classList.add("hidden");
   profileForm.classList.remove("hidden");
-  // }
+  }
 });
 
 nextBtn2.addEventListener("click", async (e) => {

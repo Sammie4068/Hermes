@@ -184,15 +184,25 @@ async function loginPost(url, data) {
       body: JSON.stringify(data),
     });
     const bodydata = await res.json();
+    console.log(bodydata);
     if (bodydata.message == "invalid") {
       signinMsg.textContent = "Invalid Email or Password";
       signinMsg.style.color = "red";
     }
     if (bodydata.message == "logged") {
       localStorage.setItem("token", bodydata.token);
-      localStorage.setItem("id", bodydata.id)
-      localStorage.setItem("name", bodydata.name)
-      window.location = "main.html";
+      localStorage.setItem("id", bodydata.id);
+      localStorage.setItem("name", bodydata.name);
+      localStorage.setItem("photo", bodydata.photo);
+      localStorage.setItem("email", bodydata.email);
+      localStorage.setItem("task", bodydata.gig);
+      localStorage.setItem("bio", bodydata.bio);
+      localStorage.setItem("wallet", bodydata.wallet);
+      if (bodydata.role == "setter") {
+        window.location = "main.html";
+      } else if (bodydata.role == "runner") {
+        window.location = "account.html";
+      }
     }
   } catch (err) {
     console.error(`Error: ${err}`);

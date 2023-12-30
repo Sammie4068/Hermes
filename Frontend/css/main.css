@@ -224,8 +224,7 @@ button {
   right: 3% !important;
 }
 .user {
-  /* display: none; */
-  display: flex;
+  display: none;
   align-items: center;
   gap: 10px;
   color: var(--primary-color);

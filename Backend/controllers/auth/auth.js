@@ -25,7 +25,7 @@ exports.login = async (req, res, next) => {
       return res.json({ message: "invalid" });
     }
 
-    const { id, role, name, email } = foundUser.rows[0];
+    const { id, role, name, email, gig, bio, photo, wallet } = foundUser.rows[0];
     const hashedPassword = await bcrypt.compare(
       req.body.password,
       foundUser.rows[0].password
@@ -44,6 +44,10 @@ exports.login = async (req, res, next) => {
       role,
       name,
       email,
+      gig,
+      bio,
+      photo,
+      wallet
     });
   } catch (err) {
     return next(err);

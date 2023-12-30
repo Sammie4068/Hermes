@@ -7,6 +7,8 @@ const {
   updateRunnerID,
   getUserActivity,
   getActivityByID,
+  getRunnerActivity,
+  getActivityBySetterID,
 } = require("../../models/index");
 
 exports.getTasks = async (req, res, next) => {
@@ -77,6 +79,17 @@ exports.getUserActivity = async (req, res, next) => {
   }
 };
 
+exports.getRunnerActivity = async (req, res, next) => {
+  try {
+    const results = await getRunnerActivity(req.params.id);
+    return res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+
+
 exports.getActivityByID = async (req, res, next) => {
   try {
     const results = await getActivityByID(req.params.id);
@@ -85,3 +98,13 @@ exports.getActivityByID = async (req, res, next) => {
     return next(err)
   }
 }
+
+exports.getActivityBySetterID = async (req, res, next) => {
+  try {
+    const results = await getActivityBySetterID(req.params.id);
+    return res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
+};
+

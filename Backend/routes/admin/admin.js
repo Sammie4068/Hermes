@@ -8,6 +8,8 @@ const {
   updateRunnerID,
   getUserActivity,
   getActivityByID,
+  getRunnerActivity,
+  getActivityBySetterID,
 } = require("../../controllers/index");
 
 router.get("/tasks", getTasks);
@@ -17,5 +19,8 @@ router.post("/activity", addActivity);
 router.patch("/activity/runner/:id", updateRunnerID);
 router.get("/activity/:id", getUserActivity);
 router.get("/activity/id/:id", getActivityByID);
+router.get("/activity/runner/:id", getRunnerActivity);
+router.get("/activity/setter/:id", getActivityBySetterID);
+
 
 module.exports = router;
