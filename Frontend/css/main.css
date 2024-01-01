@@ -1084,6 +1084,7 @@ footer .follow .socials i:hover {
 }
 
 .modal .card_body .task_side {
+  text-transform: capitalize;
   width: 60%;
 }
 

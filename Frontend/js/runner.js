@@ -49,6 +49,17 @@ function renderError() {
   errorContainer.style.display = "flex";
 }
 
+// Render Spinner
+function renderSpinner(parentEle) {
+  overlay.style.display = "flex";
+  modal.classList.add("hidden");
+  parentEle.innerHTML = ``;
+  const html = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  <p class="wait">Please wait..</p>
+  `;
+  parentEle.insertAdjacentHTML("beforeend", html);
+}
+
 // Display runners
 const wrapper = document.querySelector(".runners_wrapper");
 const gig = localStorage.getItem("gig");
@@ -105,11 +116,12 @@ function displayRunners(data) {
   const reqBtn = document.querySelectorAll("#reqBtn");
   reqBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      const runnerID = JSON.parse(e.target.value);
+      localStorage.setItem("runnerID", runnerID);
       const id = localStorage.getItem("taskID");
-      const requestData = {
-        runnerID: JSON.parse(e.target.value),
-      };
-      requestRunner(requestData, id);
+      const gig = localStorage.getItem("gig");
+
+      showTaskWithRunner(id, gig, runnerID);
     });
   });
 }
@@ -151,13 +163,13 @@ async function requestRunner(requestData, id) {
 const overlay = document.querySelector(".overlay");
 const modal = document.querySelector(".modal");
 function statusDisplay(data) {
-  let reqBtnValue = JSON.stringify(data.id);
-
+  modal.innerHTML = ``;
+  let value = JSON.stringify(data.id);
   let html = `
       <div class="heading">
       <div class="image_side">
         <img src="${data.photo}" alt="sample" />
-        <button class="btn" id="reqBtn" value='${reqBtnValue}'> Request </button>
+        <button class="btn" id="reqBtn2" value='${value}'> Request </button>
       </div>
         <div class="runner-info">
           <h1>${data.name}</h1>
@@ -199,23 +211,120 @@ function statusDisplay(data) {
   overlay.classList.remove("hidden");
 
   // Request button
-  const reqBtn = document.querySelectorAll("#reqBtn");
-  reqBtn.forEach((btn) => {
+  const reqBtnMore = document.querySelectorAll("#reqBtn2");
+  reqBtnMore.forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      const runnerID = JSON.parse(e.target.value);
+      localStorage.setItem("runnerID", runnerID);
       const id = localStorage.getItem("taskID");
-      const requestData = {
-        runnerID: JSON.parse(e.target.value),
-      };
-      requestRunner(requestData, id);
+      const gig = localStorage.getItem("gig");
+
+      showTaskWithRunner(id, gig, runnerID);
     });
   });
 }
 
-overlay.addEventListener("click", () => {
-  modal.innerHTML = ``;
+// Task popup
+
+// date and time function
+function reformatDate(date) {
+  const originalDate = new Date(date);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
+    originalDate
+  );
+  return formattedDate;
+}
+
+function reformatTime(time) {
+  const inputTimeString = time;
+  const parsedTime = new Date(`2000-01-01T${inputTimeString}`);
+  const formattedTime = parsedTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return formattedTime;
+}
+
+async function showTaskWithRunner(id, gig, runnerID) {
+  try {
+    modal.innerHTML = ``;
+
+    const result = await fetch(
+      `http://localhost:3000/api/v1/activity/setter/${id}`
+    );
+    const logData = await result.json();
+    const data = logData[0];
+
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const bodydata = await res.json();
+    const apiData = bodydata[0];
+
+    const response = await fetch(
+      `http://localhost:3000/api/v1/users/${runnerID}`
+    );
+    const runnerData = await response.json();
+
+    let html = `<div class="card_body">
+          <div class="task_side">
+            <span>
+              <h1>${data.task}</h1>
+              <img src="${apiData.icons}" alt="${apiData.title}"/>
+            </span>
+            <span> <strong>Location:</strong> ${data.location}</span>
+            <span>
+              <p> <strong>Date:</strong> ${reformatDate(data.date)}</p>
+              <p> <strong>Time:</strong> ${reformatTime(data.time)}</p>
+            </span>
+          </div>
+          <div class="billing">
+            <h2>Pricing</h2>
+            <p>Tip: NGN 1000</p>
+            <p>Transportation: NGN 1000</p>
+            <p> <strong>Total:</strong> <strong>NGN 2000</strong> </p>
+          </div>
+        </div>
+        <h2>Runner</h2>
+        <div class="heading">
+          <img src="${runnerData.photo}" alt="sample" />
+          <div class="runner-info">
+            <h1>${runnerData.name}</h1>
+            <p>${runnerData.school}</p>
+          </div>
+        </div>
+        <div class="button__wrapper">
+          <button class="cancel_btn" onclick="closeModal()">Cancel</button>
+          <button class="proceed_btn">Proceed</button>
+        </div>`;
+
+    modal.insertAdjacentHTML("beforeend", html);
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+
+    document.querySelector(".proceed_btn").addEventListener("click", () => {
+      renderSpinner(overlay);
+      setTimeout(() => {
+        const requestData = {
+          runnerID: localStorage.getItem("runnerID"),
+        };
+        const id = localStorage.getItem("taskID");
+        requestRunner(requestData, id);
+      }, 1000);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// close modal
+function closeModal() {
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
-});
+  modal.innerHTML = ``;
+}
+
+overlay.addEventListener("click", closeModal);
 
 function emptyCardDiv() {
   const cardcontainer = document.querySelectorAll(".card_container");
