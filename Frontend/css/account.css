@@ -670,7 +670,9 @@ body {
 
 /* My Profile */
 .profile {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .profile_card {
   display: flex;
@@ -679,25 +681,25 @@ body {
   border-radius: 10px;
   padding: 30px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.06);
-  width: 50%;
-  height: 455px;
+  width: 70%;
+  height: 100%;
 }
 
 .password_card {
   display: none;
+  flex-direction: column;
   background-color: var(--light);
   border-radius: 10px;
   padding: 30px;
   width: 70%;
-  height: 400px;
-  margin: 0px auto;
-  margin-top: 36px;
+  height: 100%;
+  gap: 10px;
 }
 
 .password_card_top {
   display: flex;
-  margin-left: -20px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  width: 60%;
 }
 
 .password_card_top i {
@@ -713,7 +715,7 @@ body {
 .underline {
   width: 0%;
   height: 3px;
-  background: var(--primary);
+  background: var(--lite);
   transition: 0.3s;
 }
 
@@ -764,15 +766,16 @@ body {
 }
 
 .profile-info {
-  flex: 1;
-  flex-direction: column;
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 78%;
 }
 .profile-info span,
 .password_card span {
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
+  margin-bottom: 8px;
 }
 
 .profile-info input {
@@ -784,14 +787,25 @@ body {
   padding: 10px;
 }
 
+.password-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.password-form span {
+  width: 70%;
+}
+
 .password_card input {
   outline: none;
-  width: 60%;
+  width: 100%;
   color: #666;
   background-color: #fafbfb;
   border-radius: 5px;
   padding: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .profile-info .name {
@@ -866,7 +880,9 @@ body {
 }
 
 .button.save_password {
-  margin: 20px;
+  width: 11%;
+  position: relative;
+  left: -190px;
 }
 
 .button:hover,

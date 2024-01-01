@@ -1,9 +1,10 @@
-const { res, req, next } = require("express");
+const { res, req, next, urlencoded } = require("express");
 const {
   getRunners,
   gerUsersById,
   updateUser,
   changePassword,
+  changeImage,
 } = require("../../models/index");
 const bcrypt = require("bcrypt");
 const uploadImage = require("../../utilities/index");
@@ -21,8 +22,8 @@ exports.getRunners = async (req, res, next) => {
 exports.gerUsersById = async (req, res, next) => {
   try {
     const results = await gerUsersById(req.params.id);
-    const { photo, name, email, gig, bio, tip } = results.rows[0];
-    res.json({ photo, name, email, gig, bio, tip });
+    const { photo, name, email, gig, bio, completed } = results.rows[0];
+    res.json({ photo, name, email, gig, bio, completed });
   } catch (err) {
     return next(err);
   }
@@ -39,7 +40,20 @@ exports.updateUser = async (req, res, next) => {
       id: req.params.id,
     };
     const results = await updateUser(data);
-    res.json({ message: "success", name, email, task, bio});
+    res.json({ message: "success", name, email, task, bio });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.changeImage = async (req, res, next) => {
+  try {
+   const response = await uploadImage(req.file.path);
+   const { url } = response;
+
+    const id = req.params.id
+    const result = await changeImage(url, id)
+    res.json({ message: "success" })
   } catch (err) {
     return next(err);
   }

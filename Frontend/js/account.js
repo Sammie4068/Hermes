@@ -11,10 +11,9 @@ const emailInput = document.getElementById("email");
 const taskInput = document.getElementById("task-input");
 const bioInput = document.getElementById("bio");
 const profileImage = document.getElementById("profile_image");
-const underline = document.querySelectorAll(".underline")
+const underline = document.querySelectorAll(".underline");
 const editBtn = document.getElementById("edit__btn");
 const saveBtn = document.getElementById("saveBtn");
-
 
 const username = localStorage.getItem("name");
 const photo = localStorage.getItem("photo");
@@ -331,7 +330,7 @@ function seeMore(data, taskImgData) {
         </div>
       </div>
       <div>
-        <h2>Runner info</h2>
+        <h2>Setter info</h2>
         <div class="heading">
           <img src="${
             data.photo ||
@@ -376,7 +375,7 @@ overlay.addEventListener("click", () => {
   overlay.classList.add("hidden");
 });
 
-// //Switch to password
+//Switch to password
 const profileCard = document.querySelector(".profile_card");
 const passwordCard = document.querySelector(".password_card");
 const changePasswordBtn = document.querySelector(".change-password");
@@ -384,7 +383,10 @@ const backArrow = document.getElementById("back_arrow");
 
 changePasswordBtn.addEventListener("click", () => {
   profileCard.style.display = "none";
-  passwordCard.style.display = "block";
+  passwordCard.style.display = "flex";
+  oldPassword.innerHTML = ``;
+  newPassword.innerHTML = ``;
+  cNewPassword.innerHTML = ``;
 });
 
 backArrow.addEventListener("click", () => {
@@ -485,9 +487,9 @@ function edit() {
   inputs.forEach((input) => {
     input.disabled = false;
   });
-  underline.forEach(line => {
-    line.style.width = "100%"
-  })
+  underline.forEach((line) => {
+    line.style.width = "100%";
+  });
   editBtn.classList.add("hidden");
   saveBtn.classList.remove("hidden");
 }
@@ -501,7 +503,7 @@ async function save() {
       task: taskInput.value.trim().toLowerCase(),
       bio: bioInput.value.trim(),
     };
-    console.log(newData)
+    console.log(newData);
 
     const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
       method: "PATCH",
@@ -520,12 +522,12 @@ async function save() {
 
       editBtn.classList.remove("hidden");
       saveBtn.classList.add("hidden");
-        inputs.forEach((input) => {
-          input.disabled = true;
-        });
-        underline.forEach((line) => {
-          line.style.width = "0%";
-        });
+      inputs.forEach((input) => {
+        input.disabled = true;
+      });
+      underline.forEach((line) => {
+        line.style.width = "0%";
+      });
     }
   } catch (err) {
     console.error(`Error: ${err}`);

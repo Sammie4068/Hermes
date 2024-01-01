@@ -56,8 +56,7 @@ const gigLocation = localStorage.getItem("state");
 
 function displayRunners(data) {
   data.map((dat) => {
-    let value = JSON.stringify(dat);
-    let reqBtnValue = JSON.stringify(dat.id);
+    let value = JSON.stringify(dat.id);
     let markup = `<div class="card_container" data-aos="fade-left"
         data-aos-duration="1000">
           <div class="slide-card">
@@ -69,7 +68,7 @@ function displayRunners(data) {
                 />
                 <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
-                  <button id="reqBtn" value='${reqBtnValue}'>Request</button>
+                  <button id="reqBtn" value='${value}'>Request</button>
                 </span>
               </div>
               <article>
@@ -94,10 +93,11 @@ function displayRunners(data) {
   // see more Button
   const seeMoreBtn = document.querySelectorAll(".see_more");
   seeMoreBtn.forEach((btn) => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", async (e) => {
       e.preventDefault();
-      const runnerData = JSON.parse(e.target.value);
-      statusDisplay(runnerData);
+      const runnerID = JSON.parse(e.target.value);
+      const data = await runnerInfo(runnerID);
+      statusDisplay(data);
     });
   });
 
@@ -112,6 +112,17 @@ function displayRunners(data) {
       requestRunner(requestData, id);
     });
   });
+}
+
+// Get users info
+async function runnerInfo(id) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 // Request function

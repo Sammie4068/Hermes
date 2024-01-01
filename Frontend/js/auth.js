@@ -201,7 +201,7 @@ async function loginPost(url, data) {
       if (bodydata.role == "setter") {
         window.location = "main.html";
       } else if (bodydata.role == "runner") {
-        window.location = "account.html";
+        window.location = "account.html#dashboard";
       }
     }
   } catch (err) {

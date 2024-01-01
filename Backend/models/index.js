@@ -25,6 +25,7 @@ const {
   gerUsersById,
   updateUser,
   changePassword,
+  changeImage,
 } = require("./users/users");
 
 module.exports = {
@@ -48,4 +49,5 @@ module.exports = {
   getRunnerActivity,
   getActivityBySetterID,
   updateStatus,
+  changeImage,
 };

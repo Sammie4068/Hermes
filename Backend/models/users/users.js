@@ -25,3 +25,10 @@ exports.changePassword = async (password, id) => {
         id
     ])
 }
+
+exports.changeImage = async (photo, id) => {
+   return db.query("UPDATE users SET photo = $1 WHERE id=$2", [
+    photo,
+    id
+   ]) 
+}

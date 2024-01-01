@@ -5,7 +5,7 @@ async function allTasks(parentEle) {
     const res = await fetch(`http://localhost:3000/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
-      const html = `<li>${dt.title}</li>`;
+      const html = `<option>${dt.title}</option>`;
       parentEle.insertAdjacentHTML("afterbegin", html);
     });
   } catch (err) {
@@ -13,30 +13,7 @@ async function allTasks(parentEle) {
   }
 }
 const taskInput = document.querySelector(".task-input");
-const taskList = document.getElementById("task-dropdown");
-
-taskInput.addEventListener("click", function () {
-  if (taskList.style.display == "none") {
-    taskList.style.display = "block";
-  } else {
-    taskList.style.display = "none";
-  }
-});
-
-document.addEventListener("click", function (event) {
-  if (event.target !== taskInput && event.target !== taskList) {
-    taskList.style.display = "none";
-  }
-});
-
-taskList.addEventListener("click", function (event) {
-  if (event.target.tagName === "LI") {
-    taskInput.value = event.target.textContent;
-    taskList.style.display = "none";
-  }
-});
-
-allTasks(taskList);
+allTasks(taskInput);
 
 // Gig tip
 async function getTip(gig) {
@@ -252,14 +229,13 @@ submitBtn.addEventListener("click", (e) => {
   if (schoolFormIsEmpty() && yearIsValid() && isChecked()) {
     const formData = new FormData();
 
-    formData.append("name", fullName.value.toLowerCase());
+    formData.append("name", fullName.value);
     formData.append("email", email.value);
     formData.append("gender", gender.value);
     formData.append("image", photo.files[0]);
     formData.append("password", password.value);
     formData.append("gig", taskInput.value.toLowerCase());
     formData.append("bio", bio.value.toLowerCase());
-    formData.append("tip", localStorage.getItem("tip"));
     formData.append("school", schoolName.value.toLowerCase());
     formData.append("schoolstate", schoolState.value.toLowerCase());
     formData.append("field", field.value.toLowerCase());
@@ -283,6 +259,13 @@ async function postData(data) {
       localStorage.setItem("id", bodydata.id);
       localStorage.setItem("token", bodydata.token);
       localStorage.setItem("role", bodydata.role);
+      localStorage.setItem("task", bodydata.gig);
+      localStorage.setItem("name", bodydata.name);
+      localStorage.setItem("photo", bodydata.photo);
+      localStorage.setItem("email", bodydata.email);
+      localStorage.setItem("task", bodydata.gig);
+      localStorage.setItem("bio", bodydata.bio);
+      localStorage.setItem("wallet", bodydata.wallet);
       window.location = "account.html#dashboard";
     }
   } catch (err) {
