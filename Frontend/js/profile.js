@@ -1,3 +1,6 @@
+// Url instance
+const urlParams = new URLSearchParams(window.location.search);
+
 // Init
 const id = localStorage.getItem("id");
 const userImage = document.getElementById("userImage");
@@ -5,6 +8,7 @@ const userProfileName = document.getElementById("userName");
 const walletAmt = document.getElementById("wallet__amount");
 const taskRunning = document.getElementById("task__running");
 const taskPending = document.getElementById("task__pending");
+const taskTableNumber = document.querySelector(".head h3 span")
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
@@ -40,8 +44,12 @@ async function init() {
   taskPending.innerText = taskPendingData.length;
 
   // Dashboard Activity Table
+  taskTableNumber.innerHTML = `(${setterActivityData.length})`;
   dashboardTableDisplay(setterActivityData);
   displayTask(setterActivityData);
+
+  // Tasks
+  allTasks(taskFilterOPt);
 
   // Profile
   profileImage.attributes.src.value =
@@ -100,33 +108,116 @@ function reformatTime(time) {
 // Activity Data
 
 // Table icons
-const filterIcon = document.getElementById("filterIcon")
-const filterWrapper = document.querySelector(".filter")
-const iconWrapper = document.querySelector(".icon_wrapper")
+const filterIcon = document.getElementById("filterIcon");
+const filterWrapper = document.querySelector(".filter");
+const iconWrapper = document.querySelector(".icon_wrapper");
 filterIcon.addEventListener("click", () => {
   filterWrapper.style.display = "flex";
   iconWrapper.style.display = "none";
-})
+});
 
 const filterCancel = document.getElementById("filter_cancel");
 filterCancel.addEventListener("click", () => {
-  filterWrapper.style.display = "none"
+  filterWrapper.style.display = "none";
   iconWrapper.style.display = "block";
-})
+  clearFilters();
+  displayTask(setterActivityData);
+});
 
 const searchIcon = document.getElementById("searchIcon");
-const searchWrapper = document.querySelector(".search-form")
+const searchWrapper = document.querySelector(".search-form");
 searchIcon.addEventListener("click", () => {
   searchWrapper.style.display = "flex";
-  iconWrapper.style.display = "none"
-})
+  iconWrapper.style.display = "none";
+});
 
-const searchCancel = document.getElementById("search_cancel")
+const searchCancel = document.getElementById("search_cancel");
 searchCancel.addEventListener("click", () => {
-  searchWrapper.style.display = "none"
-  iconWrapper.style.display = "block"
+  searchWrapper.style.display = "none";
+  iconWrapper.style.display = "block";
+});
+
+// Task filter options
+const taskFilterOPt = document.querySelector(".task_filter_options");
+async function allTasks(parentEle) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const data = await res.json();
+    data.forEach((dt) => {
+      const html = `<option>${dt.title}</option>`;
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// filter Options
+taskFilterOPt.addEventListener("change", () => {
+  addURLParam("task", taskFilterOPt.value);
 })
 
+const statusFilterOpt = document.querySelector(".status_filter_options");
+
+statusFilterOpt.addEventListener("change", () => {
+  addURLParam("status", statusFilterOpt.value.toLowerCase());
+});
+
+// Update url params
+function addURLParam(key, value) {
+  urlParams.set(key, value);
+  const newUrl = `${window.location.origin}${
+    window.location.pathname
+  }?${urlParams.toString()}`;
+  window.history.replaceState({}, "", newUrl);
+  window.dispatchEvent(new Event("popstate"));
+}
+
+function clearFilters() {
+  const newUrl = `${window.location.origin}${window.location.pathname}`;
+  window.history.replaceState({}, "", newUrl);
+}
+
+// Fllter display
+async function displayData() {
+  let task = urlParams.get("task");
+  let status = urlParams.get("status");
+  data = await getTableData();
+  let filterArr;
+  
+  // if (task == "All") {
+  //   filterArr = data
+  // }
+    if (task && status) {
+      filterArr = data.filter((runner) => {
+        return runner.task == task && runner.status == status;
+      });
+    }
+  if (task && !status) {
+    filterArr = data.filter((runner) => {
+      return runner.task == task;
+    });
+  }
+  if (status && !task) {
+    filterArr = data.filter((runner) => {
+      return runner.status == status;
+    });
+  }
+
+  emptyCardDiv();
+  // if (filterArr.length <= 0) renderError();
+    displayTask(filterArr);
+}
+
+window.addEventListener("popstate", displayData);
+
+// Empty table
+function emptyCardDiv() {
+  const tableEle = document.querySelectorAll("#table_tab");
+  tableEle.forEach((tab) => (tab.style.display = "none"));
+}
+
+// Task Data
 const dashboardTable = document.getElementById("dashboard_table");
 const taskTable = document.getElementById("task_table");
 
@@ -156,6 +247,7 @@ function dashboardTableDisplay(data) {
 }
 
 function displayTask(data) {
+  console.log(data)
   const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
   sortedData.map((dat) => {
     let value = JSON.stringify({ id: dat.id, task: dat.task });

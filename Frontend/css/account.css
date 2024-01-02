@@ -502,15 +502,17 @@ body {
   outline: none;
   cursor: pointer;
   padding: 0px 7px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 1px solid var(--lite);
 }
 
 .filter span select {
   outline: none;
   cursor: pointer;
-  padding: 5px;
+  padding: 0px 10px;
   border: none;
+  text-transform: capitalize;
+
 }
 /* .content_display */
 
