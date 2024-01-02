@@ -67,7 +67,7 @@ body {
 #sidebar.hide {
   width: 60px;
 }
-#sidebar .brand {
+#sidebar .brand, #sidebar .brand h2{
   font-family: "Italianno", cursive;
   font-size: 40px;
   color: var(--primary);

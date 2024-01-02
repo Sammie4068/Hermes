@@ -1,26 +1,361 @@
-// location.reload();
+// Init
 const id = localStorage.getItem("id");
-async function userData() {
+const userImage = document.getElementById("userImage");
+const userProfileName = document.getElementById("userName");
+const walletAmt = document.getElementById("wallet__amount");
+const taskRunning = document.getElementById("task__running");
+const taskPending = document.getElementById("task__pending");
+
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const taskInput = document.getElementById("task-input");
+const bioInput = document.getElementById("bio");
+const profileImage = document.getElementById("profile_image");
+const underline = document.querySelectorAll(".underline");
+const editBtn = document.getElementById("edit__btn");
+const saveBtn = document.getElementById("saveBtn");
+
+const username = localStorage.getItem("name");
+const photo = localStorage.getItem("photo");
+const wallet = localStorage.getItem("wallet");
+const email = localStorage.getItem("email");
+const inputs = document.querySelectorAll(".profileInputs");
+
+async function init() {
+  // Nav bar profile
+  userProfileName.innerText = username;
+
+  // Dashboard
+  // walletAmt.innerText = wallet;
+  const setterActivityData = await getTableData();
+  const runningTaskData = setterActivityData.filter(
+    (data) => data.status == "processing"
+  );
+  const taskPendingData = setterActivityData.filter(
+    (data) => data.status == "pending"
+  );
+  taskRunning.innerText = runningTaskData.length;
+  taskPending.innerText = taskPendingData.length;
+
+  // Dashboard Activity Table
+  dashboardTableDisplay(setterActivityData);
+  displayTask(setterActivityData);
+
+  // Profile
+  profileImage.attributes.src.value =
+    photo &&
+    "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg";
+  nameInput.value = username;
+  emailInput.value = email;
+}
+init();
+
+// All Tasks
+async function allTasks(parentEle) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`);
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
     const data = await res.json();
-    localStorage.setItem("photo", data.photo);
-    localStorage.setItem("name", data.name);
-    localStorage.setItem("email", data.email);
+    data.forEach((dt) => {
+      const html = `<option>${dt.title}</option>`;
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
   } catch (err) {
     console.log(err);
   }
 }
 
-userData();
+async function getTableData() {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/activity/${id}`);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
-// Switch active
+// date and time function
+function reformatDate(date) {
+  const originalDate = new Date(date);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
+    originalDate
+  );
+  return formattedDate;
+}
+
+function reformatTime(time) {
+  const inputTimeString = time;
+  const parsedTime = new Date(`2000-01-01T${inputTimeString}`);
+  const formattedTime = parsedTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return formattedTime;
+}
+
+// Activity Data
+const dashboardTable = document.getElementById("dashboard_table");
+const taskTable = document.getElementById("task_table");
+
+function dashboardTableDisplay(data) {
+  const sortedData = data
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 3);
+  sortedData.map((dat) => {
+    let value = JSON.stringify(dat);
+
+    let markup = `<tr id="table_element">
+                <td>
+                <img src="${
+                  dat.photo ||
+                  "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                }" />
+                   <p>${dat.name}</p>
+                      </td>
+                      <td>${dat.task}</td>
+                <td>${reformatDate(dat.date)}</td>
+                <td><button class="status ${dat.status}" value='${value}'>${
+      dat.status
+    }</button>
+              </tr>`;
+    dashboardTable.insertAdjacentHTML("beforeend", markup);
+  });
+}
+
+function displayTask(data) {
+  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  sortedData.map((dat) => {
+    let value = JSON.stringify({ id: dat.id, task: dat.task });
+
+    let markup = `<tr id="table_tab">
+                <td id="table_element">
+                <img src="${
+                  dat.photo ||
+                  "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                }" />
+                   <p>${dat.name}</p>
+                      </td>
+                      <td id="table_element">${dat.task}</td>
+                <td id="table_element">${reformatDate(dat.date)}</td>
+                <td id="table_element"> <button class="status ${
+                  dat.status
+                }" value='${value}'>${dat.status}</button></td>
+    <td class="dropdown-cell">
+                <i class='bx bx-dots-vertical-rounded' ></i>
+                <div class="dropdown-content">
+                ${
+                  dat.status == "pending"
+                    ? `<a id="reject_task" href="#">cancel task</a>`
+                    : dat.status == "processing"
+                    ? `<a id="reject_task" href="#">cancel task</a>`
+                    : `<a id="confirm_task" href="#">reset task</a>`
+                }
+                </div>
+              </td>
+              </tr>`;
+    taskTable.insertAdjacentHTML("beforeend", markup);
+  });
+
+  const tableTab = document.querySelectorAll("#table_tab");
+  tableTab.forEach((tab) => {
+    const statusBtn = tab.querySelectorAll(".status");
+    let taskData;
+    const statusData = { status: "pending" };
+    const confirmOpt = tab.querySelectorAll("#confirm_task");
+    confirmOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          statusData.status = "pending";
+          updateStatus(taskData.id, statusData);
+          location.reload();
+        });
+      });
+    });
+
+    const rejectOpt = tab.querySelectorAll("#reject_task");
+    rejectOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          statusData.status = "cancelled";
+          updateStatus(taskData.id, statusData);
+          location.reload();
+        });
+      });
+    });
+
+    const tableEle = tab.querySelectorAll("#table_element");
+    tableEle.forEach((ele) => {
+      ele.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+        });
+        taskTableInfo(taskData.id, taskData.task);
+      });
+    });
+  });
+}
+
+// Update status
+async function updateStatus(id, statusData) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/status/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(statusData),
+      }
+    );
+    const data = await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Display Contents
+const contents = document.querySelectorAll(".content_display");
+const dashboardDisplay = document.getElementById("dashboard_display");
+const tasksDisplay = document.getElementById("tasks_display");
+const profileDisplay = document.getElementById("profile_display");
+const dashboardLink = document.getElementById("dashboardLink");
+const tasksLink = document.getElementById("tasksLink");
+const profileLink = document.getElementById("profileLink");
+// const messagesDisplay = document.querySelector(".messages");
+// const messagesLink = document.getElementById("messagesLink");
+// const settingsDisplay = document.querySelector(".settings");
+const settingsLink = document.getElementById("settings");
+const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
+
+function displayContent(ele) {
+  hideAllContents();
+  ele.classList.remove("hidden");
+}
+
+function hideAllContents() {
+  contents.forEach((content) => {
+    content.classList.add("hidden");
+  });
+}
+updateDisplay();
+function updateDisplay() {
+  const state = window.location.hash.slice(1);
+  switch (state) {
+    case "dashboard":
+      displayContent(dashboardDisplay);
+      active(dashboardLink);
+      break;
+    case "tasks":
+      displayContent(tasksDisplay);
+      active(tasksLink);
+      break;
+    case "profile":
+      displayContent(profileDisplay);
+      active(profileLink);
+      break;
+    // case "messages":
+    //   displayContent(messagesDisplay);
+    //   active(messagesLink);
+    //   break;
+    // case "settings":
+    //   displayContent(settingsDisplay);
+    //   break;
+    default:
+      break;
+  }
+}
+window.addEventListener("hashchange", updateDisplay);
+
+// SideBar active
 function active(ele) {
   allSideMenu.forEach((i) => {
     i.parentElement.classList.remove("active");
   });
   ele.classList.add("active");
 }
+
+// See more on task
+const overlay = document.querySelector(".overlay");
+const modal = document.querySelector(".modal");
+
+function seeMore(data, taskImgData) {
+  let html = `<div class="card_body">
+        <div class="task_side">
+          <span>
+            <h1>${data.task}</h1>
+            <img
+              src="${taskImgData.icons}"
+              alt="${data.task}"
+            />
+          </span>
+          <span class="status">
+            <p><strong>Status:</strong><span class="${data.status}">${
+    data.status
+  }</span></p>
+          </span>
+          <span>
+            <strong>Location:</strong> ${data.location}
+          </span>
+          <span>
+            <p><strong>Date:</strong> ${reformatDate(data.date)}</p>
+            <p><strong>Time:</strong> ${reformatTime(data.time)}</p>
+          </span>
+        </div>
+        <div class="billing">
+          <h2>Pricing</h2>
+          <p>Tip: NGN 1000</p>
+          <p>Transportation: NGN 1000</p>
+          <p><strong>Total:</strong> <strong>NGN 2000</strong></p>
+        </div>
+      </div>
+      <div>
+        <h2>Runner info</h2>
+        <div class="heading">
+          <img src="${
+            data.photo ||
+            "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+          }" />
+          <div class="setter-info">
+            <h1>${data.name}</h1>
+            <div class="contact_icons">
+              <span><i class="fa-solid fa-message"></i> message</span>
+              <span><i class="fa-solid fa-phone"></i> call</span>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  modal.insertAdjacentHTML("beforeend", html);
+  modal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+}
+
+// more Info
+async function taskTableInfo(id, gig) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/activity/id/${id}`);
+    const data = await res.json();
+
+    const result = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const bodydata = await result.json();
+    const taskImgData = bodydata[0];
+
+    seeMore(data[0], taskImgData);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// close modal
+overlay.addEventListener("click", () => {
+  modal.innerHTML = ``;
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+});
 
 //Switch to password
 const profileCard = document.querySelector(".profile_card");
@@ -30,7 +365,10 @@ const backArrow = document.getElementById("back_arrow");
 
 changePasswordBtn.addEventListener("click", () => {
   profileCard.style.display = "none";
-  passwordCard.style.display = "block";
+  passwordCard.style.display = "flex";
+  oldPassword.innerHTML = ``;
+  newPassword.innerHTML = ``;
+  cNewPassword.innerHTML = ``;
 });
 
 backArrow.addEventListener("click", () => {
@@ -73,51 +411,45 @@ function confirmPasswordValidation() {
   }
 }
 
-// passwordSaveBtn.addEventListener("click", (e) => {
-//   //   e.preventDefault();
-//   if (
-//     oldpasswordValidation() &&
-//     newpasswordValidation() &&
-//     confirmPasswordValidation()
-//   ) {
-//     changePassword();
-//   }
-// });
+passwordSaveBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  if (
+    oldpasswordValidation() &&
+    newpasswordValidation() &&
+    confirmPasswordValidation()
+  ) {
+    changePassword();
+  }
+});
 
 async function changePassword() {
   try {
-    if (
-      oldpasswordValidation() &&
-      newpasswordValidation() &&
-      confirmPasswordValidation()
-    ) {
-      const newData = {
-        oldPassword: oldPassword.value,
-        newPassword: newPassword.value,
-      };
+    const newData = {
+      oldPassword: oldPassword.value,
+      newPassword: newPassword.value,
+    };
 
-      const res = await fetch(
-        `http://localhost:3000/api/v1/users/password/${id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newData),
-        }
-      );
-      const data = await res.json();
+    const res = await fetch(
+      `http://localhost:3000/api/v1/users/password/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newData),
+      }
+    );
+    const data = await res.json();
 
-      if (data.message == "success") {
-        changePasswordMsg.innerText = "Password change";
-        changePasswordMsg.style.color = "#002b1d";
-        oldPassword.value = "";
-        newPassword.value = "";
-        cNewPassword.value = "";
-      }
-      if (data.message == "invalid") {
-        changePasswordMsg.innerText = "Invalid Password";
-      }
+    if (data.message == "success") {
+      changePasswordMsg.innerText = "Password change";
+      changePasswordMsg.style.color = "#002b1d";
+      oldPassword.value = "";
+      newPassword.value = "";
+      cNewPassword.value = "";
+    }
+    if (data.message == "invalid") {
+      changePasswordMsg.innerText = "Invalid Password";
     }
   } catch (err) {
     console.log(err);
@@ -132,44 +464,26 @@ function logout() {
   window.location = "main.html";
 }
 
-// Update user
-const inputs = document.querySelectorAll(".input");
-const username = localStorage.getItem("name");
-const email = localStorage.getItem("email");
-const photo = localStorage.getItem("photo");
-const nameInput = document.querySelector(".name");
-const emailInput = document.querySelector(".email");
-const profileImage = document.getElementById("profile_image");
-const editDp = document.getElementById("edit_dp");
-const editBtn = document.getElementById("edit__btn");
-const saveBtn = document.getElementById("saveBtn");
-
-nameInput.value = username
-  .split(" ")
-  .map((a) => a.replace(a[0], a[0].toUpperCase()))
-  .join(" ");
-emailInput.value = email;
-
+// Profile
 function edit() {
   inputs.forEach((input) => {
-    input.removeAttribute("readonly");
-    input.style.border = "2px solid #002b1d";
+    input.disabled = false;
   });
-  profileImage.style.border = "2px solid #002b1d";
-  editDp.disabled = false;
+  underline.forEach((line) => {
+    line.style.width = "100%";
+  });
   editBtn.classList.add("hidden");
   saveBtn.classList.remove("hidden");
 }
-// editBtn.addEventListener("click", edit);
+editBtn.addEventListener("click", edit);
 
 async function save() {
   try {
     const newData = {
-      name: nameInput.value.trim().toLowerCase(),
+      name: nameInput.value.trim(),
       email: emailInput.value.trim(),
       task: null,
       bio: null,
-      tip: null,
     };
 
     const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
@@ -184,85 +498,20 @@ async function save() {
     if (data.message == "success") {
       localStorage.setItem("name", data.name);
       localStorage.setItem("email", data.email);
+      localStorage.setItem("task", data.task);
+      localStorage.setItem("bio", data.bio);
 
       editBtn.classList.remove("hidden");
       saveBtn.classList.add("hidden");
       inputs.forEach((input) => {
-        input.setAttribute("readonly", "readonly");
-        input.style.border = "2px solid #68ddcb";
+        input.disabled = true;
       });
-      profileImage.style.border = "2px solid #68ddcb";
-      editDp.disabled = true;
+      underline.forEach((line) => {
+        line.style.width = "0%";
+      });
     }
   } catch (err) {
     console.error(`Error: ${err}`);
   }
 }
-// saveBtn.addEventListener("click", save);
-
-// SideBar active
-function active(ele) {
-  allSideMenu.forEach((i) => {
-    i.parentElement.classList.remove("active");
-  });
-  ele.classList.add("active");
-}
-
-// Display Contents
-const contents = document.querySelectorAll("#content");
-const profileDisplay = document.querySelector(".my_profile");
-const profileLink = document.getElementById("profileLink");
-const messagesDisplay = document.querySelector(".messages");
-const messagesLink = document.getElementById("messagesLink");
-const settingsDisplay = document.querySelector(".settings");
-const settingsLink = document.getElementById("settings");
-
-const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
-
-function displayContent(ele) {
-  hideAllContents();
-  ele.classList.remove("hidden");
-}
-
-function hideAllContents() {
-  contents.forEach((content) => {
-    content.classList.add("hidden");
-  });
-}
-updateDisplay();
-function updateDisplay() {
-  const state = window.location.hash.slice(1);
-  switch (state) {
-    case "profile":
-      displayContent(profileDisplay);
-      profileCard.style.display = "flex";
-      passwordCard.style.display = "none";
-      active(profileLink);
-      break;
-    case "messages":
-      displayContent(messagesDisplay);
-      active(messagesLink);
-      break;
-    case "settings":
-      displayContent(settingsDisplay);
-      break;
-    case "password":
-      profileCard.style.display = "none";
-      passwordCard.style.display = "block";
-      break;
-    case "edit":
-      edit();
-      break;
-    case "save":
-      save();
-      displayContent(profileDisplay);
-      break;
-    case "passwordSave":
-      changePassword();
-      break;
-
-    default:
-      break;
-  }
-}
-window.addEventListener("hashchange", updateDisplay);
+saveBtn.addEventListener("click", save);

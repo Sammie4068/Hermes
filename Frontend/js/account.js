@@ -23,17 +23,6 @@ const task = localStorage.getItem("task");
 const bio = localStorage.getItem("bio");
 const inputs = document.querySelectorAll(".profileInputs");
 
-// const nameInput = document.querySelector(".name");
-// const emailInput = document.querySelector(".email");
-// const bioInput = document.querySelector("#bio");
-// const profileInfo = document.querySelector(".profile-info");
-// const btnWrapper = document.querySelector(".btn-wrapper");
-// const profileImage = document.getElementById("profile_image");
-// const editDp = document.getElementById("edit_dp");
-// const tipInput = document.querySelector(".tip");
-// const taskInput = document.querySelector(".task-input");
-// const taskList = document.getElementById("task-dropdown");
-
 async function init() {
   // Nav bar profile
   userProfileName.innerText = username;

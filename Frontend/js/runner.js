@@ -153,7 +153,7 @@ async function requestRunner(requestData, id) {
     const data = await res.json();
 
     if (data.message == "success") {
-      window.location = "tasks.html";
+      window.location = "profile.html#tasks";
     }
   } catch (err) {
     console.log(err);
