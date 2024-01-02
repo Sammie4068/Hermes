@@ -168,12 +168,13 @@ body {
   width: 100%;
   margin-right: auto;
 }
-#content nav form .form-input {
-  display: flex;
+#content nav form .form-input, .search-form {
+  display: none;
   align-items: center;
   height: 36px;
+  gap: 10px;
 }
-#content nav form .form-input input {
+#content nav form .form-input input, .search-form input {
   flex-grow: 1;
   padding: 0 16px;
   height: 100%;
@@ -184,7 +185,7 @@ body {
   width: 100%;
   color: var(--dark);
 }
-#content nav form .form-input button {
+#content nav form .form-input button, .search-form button {
   width: 36px;
   height: 100%;
   display: flex;
@@ -197,6 +198,11 @@ body {
   outline: none;
   border-radius: 0 36px 36px 0;
   cursor: pointer;
+  margin-left: -10px;
+}
+
+#search_cancel {
+  color: #800000;
 }
 #content nav .notification {
   font-size: 20px;
@@ -357,6 +363,10 @@ body {
   grid-gap: 16px;
   margin-bottom: 24px;
 }
+.task_table .head i {
+  cursor: pointer;
+  font-size: 20px;
+}
 #content .content_display .table-data .head h3,
 .task_table .head h3 {
   margin-right: auto;
@@ -473,6 +483,35 @@ body {
   background-color: #800000;
 }
 
+.filter{
+  display: none;
+  align-items: center;
+  gap: 15px;
+  transition: left 1s ease-in-out;
+}
+.filter {
+  margin-left: 20px;
+}
+.filter i{
+  font-size: 30px;
+  color: #800000;
+  margin-left: -10px;
+}
+
+.filter span {
+  outline: none;
+  cursor: pointer;
+  padding: 0px 7px;
+  border-radius: 20px;
+  border: 1px solid var(--lite);
+}
+
+.filter span select {
+  outline: none;
+  cursor: pointer;
+  padding: 5px;
+  border: none;
+}
 /* .content_display */
 
 /* overlay and modal */

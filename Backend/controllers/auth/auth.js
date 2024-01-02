@@ -82,8 +82,6 @@ exports.register = async (req, res, next) => {
         role,
         name,
         email,
-        gig,
-        bio,
         photo,
         wallet,
       });

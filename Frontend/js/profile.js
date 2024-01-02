@@ -24,7 +24,9 @@ const inputs = document.querySelectorAll(".profileInputs");
 async function init() {
   // Nav bar profile
   userProfileName.innerText = username;
-
+  profileImage.attributes.src.value =
+    photo &&
+    "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg";
   // Dashboard
   // walletAmt.innerText = wallet;
   const setterActivityData = await getTableData();
@@ -96,6 +98,35 @@ function reformatTime(time) {
 }
 
 // Activity Data
+
+// Table icons
+const filterIcon = document.getElementById("filterIcon")
+const filterWrapper = document.querySelector(".filter")
+const iconWrapper = document.querySelector(".icon_wrapper")
+filterIcon.addEventListener("click", () => {
+  filterWrapper.style.display = "flex";
+  iconWrapper.style.display = "none";
+})
+
+const filterCancel = document.getElementById("filter_cancel");
+filterCancel.addEventListener("click", () => {
+  filterWrapper.style.display = "none"
+  iconWrapper.style.display = "block";
+})
+
+const searchIcon = document.getElementById("searchIcon");
+const searchWrapper = document.querySelector(".search-form")
+searchIcon.addEventListener("click", () => {
+  searchWrapper.style.display = "flex";
+  iconWrapper.style.display = "none"
+})
+
+const searchCancel = document.getElementById("search_cancel")
+searchCancel.addEventListener("click", () => {
+  searchWrapper.style.display = "none"
+  iconWrapper.style.display = "block"
+})
+
 const dashboardTable = document.getElementById("dashboard_table");
 const taskTable = document.getElementById("task_table");
 
