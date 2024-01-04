@@ -5,6 +5,7 @@ const userProfileName = document.getElementById("userName");
 const walletAmt = document.getElementById("wallet__amount");
 const taskCompleted = document.getElementById("task__completed");
 const taskPending = document.getElementById("task__pending");
+const taskTableNumber = document.querySelector(".head h3 span");
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
@@ -44,6 +45,9 @@ async function init() {
   dashboardTableDisplay(runnerActivityData);
   displayTask(runnerActivityData);
 
+  // Tasks
+  allTasks(taskFilterOPt);
+
   // Profile
   profileImage.attributes.src.value = photo;
   nameInput.value = username;
@@ -53,20 +57,6 @@ async function init() {
   allTasks(taskInput);
 }
 init();
-
-// All Tasks
-async function allTasks(parentEle) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
-    const data = await res.json();
-    data.forEach((dt) => {
-      const html = `<option>${dt.title}</option>`;
-      parentEle.insertAdjacentHTML("afterbegin", html);
-    });
-  } catch (err) {
-    console.log(err);
-  }
-}
 
 async function runnerActivity() {
   try {
@@ -102,6 +92,127 @@ function reformatTime(time) {
 }
 
 // Activity Data
+
+// Table icons
+const filterIcon = document.getElementById("filterIcon");
+const filterWrapper = document.querySelector(".filter");
+const iconWrapper = document.querySelector(".icon_wrapper");
+filterIcon.addEventListener("click", () => {
+  filterWrapper.style.display = "flex";
+  iconWrapper.style.display = "none";
+});
+
+const filterCancel = document.getElementById("filter_cancel");
+filterCancel.addEventListener("click", async () => {
+  filterWrapper.style.display = "none";
+  iconWrapper.style.display = "block";
+  // clearFilters();
+  const runnerActivityData = await runnerActivity();
+  displayTask(runnerActivityData);
+});
+
+const searchIcon = document.getElementById("searchIcon");
+const searchWrapper = document.querySelector(".search-form");
+searchIcon.addEventListener("click", () => {
+  searchWrapper.style.display = "flex";
+  iconWrapper.style.display = "none";
+});
+
+const searchCancel = document.getElementById("search_cancel");
+searchCancel.addEventListener("click", () => {
+  searchWrapper.style.display = "none";
+  iconWrapper.style.display = "block";
+});
+
+// Task filter options
+const taskFilterOPt = document.querySelector(".task_filter_options");
+async function allTasks(parentEle) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const data = await res.json();
+    data.forEach((dt) => {
+      const html = `<option>${dt.title}</option>`;
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// filter Options
+taskFilterOPt.addEventListener("change", async () => {
+  data = await runnerActivity();
+
+  let filterArr = data.filter((runner) => {
+  if (taskFilterOPt.value == "All") return runner ;
+
+   return runner.task == taskFilterOPt.value;
+  });
+
+  displayTask(filterArr);
+});
+
+const statusFilterOpt = document.querySelector(".status_filter_options");
+
+statusFilterOpt.addEventListener("change", async () => {
+data = await runnerActivity();
+
+let filterArr = data.filter((runner) => {
+  if (statusFilterOpt.value == "All") return runner;
+
+  return runner.status == statusFilterOpt.value.toLowerCase();
+});
+
+displayTask(filterArr);
+});
+
+// Fllter display
+async function displayFilter() {
+  let task = urlParams.get("task");
+  let status = urlParams.get("status");
+  data = await runnerActivity();
+  let filterArr = data;
+
+  if (task && status) {
+    filterArr = data.filter((runner) => {
+      return runner.task == task && runner.status == status;
+    });
+  }
+  if (task && !status) {
+    filterArr = data.filter((runner) => {
+      return runner.task == task;
+    });
+  }
+  if (status && !task) {
+    filterArr = data.filter((runner) => {
+      return runner.status == status;
+    });
+  }
+
+  emptyCardDiv();
+  // if (filterArr.length <= 0) renderError();
+  displayTask(filterArr);
+}
+
+
+// Empty table
+function emptyCardDiv() {
+  const tableEle = document.querySelectorAll("#table_tab");
+  tableEle.forEach((tab) => (tab.style.display = "none"));
+}
+
+// Search
+const searchBar = document.getElementById("search_bar");
+searchBar.addEventListener("input", async () => {
+  data = await runnerActivity();
+  const searchTerm = searchBar.value.toLowerCase();
+  const searchResult = data.filter((dat) =>
+    dat.name.toLowerCase().includes(searchTerm)
+  );
+  displayTask(searchResult);
+});
+
+
 const dashboardTable = document.getElementById("dashboard_table");
 const taskTable = document.getElementById("task_table");
 
@@ -130,7 +241,9 @@ function dashboardTableDisplay(data) {
 }
 
 function displayTask(data) {
+    taskTable.innerHTML = ``;
   const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
     let value = JSON.stringify(dat);
 
@@ -492,7 +605,6 @@ async function save() {
       task: taskInput.value.trim().toLowerCase(),
       bio: bioInput.value.trim(),
     };
-    console.log(newData);
 
     const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
       method: "PATCH",

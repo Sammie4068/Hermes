@@ -1,5 +1,5 @@
 // Url instance
-const urlParams = new URLSearchParams(window.location.search);
+// const urlParams = new URLSearchParams(window.location.search);
 
 // Init
 const id = localStorage.getItem("id");
@@ -8,7 +8,7 @@ const userProfileName = document.getElementById("userName");
 const walletAmt = document.getElementById("wallet__amount");
 const taskRunning = document.getElementById("task__running");
 const taskPending = document.getElementById("task__pending");
-const taskTableNumber = document.querySelector(".head h3 span")
+const taskTableNumber = document.querySelector(".head h3 span");
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
@@ -44,7 +44,6 @@ async function init() {
   taskPending.innerText = taskPendingData.length;
 
   // Dashboard Activity Table
-  taskTableNumber.innerHTML = `(${setterActivityData.length})`;
   dashboardTableDisplay(setterActivityData);
   displayTask(setterActivityData);
 
@@ -59,20 +58,6 @@ async function init() {
   emailInput.value = email;
 }
 init();
-
-// All Tasks
-async function allTasks(parentEle) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
-    const data = await res.json();
-    data.forEach((dt) => {
-      const html = `<option>${dt.title}</option>`;
-      parentEle.insertAdjacentHTML("afterbegin", html);
-    });
-  } catch (err) {
-    console.log(err);
-  }
-}
 
 async function getTableData() {
   try {
@@ -117,10 +102,11 @@ filterIcon.addEventListener("click", () => {
 });
 
 const filterCancel = document.getElementById("filter_cancel");
-filterCancel.addEventListener("click", () => {
+filterCancel.addEventListener("click", async () => {
   filterWrapper.style.display = "none";
   iconWrapper.style.display = "block";
   clearFilters();
+  const setterActivityData = await getTableData();
   displayTask(setterActivityData);
 });
 
@@ -153,46 +139,59 @@ async function allTasks(parentEle) {
 }
 
 // filter Options
-taskFilterOPt.addEventListener("change", () => {
-  addURLParam("task", taskFilterOPt.value);
-})
+taskFilterOPt.addEventListener("change", async () => {
+  data = await getTableData();
+
+  let filterArr = data.filter((runner) => {
+  if (taskFilterOPt.value == "All") return runner ;
+
+   return runner.task == taskFilterOPt.value;
+  });
+
+  displayTask(filterArr);
+});
 
 const statusFilterOpt = document.querySelector(".status_filter_options");
 
-statusFilterOpt.addEventListener("change", () => {
-  addURLParam("status", statusFilterOpt.value.toLowerCase());
+statusFilterOpt.addEventListener("change", async () => {
+data = await getTableData();
+
+let filterArr = data.filter((runner) => {
+  if (statusFilterOpt.value == "All") return runner;
+
+  return runner.status == statusFilterOpt.value.toLowerCase();
+});
+
+displayTask(filterArr);
 });
 
 // Update url params
-function addURLParam(key, value) {
-  urlParams.set(key, value);
-  const newUrl = `${window.location.origin}${
-    window.location.pathname
-  }?${urlParams.toString()}`;
-  window.history.replaceState({}, "", newUrl);
-  window.dispatchEvent(new Event("popstate"));
-}
+// function addURLParam(key, value) {
+//   urlParams.set(key, value);
+//   const newUrl = `${window.location.origin}${
+//     window.location.pathname
+//   }?${urlParams.toString()}`;
+//   window.history.replaceState({}, "", newUrl);
+//   window.dispatchEvent(new Event("popstate"));
+// }
 
-function clearFilters() {
-  const newUrl = `${window.location.origin}${window.location.pathname}`;
-  window.history.replaceState({}, "", newUrl);
-}
+// function clearFilters() {
+//   const newUrl = `${window.location.origin}${window.location.pathname}`;
+//   window.history.replaceState({}, "", newUrl);
+// }
 
 // Fllter display
-async function displayData() {
+async function displayFilter() {
   let task = urlParams.get("task");
   let status = urlParams.get("status");
   data = await getTableData();
-  let filterArr;
-  
-  // if (task == "All") {
-  //   filterArr = data
-  // }
-    if (task && status) {
-      filterArr = data.filter((runner) => {
-        return runner.task == task && runner.status == status;
-      });
-    }
+  let filterArr = data;
+
+  if (task && status) {
+    filterArr = data.filter((runner) => {
+      return runner.task == task && runner.status == status;
+    });
+  }
   if (task && !status) {
     filterArr = data.filter((runner) => {
       return runner.task == task;
@@ -206,16 +205,27 @@ async function displayData() {
 
   emptyCardDiv();
   // if (filterArr.length <= 0) renderError();
-    displayTask(filterArr);
+  displayTask(filterArr);
 }
 
-window.addEventListener("popstate", displayData);
+// window.addEventListener("popstate", displayFilter);
 
 // Empty table
 function emptyCardDiv() {
   const tableEle = document.querySelectorAll("#table_tab");
   tableEle.forEach((tab) => (tab.style.display = "none"));
 }
+
+// Search
+const searchBar = document.getElementById("search_bar");
+searchBar.addEventListener("input", async () => {
+  data = await getTableData();
+  const searchTerm = searchBar.value.toLowerCase();
+  const searchResult = data.filter((dat) =>
+    dat.name.toLowerCase().includes(searchTerm)
+  );
+  displayTask(searchResult);
+});
 
 // Task Data
 const dashboardTable = document.getElementById("dashboard_table");
@@ -247,8 +257,9 @@ function dashboardTableDisplay(data) {
 }
 
 function displayTask(data) {
-  console.log(data)
+  taskTable.innerHTML = ``;
   const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
     let value = JSON.stringify({ id: dat.id, task: dat.task });
 

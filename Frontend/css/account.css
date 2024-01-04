@@ -182,7 +182,7 @@ body {
   background: var(--grey);
   border-radius: 36px 0 0 36px;
   outline: none;
-  width: 100%;
+  width: 300px;
   color: var(--dark);
 }
 #content nav form .form-input button, .search-form button {
@@ -203,7 +203,13 @@ body {
 
 #search_cancel {
   color: #800000;
+  transition: all 0.2s ease-in-out;
 }
+
+#search_cancel:hover {
+  transform: scale(1.05);
+}
+
 #content nav .notification {
   font-size: 20px;
   position: relative;
@@ -496,12 +502,15 @@ body {
   font-size: 30px;
   color: #800000;
   margin-left: -10px;
+  transition: all 0.2s ease-in-out;
 }
-
+.filter i:hover {
+  transform: scale(1.05);
+}
 .filter span {
   outline: none;
   cursor: pointer;
-  padding: 0px 7px;
+  padding: 3px 7px;
   border-radius: 10px;
   border: 1px solid var(--lite);
 }
@@ -924,6 +933,11 @@ body {
   width: 11%;
   position: relative;
   left: -190px;
+}
+.button.password_save{
+  width: 11%;
+  position: relative;
+  left: -145px;
 }
 
 .button:hover,

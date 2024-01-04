@@ -162,9 +162,37 @@
         <div class="task_table">
           <div class="order">
             <div class="head">
-              <h3>Recent Tasks</h3>
-              <i class="bx bx-search"></i>
-              <i class="bx bx-filter"></i>
+              <h3>Recent Tasks <span>(0)</span></h3>
+             <span class="icon_wrapper">
+                <i class="bx bx-search" id="searchIcon"></i>
+                <i class="bx bx-filter" id="filterIcon"></i>
+              </span>
+              <div class="filter">
+                <span
+                  >tasks:
+                  <select class="task_filter_options">
+                    <option selected>All</option>
+                  </select>
+                </span>
+                <span>
+                  status:
+                  <select class="status_filter_options">
+                    <option selected>All</option>
+                    <option>Completed</option>
+                    <option>Processing</option>
+                    <option>Pending</option>
+                    <option>Cancelled</option>
+                  </select>
+                </span>
+                <i class="bx bx-x-circle" id="filter_cancel"></i>
+              </div>
+              <form action="#">
+                <div class="search-form">
+                  <input type="search" 
+                  placeholder="Search Runner..." id="search_bar"/>
+                  <i class="bx bx-x-circle" id="search_cancel"></i>
+                </div>
+              </form>
             </div>
             <table>
               <thead>
