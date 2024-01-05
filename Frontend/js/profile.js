@@ -9,6 +9,7 @@ const walletAmt = document.getElementById("wallet__amount");
 const taskRunning = document.getElementById("task__running");
 const taskPending = document.getElementById("task__pending");
 const taskTableNumber = document.querySelector(".head h3 span");
+const tableMsg = document.getElementById("table_msg");
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
@@ -44,6 +45,7 @@ async function init() {
   taskPending.innerText = taskPendingData.length;
 
   // Dashboard Activity Table
+  if (setterActivityData.length < 1) tableMsg.style.display = "block";
   dashboardTableDisplay(setterActivityData);
   displayTask(setterActivityData);
 
@@ -143,9 +145,9 @@ taskFilterOPt.addEventListener("change", async () => {
   data = await getTableData();
 
   let filterArr = data.filter((runner) => {
-  if (taskFilterOPt.value == "All") return runner ;
+    if (taskFilterOPt.value == "All") return runner;
 
-   return runner.task == taskFilterOPt.value;
+    return runner.task == taskFilterOPt.value;
   });
 
   displayTask(filterArr);
@@ -154,31 +156,16 @@ taskFilterOPt.addEventListener("change", async () => {
 const statusFilterOpt = document.querySelector(".status_filter_options");
 
 statusFilterOpt.addEventListener("change", async () => {
-data = await getTableData();
+  data = await getTableData();
 
-let filterArr = data.filter((runner) => {
-  if (statusFilterOpt.value == "All") return runner;
+  let filterArr = data.filter((runner) => {
+    if (statusFilterOpt.value == "All") return runner;
 
-  return runner.status == statusFilterOpt.value.toLowerCase();
+    return runner.status == statusFilterOpt.value.toLowerCase();
+  });
+
+  displayTask(filterArr);
 });
-
-displayTask(filterArr);
-});
-
-// Update url params
-// function addURLParam(key, value) {
-//   urlParams.set(key, value);
-//   const newUrl = `${window.location.origin}${
-//     window.location.pathname
-//   }?${urlParams.toString()}`;
-//   window.history.replaceState({}, "", newUrl);
-//   window.dispatchEvent(new Event("popstate"));
-// }
-
-// function clearFilters() {
-//   const newUrl = `${window.location.origin}${window.location.pathname}`;
-//   window.history.replaceState({}, "", newUrl);
-// }
 
 // Fllter display
 async function displayFilter() {
@@ -204,7 +191,10 @@ async function displayFilter() {
   }
 
   emptyCardDiv();
-  // if (filterArr.length <= 0) renderError();
+  if (filterArr.length < 1) {
+    tableMsg.innerText = "There's no task that fits your filter"
+    tableMsg.style.display = "block";
+  }
   displayTask(filterArr);
 }
 
