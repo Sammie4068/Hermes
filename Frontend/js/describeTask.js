@@ -117,7 +117,7 @@ function closeModal() {
 //Services
 const services = document.getElementById("services");
 services.addEventListener("click", () => {
-  window.location = "main.html#services";
+  window.location = "index.html#services";
 });
 
 //Account

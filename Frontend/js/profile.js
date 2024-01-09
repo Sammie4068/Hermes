@@ -586,7 +586,7 @@ const logoutLink = document.getElementById("logout");
 logoutLink.addEventListener("click", logout);
 function logout() {
   localStorage.clear();
-  window.location = "main.html";
+  window.location = "index.html";
 }
 
 // Profile

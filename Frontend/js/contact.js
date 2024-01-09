@@ -14,8 +14,8 @@ if (token) {
   signin.classList.add("hidden");
   account.classList.remove("hidden");
   runnerBtn.classList.add("hidden");
-    userProfile.style.display = "flex";
-    user.innerText = `${username}`;
+  userProfile.style.display = "flex";
+  user.innerText = `${username}`;
 }
 
 runnerBtn.addEventListener("click", () => {
@@ -53,5 +53,5 @@ asRunner.addEventListener("click", () => {
 });
 
 services.addEventListener("click", () => {
-  window.location = "main.html#services";
+  window.location = "index.html#services";
 });

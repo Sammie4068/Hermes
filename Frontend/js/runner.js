@@ -15,7 +15,7 @@ function removeAllactive(parentEle) {
 //Services
 const services = document.getElementById("services");
 services.addEventListener("click", () => {
-  window.location = "main.html#services";
+  window.location = "index.html#services";
 });
 
 // Render Error
@@ -42,7 +42,7 @@ const gig = localStorage.getItem("gig");
 const gigLocation = localStorage.getItem("state");
 
 function displayRunners(data) {
-  console.log(data)
+  console.log(data);
   data.map((dat) => {
     let value = JSON.stringify(dat.id);
     let markup = `<div class="card_container" data-aos="fade-left"

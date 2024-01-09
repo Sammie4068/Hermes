@@ -144,9 +144,9 @@ taskFilterOPt.addEventListener("change", async () => {
   data = await runnerActivity();
 
   let filterArr = data.filter((runner) => {
-  if (taskFilterOPt.value == "All") return runner ;
+    if (taskFilterOPt.value == "All") return runner;
 
-   return runner.task == taskFilterOPt.value;
+    return runner.task == taskFilterOPt.value;
   });
 
   displayTask(filterArr);
@@ -155,15 +155,15 @@ taskFilterOPt.addEventListener("change", async () => {
 const statusFilterOpt = document.querySelector(".status_filter_options");
 
 statusFilterOpt.addEventListener("change", async () => {
-data = await runnerActivity();
+  data = await runnerActivity();
 
-let filterArr = data.filter((runner) => {
-  if (statusFilterOpt.value == "All") return runner;
+  let filterArr = data.filter((runner) => {
+    if (statusFilterOpt.value == "All") return runner;
 
-  return runner.status == statusFilterOpt.value.toLowerCase();
-});
+    return runner.status == statusFilterOpt.value.toLowerCase();
+  });
 
-displayTask(filterArr);
+  displayTask(filterArr);
 });
 
 // Fllter display
@@ -194,7 +194,6 @@ async function displayFilter() {
   displayTask(filterArr);
 }
 
-
 // Empty table
 function emptyCardDiv() {
   const tableEle = document.querySelectorAll("#table_tab");
@@ -211,7 +210,6 @@ searchBar.addEventListener("input", async () => {
   );
   displayTask(searchResult);
 });
-
 
 const dashboardTable = document.getElementById("dashboard_table");
 const taskTable = document.getElementById("task_table");
@@ -241,7 +239,7 @@ function dashboardTableDisplay(data) {
 }
 
 function displayTask(data) {
-    taskTable.innerHTML = ``;
+  taskTable.innerHTML = ``;
   const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
   taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
@@ -581,7 +579,7 @@ const logoutLink = document.getElementById("logout");
 logoutLink.addEventListener("click", logout);
 function logout() {
   localStorage.clear();
-  window.location = "main.html";
+  window.location = "index.html";
 }
 
 // Profile

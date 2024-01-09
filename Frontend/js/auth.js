@@ -160,7 +160,7 @@ async function postData(url, data) {
       localStorage.setItem("email", bodydata.email);
       localStorage.setItem("wallet", bodydata.wallet);
 
-      window.location = "main.html";
+      window.location = "index.html";
     }
     if (bodydata.message == "Already Exists") {
       signupMsg.textContent = "Email Already Exist";
@@ -203,7 +203,7 @@ async function loginPost(url, data) {
       localStorage.setItem("bio", bodydata.bio);
       localStorage.setItem("wallet", bodydata.wallet);
       if (bodydata.role == "setter") {
-        window.location = "main.html";
+        window.location = "index.html";
       } else if (bodydata.role == "runner") {
         window.location = "account.html#dashboard";
       }

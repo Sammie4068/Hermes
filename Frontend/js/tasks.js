@@ -24,7 +24,7 @@ userImg.addEventListener("click", () => {
 // Services
 const services = document.getElementById("services");
 services.addEventListener("click", () => {
-  window.location = "main.html#services";
+  window.location = "index.html#services";
 });
 
 // AOS.init();
@@ -65,7 +65,7 @@ function displayTask(data) {
               </tr>`;
     table.insertAdjacentHTML("beforeend", markup);
   });
- 
+
   const tableEle = document.querySelectorAll("#table_element");
   tableEle.forEach((tab) => {
     tab.addEventListener("click", () => {
@@ -160,11 +160,11 @@ const modal = document.querySelector(".modal");
 function statusDisplay(data, taskImgData) {
   modal.innerHTML = ``;
 
-    const originalDate = new Date(data.date);
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
-      originalDate
-    );
+  const originalDate = new Date(data.date);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
+    originalDate
+  );
   let html = `<div class="card_body">
         <div class="task__info">
           <span>
