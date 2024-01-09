@@ -8,7 +8,7 @@ async function allTasks(parentEle) {
     const res = await fetch(`http://localhost:3000/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
-      const html = `<li>${dt.title}</li>`;
+      const html = `<li>${dt.title}  <img src="${dt.icons}"></li>`;
       parentEle.insertAdjacentHTML("afterbegin", html);
     });
   } catch (err) {
@@ -63,7 +63,7 @@ nextBtn.addEventListener("click", (e) => {
   const option = gigOption.value;
 
   const data = {
-    task: gig.value,
+    task: gig.value.trim(),
     description: gigDescription.value,
     location: gigLocation.value + " " + locationState.value.toLowerCase(),
     date: gigDate.value,

@@ -9,7 +9,7 @@ const walletAmt = document.getElementById("wallet__amount");
 const taskRunning = document.getElementById("task__running");
 const taskPending = document.getElementById("task__pending");
 const taskTableNumber = document.querySelector(".head h3 span");
-const tableMsg = document.getElementById("table_msg");
+const tableMsg = document.querySelectorAll("#table_msg");
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
@@ -33,7 +33,7 @@ async function init() {
     photo &&
     "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg";
   // Dashboard
-  // walletAmt.innerText = wallet;
+  walletAmt.innerText = wallet || 0;
   const setterActivityData = await getTableData();
   const runningTaskData = setterActivityData.filter(
     (data) => data.status == "processing"
@@ -45,7 +45,8 @@ async function init() {
   taskPending.innerText = taskPendingData.length;
 
   // Dashboard Activity Table
-  if (setterActivityData.length < 1) tableMsg.style.display = "block";
+  if (setterActivityData.length < 1)
+    tableMsg.forEach((msg) => (msg.style.display = "block"));
   dashboardTableDisplay(setterActivityData);
   displayTask(setterActivityData);
 
@@ -192,7 +193,7 @@ async function displayFilter() {
 
   emptyCardDiv();
   if (filterArr.length < 1) {
-    tableMsg.innerText = "There's no task that fits your filter"
+    tableMsg.innerText = "There's no task that fits your filter";
     tableMsg.style.display = "block";
   }
   displayTask(filterArr);

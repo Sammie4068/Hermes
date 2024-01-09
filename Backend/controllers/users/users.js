@@ -22,8 +22,8 @@ exports.getRunners = async (req, res, next) => {
 exports.gerUsersById = async (req, res, next) => {
   try {
     const results = await gerUsersById(req.params.id);
-    const {id, photo, name, email, gig, bio, completed, school } = results.rows[0];
-    res.json({ id, photo, name, email, gig, bio, completed, school });
+    const {id, photo, name, email, gig, bio, completed, school, wallet } = results.rows[0];
+    res.json({ id, photo, name, email, gig, bio, completed, school, wallet });
   } catch (err) {
     return next(err);
   }

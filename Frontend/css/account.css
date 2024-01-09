@@ -462,7 +462,7 @@ body {
   background: var(--grey);
   cursor: pointer;
 }
-.task_table #table_msg {
+#table_msg {
   display: none;
  position: relative;
  left: -70px;

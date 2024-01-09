@@ -18,30 +18,6 @@ services.addEventListener("click", () => {
   window.location = "main.html#services";
 });
 
-//userprofile
-const role = localStorage.getItem("role");
-const username = localStorage.getItem("name");
-// const account = document.getElementById("account");
-const userProfile = document.querySelector(".user");
-const user = document.querySelector(".user p");
-const userImg = document.querySelector(".user img");
-userProfile.style.display = "flex";
-user.innerText = `${username}`;
-user.addEventListener("click", () => {
-  if (role == "setter") {
-    window.location = "profile.html#profile";
-  } else if (role == "runner") {
-    window.location = "account.html#dashboard";
-  }
-});
-userImg.addEventListener("click", () => {
-  if (role == "setter") {
-    window.location = "profile.html#profile";
-  } else if (role == "runner") {
-    window.location = "account.html#dashboard";
-  }
-});
-
 // Render Error
 const errorContainer = document.querySelector(".render_error");
 
@@ -66,6 +42,7 @@ const gig = localStorage.getItem("gig");
 const gigLocation = localStorage.getItem("state");
 
 function displayRunners(data) {
+  console.log(data)
   data.map((dat) => {
     let value = JSON.stringify(dat.id);
     let markup = `<div class="card_container" data-aos="fade-left"
@@ -174,10 +151,6 @@ function statusDisplay(data) {
         <div class="runner-info">
           <h1>${data.name}</h1>
           <p>${data.completed} ${data.gig} completed</p>
-          <div class="contact_icons">
-            <span><i class="fa-solid fa-message"></i> message</span>
-            <span><i class="fa-solid fa-phone"></i> call</span>
-          </div>
         </div>
       </div>
       <hr />

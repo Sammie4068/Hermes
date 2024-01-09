@@ -967,11 +967,19 @@ footer .follow .socials i:hover {
   border-radius: 8px;
   margin-top: -0.5rem;
 }
+.task-dropdown img{
+ width: 30px;
+ height: 30px;
+ color: #002b1d;
+}
 .task-dropdown li {
   color: var(--primary-color);
   text-transform: capitalize;
   cursor: pointer;
   margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 .task-dropdown li:hover {
   transform: scale(1.01);
