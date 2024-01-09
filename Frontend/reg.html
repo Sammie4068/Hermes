@@ -77,15 +77,13 @@
             <h1>Profile card</h1>
             <p class="msg" id="msg-ii"></p>
             <div>
-            <label>Task </label>
-            <input
-              type="text"
-              class="task-input"
-              placeholder="Select a task"
-              readonly
-              required
-            />
-            <ul class="task-dropdown" id="task-dropdown"></ul>
+              <label>Task </label>
+              <select
+                class="task-input"
+                id="task-input"
+              >
+              <option value="" disabled selected></option>
+            </select>
               <p>
                 Choose the task you want to run. This can be change anytime.
               </p>
@@ -99,7 +97,12 @@
               </p>
             </div>
             <div class="btnCont">
-              <input type="submit" value="Back" id="backBtn1" class="back_btn" />
+              <input
+                type="submit"
+                value="Back"
+                id="backBtn1"
+                class="back_btn"
+              />
               <input type="submit" value="Next" id="nextBtn2" />
             </div>
           </div>
@@ -117,7 +120,7 @@
                 <option disabled selected>
                   What state is your school located?
                 </option>
-                <option value="Abia">Abia</option>
+                <!-- <option value="Abia">Abia</option>
                 <option value="Adamawa">Adamawa</option>
                 <option value="Akwa Ibom">Akwa Ibom</option>
                 <option value="Anambra">Anambra</option>
@@ -133,9 +136,9 @@
                 <option value="Enugu">Enugu</option>
                 <option value="Gombe">Gombe</option>
                 <option value="Imo">Imo</option>
-                <option value="Jigawa">Jigawa</option>
+                <option value="Jigawa">Jigawa</option> -->
                 <option value="Kaduna">Kaduna</option>
-                <option value="Kano">Kano</option>
+                <!-- <option value="Kano">Kano</option>
                 <option value="Katsina">Katsina</option>
                 <option value="Kebbi">Kebbi</option>
                 <option value="Kogi">Kogi</option>
@@ -152,7 +155,7 @@
                 <option value="Sokoto">Sokoto</option>
                 <option value="Taraba">Taraba</option>
                 <option value="Yobe">Yobe</option>
-                <option value="Zamfara">Zamfara</option>
+                <option value="Zamfara">Zamfara</option> -->
               </select>
             </div>
             <div>
@@ -180,7 +183,12 @@
               >
             </div>
             <div class="btnCont">
-              <input type="submit" value="Back" id="backBtn2" class="back_btn"/>
+              <input
+                type="submit"
+                value="Back"
+                id="backBtn2"
+                class="back_btn"
+              />
               <input type="submit" value="Submit" id="submitBtn" />
             </div>
           </div>

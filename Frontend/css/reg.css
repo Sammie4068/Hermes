@@ -157,6 +157,10 @@ textarea {
   height: 140px;
 }
 
+.task-input {
+  text-transform: capitalize;
+}
+
 .task-dropdown {
   background-color: #fafbfb;
   padding: 20px;

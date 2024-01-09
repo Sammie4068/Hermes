@@ -8,21 +8,14 @@ function active(parentEle, ele) {
   ele.classList.add("active_option");
 }
 
+function removeAllactive(parentEle) {
+  parentEle.forEach((i) => i.classList.remove("active_option"));
+}
+
 //Services
 const services = document.getElementById("services");
 services.addEventListener("click", () => {
   window.location = "main.html#services";
-});
-
-//Account
-const role = localStorage.getItem("role");
-const account = document.getElementById("account");
-account.addEventListener("click", () => {
-  if (role == "setter") {
-    window.location = "profile.html#profile";
-  } else if (role == "runner") {
-    window.location = "account.html#dashboard";
-  }
 });
 
 // Render Error
@@ -32,14 +25,26 @@ function renderError() {
   errorContainer.style.display = "flex";
 }
 
+// Render Spinner
+function renderSpinner(parentEle) {
+  overlay.style.display = "flex";
+  modal.classList.add("hidden");
+  parentEle.innerHTML = ``;
+  const html = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  <p class="wait">Please wait..</p>
+  `;
+  parentEle.insertAdjacentHTML("beforeend", html);
+}
+
 // Display runners
 const wrapper = document.querySelector(".runners_wrapper");
 const gig = localStorage.getItem("gig");
 const gigLocation = localStorage.getItem("state");
 
 function displayRunners(data) {
+  console.log(data)
   data.map((dat) => {
-    let value = JSON.stringify(dat);
+    let value = JSON.stringify(dat.id);
     let markup = `<div class="card_container" data-aos="fade-left"
         data-aos-duration="1000">
           <div class="slide-card">
@@ -51,25 +56,21 @@ function displayRunners(data) {
                 />
                 <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
-                  <button value='${value}' id="reqBtn">Request</button>
+                  <button id="reqBtn" value='${value}'>Request</button>
                 </span>
               </div>
               <article>
                 <div class="info_top">
                   <div class="name-profession">
-                    <span class="name">${dat.name
-                      .split(" ")
-                      .map((a) => a.replace(a[0], a[0].toUpperCase()))
-                      .join(" ")}</span>
-                    <span class="profession">${dat.completed} ${
-      dat.gig
-    } completed</span>
+                    <span class="name">${dat.name}</span>
+                    <span class="profession">${dat.completed} ${dat.gig} completed</span>
                   </div>
                 </div>
                 <div class="about">
                   <h3>About me</h3>
                   <p>${dat.bio}</p>
                 </div>
+                <button value='${value}' class="see_more">See More...</button>
               </article>
             </div>
           </div>
@@ -77,40 +78,79 @@ function displayRunners(data) {
 
     wrapper.insertAdjacentHTML("beforeend", markup);
   });
-  // Request Button
+  // see more Button
+  const seeMoreBtn = document.querySelectorAll(".see_more");
+  seeMoreBtn.forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const runnerID = JSON.parse(e.target.value);
+      const data = await runnerInfo(runnerID);
+      statusDisplay(data);
+    });
+  });
+
+  // Request button
   const reqBtn = document.querySelectorAll("#reqBtn");
   reqBtn.forEach((btn) => {
     btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      btn.textContent = "Pending..." 
-      btn.style.background = "#fd7238";
-      const runnerData = JSON.parse(e.target.value);
-       statusDisplay(runnerData);
+      const runnerID = JSON.parse(e.target.value);
+      localStorage.setItem("runnerID", runnerID);
+      const id = localStorage.getItem("taskID");
+      const gig = localStorage.getItem("gig");
+
+      showTaskWithRunner(id, gig, runnerID);
     });
   });
 }
 
+// Get users info
+async function runnerInfo(id) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`);
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
+// Request function
+async function requestRunner(requestData, id) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/runner/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      }
+    );
+    const data = await res.json();
+
+    if (data.message == "success") {
+      window.location = "profile.html#tasks";
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 const overlay = document.querySelector(".overlay");
 const modal = document.querySelector(".modal");
 function statusDisplay(data) {
-  let html = `<div class="status">
-        <p>Status: <span>pending</span> </p>
-        <p>Waiting for the runner to confirm....</p>
-      </div>
+  modal.innerHTML = ``;
+  let value = JSON.stringify(data.id);
+  let html = `
       <div class="heading">
+      <div class="image_side">
         <img src="${data.photo}" alt="sample" />
+        <button class="btn" id="reqBtn2" value='${value}'> Request </button>
+      </div>
         <div class="runner-info">
-          <h1>${data.name
-            .split(" ")
-            .map((a) => a.replace(a[0], a[0].toUpperCase()))
-            .join(" ")}</h1>
+          <h1>${data.name}</h1>
           <p>${data.completed} ${data.gig} completed</p>
-          <div class="contact_icons">
-            <span><i class="fa-solid fa-message"></i> message</span>
-            <span><i class="fa-solid fa-phone"></i> call</span>
-          </div>
         </div>
       </div>
       <hr />
@@ -142,7 +182,122 @@ function statusDisplay(data) {
   modal.insertAdjacentHTML("beforeend", html);
   modal.classList.remove("hidden");
   overlay.classList.remove("hidden");
+
+  // Request button
+  const reqBtnMore = document.querySelectorAll("#reqBtn2");
+  reqBtnMore.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      const runnerID = JSON.parse(e.target.value);
+      localStorage.setItem("runnerID", runnerID);
+      const id = localStorage.getItem("taskID");
+      const gig = localStorage.getItem("gig");
+
+      showTaskWithRunner(id, gig, runnerID);
+    });
+  });
 }
+
+// Task popup
+
+// date and time function
+function reformatDate(date) {
+  const originalDate = new Date(date);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
+    originalDate
+  );
+  return formattedDate;
+}
+
+function reformatTime(time) {
+  const inputTimeString = time;
+  const parsedTime = new Date(`2000-01-01T${inputTimeString}`);
+  const formattedTime = parsedTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return formattedTime;
+}
+
+async function showTaskWithRunner(id, gig, runnerID) {
+  try {
+    modal.innerHTML = ``;
+
+    const result = await fetch(
+      `http://localhost:3000/api/v1/activity/setter/${id}`
+    );
+    const logData = await result.json();
+    const data = logData[0];
+
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const bodydata = await res.json();
+    const apiData = bodydata[0];
+
+    const response = await fetch(
+      `http://localhost:3000/api/v1/users/${runnerID}`
+    );
+    const runnerData = await response.json();
+
+    let html = `<div class="card_body">
+          <div class="task_side">
+            <span>
+              <h1>${data.task}</h1>
+              <img src="${apiData.icons}" alt="${apiData.title}"/>
+            </span>
+            <span> <strong>Location:</strong> ${data.location}</span>
+            <span>
+              <p> <strong>Date:</strong> ${reformatDate(data.date)}</p>
+              <p> <strong>Time:</strong> ${reformatTime(data.time)}</p>
+            </span>
+          </div>
+          <div class="billing">
+            <h2>Pricing</h2>
+            <p>Tip: NGN 1000</p>
+            <p>Transportation: NGN 1000</p>
+            <p> <strong>Total:</strong> <strong>NGN 2000</strong> </p>
+          </div>
+        </div>
+        <h2>Runner</h2>
+        <div class="heading">
+          <img src="${runnerData.photo}" alt="sample" />
+          <div class="runner-info">
+            <h1>${runnerData.name}</h1>
+            <p>${runnerData.school}</p>
+          </div>
+        </div>
+        <div class="button__wrapper">
+          <button class="cancel_btn" onclick="closeModal()">Cancel</button>
+          <button class="proceed_btn">Proceed</button>
+        </div>`;
+
+    modal.insertAdjacentHTML("beforeend", html);
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+
+    document.querySelector(".proceed_btn").addEventListener("click", () => {
+      renderSpinner(overlay);
+      setTimeout(() => {
+        const requestData = {
+          runnerID: localStorage.getItem("runnerID"),
+        };
+        const id = localStorage.getItem("taskID");
+        requestRunner(requestData, id);
+      }, 1000);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// close modal
+function closeModal() {
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+  modal.innerHTML = ``;
+}
+
+overlay.addEventListener("click", closeModal);
 
 function emptyCardDiv() {
   const cardcontainer = document.querySelectorAll(".card_container");
@@ -232,6 +387,8 @@ document.querySelector(".filter_clear").addEventListener("click", () => {
   clearFilters();
   emptyCardDiv();
   getRunners();
+  removeAllactive(genderOptions);
+  removeAllactive(runnerType);
 });
 
 async function displayData() {

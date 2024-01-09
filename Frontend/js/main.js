@@ -71,13 +71,14 @@ gsap.from(".img_wrapper img", {
 // Authentication
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
-const account = document.getElementById("account");
+const username = localStorage.getItem("name");
+const activity = document.getElementById("activity");
 const signin = document.getElementById("signin");
 const runnerBtn = document.querySelector(".runner_btn");
 
 if (token) {
   signin.classList.add("hidden");
-  account.classList.remove("hidden");
+  activity.classList.remove("hidden");
   runnerBtn.classList.add("hidden");
 }
 
@@ -89,9 +90,9 @@ signin.addEventListener("click", () => {
   window.location = "auth.html";
 });
 
-account.addEventListener("click", () => {
+activity.addEventListener("click", () => {
   if (role == "setter") {
-    window.location = "profile.html#profile";
+    window.location = "profile.html#dashboard";
   } else if (role == "runner") {
     window.location = "account.html#dashboard";
   }
@@ -161,7 +162,7 @@ const setterBtn = document.querySelectorAll(".setter_btn");
 setterBtn.forEach((btn) =>
   btn.addEventListener("click", () => {
     if (token) {
-      window.location = "describeTask.html"
+      window.location = "describeTask.html";
     } else {
       localStorage.setItem("role", "setter");
       window.location = "auth.html";

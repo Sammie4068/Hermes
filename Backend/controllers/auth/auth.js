@@ -25,7 +25,7 @@ exports.login = async (req, res, next) => {
       return res.json({ message: "invalid" });
     }
 
-    const { id, role, name, email } = foundUser.rows[0];
+    const { id, role, name, email, gig, bio, photo, wallet } = foundUser.rows[0];
     const hashedPassword = await bcrypt.compare(
       req.body.password,
       foundUser.rows[0].password
@@ -44,6 +44,10 @@ exports.login = async (req, res, next) => {
       role,
       name,
       email,
+      gig,
+      bio,
+      photo,
+      wallet
     });
   } catch (err) {
     return next(err);
@@ -66,7 +70,7 @@ exports.register = async (req, res, next) => {
         role,
       };
       const result = await addUsers(user);
-      const { id } = result.rows[0];
+      const { id, gig, bio, photo, wallet } = result.rows[0];
       const token = jwt.sign({ name }, secret, {
         expiresIn: 60 * 60,
       });
@@ -78,6 +82,8 @@ exports.register = async (req, res, next) => {
         role,
         name,
         email,
+        photo,
+        wallet,
       });
     }
   } catch (err) {
@@ -121,18 +127,24 @@ exports.addRunner = async (req, res, next) => {
       role: "runner",
       gig: req.body.gig,
       bio: req.body.bio,
-      tip: req.body.tip
+      wallet: 0
     };
     const result = await addRunner(runner);
     const token = jwt.sign({ name }, secret, {
       expiresIn: 60 * 60,
     });
-    const {id} = result.rows[0]
+    const { id, email, gig, bio, photo, wallet } = result.rows[0];
     res.json({
       message: "success",
       id,
       token,
-      role: "runner"
+      role: "runner",
+      name,
+      email,
+      gig,
+      bio,
+      photo,
+      wallet,
     });
   } catch (err) {
     return next(err);

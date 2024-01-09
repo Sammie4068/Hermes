@@ -9,6 +9,13 @@
     />
     <link
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css"
     />
     <link rel="stylesheet" href="./css/account.css" />
@@ -17,14 +24,18 @@
   </head>
   <body>
     <section id="sidebar">
-      <a href="main.html" class="brand">
-        <span class="text">Hermes</span>
-      </a>
+      <span class="text brand">Hermes</span>
       <ul class="side-menu top">
         <li class="active" id="dashboardLink">
           <a href="#dashboard">
             <i class="bx bxs-dashboard"></i>
             <span class="text">Dashboard</span>
+          </a>
+        </li>
+        <li id="tasksLink">
+          <a href="#tasks">
+            <i class="bx bxs-calendar"></i>
+            <span class="text">Tasks</span>
           </a>
         </li>
         <li id="profileLink">
@@ -33,12 +44,12 @@
             <span class="text">My Profile</span>
           </a>
         </li>
-        <li id="messagesLink">
+        <!-- <li id="messagesLink">
           <a href="#messages">
             <i class="bx bxs-message-dots"></i>
             <span class="text">Messages</span>
           </a>
-        </li>
+        </li> -->
       </ul>
       <ul class="side-menu">
         <li id="settings">
@@ -56,8 +67,30 @@
       </ul>
     </section>
 
-    <section id="content" class="dashboard_display">
-      <main>
+    <section id="content">
+      <nav>
+        <form action="#">
+          <div class="form-input">
+            <input type="search" placeholder="Search..." />
+            <button type="submit" class="search-btn">
+              <i class="bx bx-search"></i>
+            </button>
+          </div>
+        </form>
+        <a href="#" class="notification">
+          <i class="bx bxs-bell"></i>
+          <span class="num">0</span>
+        </a>
+        <p id="userName"></p>
+        <a href="#profile" class="profile">
+          <img
+            id="userImage"
+            src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+          />
+        </a>
+      </nav>
+
+      <div class="content_display" id="dashboard_display">
         <div class="head-title">
           <div class="left">
             <h1>Dashboard</h1>
@@ -66,24 +99,24 @@
         <div class="display_body">
           <ul class="box-info">
             <li>
-              <i class="bx bxs-zap"></i>
+              <i class="bx bxs-wallet"></i>
               <span class="text">
-                <h3>3</h3>
-                <p>Bolts</p>
+                <h3 id="wallet__amount">1000</h3>
+                <p>NGN</p>
               </span>
             </li>
             <li>
               <i class="bx bxs-calendar-check"></i>
               <span class="text">
-                <h3>0</h3>
-                <p>Tasks Accomplished</p>
+                <h3 id="task__completed">0</h3>
+                <p>Tasks Completed</p>
               </span>
             </li>
             <li>
               <i class="bx bxs-group"></i>
               <span class="text">
-                <h3>0</h3>
-                <p>Setters</p>
+                <h3 id="task__pending">0</h3>
+                <p>Pending Tasks</p>
               </span>
             </li>
           </ul>
@@ -101,8 +134,8 @@
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
+                <tbody id="dashboard_table">
+                  <!-- <tr>
                     <td>
                       <img
                         src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
@@ -111,36 +144,188 @@
                     </td>
                     <td>01-10-2023</td>
                     <td><span class="status completed">Completed</span></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img
-                        src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
-                      />
-                      <p>Dorcas Sang</p>
-                    </td>
-                    <td>01-10-2023</td>
-                    <td><span class="status pending">Pending</span></td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img
-                        src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
-                      />
-                      <p>Fortune Ifeanyi</p>
-                    </td>
-                    <td>01-10-2023</td>
-                    <td><span class="status process">Process</span></td>
-                  </tr>
+                  </tr> -->
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-      </main>
+      </div>
+
+      <div class="content_display" id="tasks_display">
+        <div class="head-title">
+          <div class="left">
+            <h1>Task Table</h1>
+          </div>
+        </div>
+
+        <div class="task_table">
+          <div class="order">
+            <div class="head">
+              <h3>Recent Tasks <span>(0)</span></h3>
+             <span class="icon_wrapper">
+                <i class="bx bx-search" id="searchIcon"></i>
+                <i class="bx bx-filter" id="filterIcon"></i>
+              </span>
+              <div class="filter">
+                <span
+                  >tasks:
+                  <select class="task_filter_options">
+                    <option selected>All</option>
+                  </select>
+                </span>
+                <span>
+                  status:
+                  <select class="status_filter_options">
+                    <option selected>All</option>
+                    <option>Completed</option>
+                    <option>Processing</option>
+                    <option>Pending</option>
+                    <option>Cancelled</option>
+                  </select>
+                </span>
+                <i class="bx bx-x-circle" id="filter_cancel"></i>
+              </div>
+              <form action="#">
+                <div class="search-form">
+                  <input type="search" 
+                  placeholder="Search Runner..." id="search_bar"/>
+                  <i class="bx bx-x-circle" id="search_cancel"></i>
+                </div>
+              </form>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Setter</th>
+                  <th>Date of Task</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="task_table">
+                <!-- <tr>
+                    <td>
+                      <img
+                        src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                      />
+                      <p>John Tigil</p>
+                    </td>
+                    <td>01-10-2023</td>
+                    <td><span class="status completed">Completed</span></td>
+                    <td class="dropdown-cell">
+                <i class='bx bx-dots-vertical-rounded' ></i>
+                <div class="dropdown-content">
+                  <a href="#">See More</a>
+                  <a href="#">confirm task</a>
+                  <a href="#">reject task</a>
+                  <a href="#">delete</a>
+                </div>
+              </td>
+                  </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="content_display" id="profile_display">
+        <div class="head-title">
+          <div class="left">
+            <h1>My Profile</h1>
+          </div>
+        </div>
+
+        <div class="display_body">
+          <div class="profile">
+            <div class="profile_card">
+              <div class="profile_card_img">
+                <img
+                  src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                  alt="Profile Picture"
+                  id="profile_image"
+                  class="dp"
+                />
+                <input type="file" class="edit_dp" id="edit_dp" />
+              </div>
+              <div class="profile-info">
+                <span>
+                  <label>Name </label>
+                  <input
+                    type="text"
+                    id="name"
+                    class="name profileInputs"
+                    disabled
+                  />
+                  <label class="underline"></label>
+                </span>
+                <span>
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="email profileInputs"
+                    disabled
+                  />
+                  <label class="underline"></label>
+                </span>
+                <span>
+                  <label>Task</label>
+                  <select
+                    class="task-input profileInputs"
+                    id="task-input"
+                    disabled
+                  ></select>
+                  <label class="underline"></label>
+                </span>
+                <span>
+                  <label>Bio</label>
+                  <textarea id="bio" class="profileInputs" disabled></textarea>
+                  <label class="underline"></label>
+                </span>
+                <div class="btn-wrapper">
+                  <a href="#" class="change-password">Change Password </a>
+                  <a href="#" class="button edit_btn" id="edit__btn"
+                    >Edit Profile</a
+                  >
+                  <a href="#" class="button hidden" id="saveBtn">Save</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="password_card">
+              <div class="password_card_top">
+                <i class="bx bx-left-arrow-alt" id="back_arrow"></i>
+                <p id="change_password_msg"></p>
+              </div>
+              <div class="password-form">
+                <span>
+                  <label>Old Password </label>
+                  <input class="password" type="password" id="old_password" />
+                </span>
+                <span>
+                  <label>New Password </label>
+                  <input class="password" type="password" id="new_password" />
+                </span>
+                <span>
+                  <label>Confirm Password </label>
+                  <input
+                    class="password"
+                    type="password"
+                    id="confirm_new_password"
+                  />
+                </span>
+                <a href="#" class="button save_password" id="password_saveBtn"
+                  >Save</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="content" class="my_profile">
+    <!-- <section id="content" class="my_profile">
       <main>
         <div class="head-title">
           <div class="left">
@@ -220,15 +405,61 @@
           </div>
         </div>
       </main>
-    </section>
-    <section id="content" class="messages">
+    </section> -->
+    <!-- <section id="content" class="messages">
       <h1>Coming Soon...</h1>
     </section>
 
     <section id="content" class="settings">
       <h1>Coming Soon...</h1>
-    </section>
+    </section> -->
 
+    <div class="overlay hidden"></div>
+    <div class="modal hidden">
+      <!-- <div class="card_body">
+        <div class="task_side">
+          <span>
+            <h1>Errand</h1>
+            <img
+              src="https://res.cloudinary.com/okorosamuel/image/upload/v1703005535/Hermes/bicycle-svgrepo-com_udv9jl.svg"
+              alt="errand"
+            />
+          </span>
+          <span class="status">
+            <p><strong>Status:</strong><span class="pending">pending</span></p>
+          </span>
+          <span>
+            <strong>Location:</strong> 12 Hong avenue, Gwanna rd. Kaduna
+          </span>
+          <span>
+            <p><strong>Date:</strong> 12-12-2024</p>
+            <p><strong>Time:</strong> 10:12 AM</p>
+          </span>
+        </div>
+        <div class="billing">
+          <h2>Pricing</h2>
+          <p>Tip: NGN 1000</p>
+          <p>Transportation: NGN 1000</p>
+          <p><strong>Total:</strong> <strong>NGN 2000</strong></p>
+        </div>
+      </div>
+      <div>
+        <h2>Runner info</h2>
+        <div class="heading">
+          <img
+            src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+            alt="sample"
+          />
+          <div class="setter-info">
+            <h1>Okoro Samuel</h1>
+            <div class="contact_icons">
+              <span><i class="fa-solid fa-message"></i> message</span>
+              <span><i class="fa-solid fa-phone"></i> call</span>
+            </div>
+          </div>
+        </div>
+      </div> -->
+    </div>
     <script src="./js/account.js"></script>
   </body>
 </html>

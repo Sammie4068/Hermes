@@ -3,6 +3,12 @@ const {
   getTaskByName,
   getAllRunners,
   addActivity,
+  updateRunnerID,
+  getUserActivity,
+  getActivityByID,
+  getRunnerActivity,
+  getActivityBySetterID,
+  updateStatus,
 } = require("./admin/admin");
 
 const {
@@ -19,6 +25,7 @@ const {
   gerUsersById,
   updateUser,
   changePassword,
+  changeImage,
 } = require("./users/users");
 
 module.exports = {
@@ -36,4 +43,11 @@ module.exports = {
   updateUser,
   changePassword,
   addActivity,
+  updateRunnerID,
+  getUserActivity,
+  getActivityByID,
+  getRunnerActivity,
+  getActivityBySetterID,
+  updateStatus,
+  changeImage,
 };

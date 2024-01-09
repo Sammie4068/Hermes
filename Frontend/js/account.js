@@ -1,31 +1,352 @@
 // Init
-// location.reload();
 const id = localStorage.getItem("id");
-async function userData() {
+const userImage = document.getElementById("userImage");
+const userProfileName = document.getElementById("userName");
+const walletAmt = document.getElementById("wallet__amount");
+const taskCompleted = document.getElementById("task__completed");
+const taskPending = document.getElementById("task__pending");
+const taskTableNumber = document.querySelector(".head h3 span");
+
+const nameInput = document.getElementById("name");
+const emailInput = document.getElementById("email");
+const taskInput = document.getElementById("task-input");
+const bioInput = document.getElementById("bio");
+const profileImage = document.getElementById("profile_image");
+const underline = document.querySelectorAll(".underline");
+const editBtn = document.getElementById("edit__btn");
+const saveBtn = document.getElementById("saveBtn");
+
+const username = localStorage.getItem("name");
+const photo = localStorage.getItem("photo");
+const wallet = localStorage.getItem("wallet");
+const email = localStorage.getItem("email");
+const task = localStorage.getItem("task");
+const bio = localStorage.getItem("bio");
+const inputs = document.querySelectorAll(".profileInputs");
+
+async function init() {
+  // Nav bar profile
+  userProfileName.innerText = username;
+  userImage.attributes.src.value = photo;
+
+  // Dashboard
+  walletAmt.innerText = wallet;
+  const runnerActivityData = await runnerActivity();
+  const taskCompletedData = runnerActivityData.filter(
+    (data) => data.status == "completed"
+  );
+  const taskPendingData = runnerActivityData.filter(
+    (data) => data.status == "pending"
+  );
+  taskCompleted.innerText = taskCompletedData.length;
+  taskPending.innerText = taskPendingData.length;
+
+  // Dashboard Activity Table
+  dashboardTableDisplay(runnerActivityData);
+  displayTask(runnerActivityData);
+
+  // Tasks
+  allTasks(taskFilterOPt);
+
+  // Profile
+  profileImage.attributes.src.value = photo;
+  nameInput.value = username;
+  emailInput.value = email;
+  taskInput.innerHTML = `<option>${task}</option>`;
+  bioInput.value = bio;
+  allTasks(taskInput);
+}
+init();
+
+async function runnerActivity() {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`);
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/runner/${id}`
+    );
     const data = await res.json();
-    localStorage.setItem("photo", data.photo);
-    localStorage.setItem("name", data.name);
-    localStorage.setItem("email", data.email);
-    localStorage.setItem("task", data.gig);
-    localStorage.setItem("bio", data.bio);
-    localStorage.setItem("tip", data.tip);
+    return data;
   } catch (err) {
     console.log(err);
   }
 }
-userData();
+
+// date and time function
+function reformatDate(date) {
+  const originalDate = new Date(date);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
+    originalDate
+  );
+  return formattedDate;
+}
+
+function reformatTime(time) {
+  const inputTimeString = time;
+  const parsedTime = new Date(`2000-01-01T${inputTimeString}`);
+  const formattedTime = parsedTime.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return formattedTime;
+}
+
+// Activity Data
+
+// Table icons
+const filterIcon = document.getElementById("filterIcon");
+const filterWrapper = document.querySelector(".filter");
+const iconWrapper = document.querySelector(".icon_wrapper");
+filterIcon.addEventListener("click", () => {
+  filterWrapper.style.display = "flex";
+  iconWrapper.style.display = "none";
+});
+
+const filterCancel = document.getElementById("filter_cancel");
+filterCancel.addEventListener("click", async () => {
+  filterWrapper.style.display = "none";
+  iconWrapper.style.display = "block";
+  // clearFilters();
+  const runnerActivityData = await runnerActivity();
+  displayTask(runnerActivityData);
+});
+
+const searchIcon = document.getElementById("searchIcon");
+const searchWrapper = document.querySelector(".search-form");
+searchIcon.addEventListener("click", () => {
+  searchWrapper.style.display = "flex";
+  iconWrapper.style.display = "none";
+});
+
+const searchCancel = document.getElementById("search_cancel");
+searchCancel.addEventListener("click", () => {
+  searchWrapper.style.display = "none";
+  iconWrapper.style.display = "block";
+});
+
+// Task filter options
+const taskFilterOPt = document.querySelector(".task_filter_options");
+async function allTasks(parentEle) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const data = await res.json();
+    data.forEach((dt) => {
+      const html = `<option>${dt.title}</option>`;
+      parentEle.insertAdjacentHTML("afterbegin", html);
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// filter Options
+taskFilterOPt.addEventListener("change", async () => {
+  data = await runnerActivity();
+
+  let filterArr = data.filter((runner) => {
+  if (taskFilterOPt.value == "All") return runner ;
+
+   return runner.task == taskFilterOPt.value;
+  });
+
+  displayTask(filterArr);
+});
+
+const statusFilterOpt = document.querySelector(".status_filter_options");
+
+statusFilterOpt.addEventListener("change", async () => {
+data = await runnerActivity();
+
+let filterArr = data.filter((runner) => {
+  if (statusFilterOpt.value == "All") return runner;
+
+  return runner.status == statusFilterOpt.value.toLowerCase();
+});
+
+displayTask(filterArr);
+});
+
+// Fllter display
+async function displayFilter() {
+  let task = urlParams.get("task");
+  let status = urlParams.get("status");
+  data = await runnerActivity();
+  let filterArr = data;
+
+  if (task && status) {
+    filterArr = data.filter((runner) => {
+      return runner.task == task && runner.status == status;
+    });
+  }
+  if (task && !status) {
+    filterArr = data.filter((runner) => {
+      return runner.task == task;
+    });
+  }
+  if (status && !task) {
+    filterArr = data.filter((runner) => {
+      return runner.status == status;
+    });
+  }
+
+  emptyCardDiv();
+  // if (filterArr.length <= 0) renderError();
+  displayTask(filterArr);
+}
+
+
+// Empty table
+function emptyCardDiv() {
+  const tableEle = document.querySelectorAll("#table_tab");
+  tableEle.forEach((tab) => (tab.style.display = "none"));
+}
+
+// Search
+const searchBar = document.getElementById("search_bar");
+searchBar.addEventListener("input", async () => {
+  data = await runnerActivity();
+  const searchTerm = searchBar.value.toLowerCase();
+  const searchResult = data.filter((dat) =>
+    dat.name.toLowerCase().includes(searchTerm)
+  );
+  displayTask(searchResult);
+});
+
+
+const dashboardTable = document.getElementById("dashboard_table");
+const taskTable = document.getElementById("task_table");
+
+function dashboardTableDisplay(data) {
+  const sortedData = data
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 3);
+  sortedData.map((dat) => {
+    let value = JSON.stringify(dat);
+
+    let markup = `<tr id="table_element">
+                <td>
+                <img src="${
+                  dat.photo ||
+                  "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                }" />
+                   <p>${dat.name}</p>
+                      </td>
+                <td>${reformatDate(dat.date)}</td>
+                <td><button class="status ${dat.status}" value='${value}'>${
+      dat.status
+    }</button>
+              </tr>`;
+    dashboardTable.insertAdjacentHTML("beforeend", markup);
+  });
+}
+
+function displayTask(data) {
+    taskTable.innerHTML = ``;
+  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  taskTableNumber.innerHTML = `(${sortedData.length})`;
+  sortedData.map((dat) => {
+    let value = JSON.stringify(dat);
+
+    let markup = `<tr id="table_tab">
+                <td id="table_element">
+                <img src="${
+                  dat.photo ||
+                  "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+                }" />
+                   <p>${dat.name}</p>
+                      </td>
+                <td id="table_element">${reformatDate(dat.date)}</td>
+                <td id="table_element"> <button class="status ${
+                  dat.status
+                }" value='${value}'>${dat.status}</button></td>
+    <td class="dropdown-cell">
+                <i class='bx bx-dots-vertical-rounded' ></i>
+                <div class="dropdown-content">
+                ${
+                  dat.status == "pending"
+                    ? `<a id="confirm_task" href="#">confirm task</a>
+                  <a id="reject_task" href="#">reject task</a>`
+                    : dat.status == "processing"
+                    ? `<a id="reject_task" href="#">cancel task</a>`
+                    : `<a id="confirm_task" href="#">confirm task</a>`
+                }
+                </div>
+              </td>
+              </tr>`;
+    taskTable.insertAdjacentHTML("beforeend", markup);
+  });
+
+  const tableTab = document.querySelectorAll("#table_tab");
+  tableTab.forEach((tab) => {
+    const statusBtn = tab.querySelectorAll(".status");
+    let taskData;
+    const statusData = { status: "pending" };
+    const confirmOpt = tab.querySelectorAll("#confirm_task");
+    confirmOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          statusData.status = "processing";
+          updateStatus(taskData.id, statusData);
+          location.reload();
+        });
+      });
+    });
+
+    const rejectOpt = tab.querySelectorAll("#reject_task");
+    rejectOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          statusData.status = "cancelled";
+          updateStatus(taskData.id, statusData);
+          location.reload();
+        });
+      });
+    });
+
+    const tableEle = tab.querySelectorAll("#table_element");
+    tableEle.forEach((ele) => {
+      ele.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+        });
+        taskTableInfo(taskData.id, taskData.task);
+      });
+    });
+  });
+}
+
+// Update status
+async function updateStatus(id, statusData) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/status/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(statusData),
+      }
+    );
+    const data = await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 // Display Contents
-const contents = document.querySelectorAll("#content");
-const dashboardDisplay = document.querySelector(".dashboard_display");
-const profileDisplay = document.querySelector(".my_profile");
+const contents = document.querySelectorAll(".content_display");
+const dashboardDisplay = document.getElementById("dashboard_display");
+const tasksDisplay = document.getElementById("tasks_display");
+const profileDisplay = document.getElementById("profile_display");
 const dashboardLink = document.getElementById("dashboardLink");
+const tasksLink = document.getElementById("tasksLink");
 const profileLink = document.getElementById("profileLink");
-const messagesDisplay = document.querySelector(".messages");
-const messagesLink = document.getElementById("messagesLink");
-const settingsDisplay = document.querySelector(".settings");
+// const messagesDisplay = document.querySelector(".messages");
+// const messagesLink = document.getElementById("messagesLink");
+// const settingsDisplay = document.querySelector(".settings");
 const settingsLink = document.getElementById("settings");
 const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
 
@@ -47,17 +368,21 @@ function updateDisplay() {
       displayContent(dashboardDisplay);
       active(dashboardLink);
       break;
+    case "tasks":
+      displayContent(tasksDisplay);
+      active(tasksLink);
+      break;
     case "profile":
       displayContent(profileDisplay);
       active(profileLink);
       break;
-    case "messages":
-      displayContent(messagesDisplay);
-      active(messagesLink);
-      break;
-    case "settings":
-      displayContent(settingsDisplay);
-      break;
+    // case "messages":
+    //   displayContent(messagesDisplay);
+    //   active(messagesLink);
+    //   break;
+    // case "settings":
+    //   displayContent(settingsDisplay);
+    //   break;
     default:
       break;
   }
@@ -72,6 +397,86 @@ function active(ele) {
   ele.classList.add("active");
 }
 
+// See more on task
+const overlay = document.querySelector(".overlay");
+const modal = document.querySelector(".modal");
+
+function seeMore(data, taskImgData) {
+  let html = `<div class="card_body">
+        <div class="task_side">
+          <span>
+            <h1>${data.task}</h1>
+            <img
+              src="${taskImgData.icons}"
+              alt="${data.task}"
+            />
+          </span>
+          <span class="status">
+            <p><strong>Status:</strong><span class="${data.status}">${
+    data.status
+  }</span></p>
+          </span>
+          <span>
+            <strong>Location:</strong> ${data.location}
+          </span>
+          <span>
+            <p><strong>Date:</strong> ${reformatDate(data.date)}</p>
+            <p><strong>Time:</strong> ${reformatTime(data.time)}</p>
+          </span>
+        </div>
+        <div class="billing">
+          <h2>Pricing</h2>
+          <p>Tip: NGN 1000</p>
+          <p>Transportation: NGN 1000</p>
+          <p><strong>Total:</strong> <strong>NGN 2000</strong></p>
+        </div>
+      </div>
+      <div>
+        <h2>Setter info</h2>
+        <div class="heading">
+          <img src="${
+            data.photo ||
+            "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
+          }" />
+          <div class="setter-info">
+            <h1>${data.name}</h1>
+            <div class="contact_icons">
+              <span><i class="fa-solid fa-message"></i> message</span>
+              <span><i class="fa-solid fa-phone"></i> call</span>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  modal.insertAdjacentHTML("beforeend", html);
+  modal.classList.remove("hidden");
+  overlay.classList.remove("hidden");
+}
+
+// more Info
+async function taskTableInfo(id, gig) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/activity/setter/${id}`
+    );
+    const data = await res.json();
+
+    const result = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const bodydata = await result.json();
+    const taskImgData = bodydata[0];
+
+    seeMore(data[0], taskImgData);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// close modal
+overlay.addEventListener("click", () => {
+  modal.innerHTML = ``;
+  modal.classList.add("hidden");
+  overlay.classList.add("hidden");
+});
+
 //Switch to password
 const profileCard = document.querySelector(".profile_card");
 const passwordCard = document.querySelector(".password_card");
@@ -80,7 +485,10 @@ const backArrow = document.getElementById("back_arrow");
 
 changePasswordBtn.addEventListener("click", () => {
   profileCard.style.display = "none";
-  passwordCard.style.display = "block";
+  passwordCard.style.display = "flex";
+  oldPassword.innerHTML = ``;
+  newPassword.innerHTML = ``;
+  cNewPassword.innerHTML = ``;
 });
 
 backArrow.addEventListener("click", () => {
@@ -176,98 +584,26 @@ function logout() {
   window.location = "main.html";
 }
 
-// Get all taskers
-async function allTasks(parentEle) {
-  try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
-    const data = await res.json();
-    parentEle.innerHTML = ``;
-    data.forEach((dt) => {
-      const html = `<li>${dt.title}</li>`;
-      parentEle.insertAdjacentHTML("afterbegin", html);
-    });
-  } catch (err) {
-    console.log(err);
-  }
-}
-const taskInput = document.querySelector(".task-input");
-const taskList = document.getElementById("task-dropdown");
-
-taskInput.addEventListener("click", function () {
-  if (taskList.style.display == "none") {
-    taskList.style.display = "block";
-  } else {
-    taskList.style.display = "none";
-  }
-});
-
-document.addEventListener("click", function (event) {
-  if (event.target !== taskInput && event.target !== taskList) {
-    taskList.style.display = "none";
-  }
-});
-
-taskList.addEventListener("click", function (event) {
-  if (event.target.tagName === "LI") {
-    taskInput.value = event.target.textContent;
-    taskList.style.display = "none";
-  }
-});
-
-// Update User
-const username = localStorage.getItem("name");
-const email = localStorage.getItem("email");
-const photo = localStorage.getItem("photo");
-const task = localStorage.getItem("task");
-const bio = localStorage.getItem("bio");
-const editBtn = document.getElementById("edit__btn");
-const saveBtn = document.getElementById("saveBtn");
-const inputs = document.querySelectorAll("input");
-const nameInput = document.querySelector(".name");
-const emailInput = document.querySelector(".email");
-const bioInput = document.querySelector("#bio");
-const profileInfo = document.querySelector(".profile-info");
-const btnWrapper = document.querySelector(".btn-wrapper");
-const profileImage = document.getElementById("profile_image");
-const editDp = document.getElementById("edit_dp");
-const tip = localStorage.getItem("tip");
-const tipInput = document.querySelector(".tip");
-
-profileImage.attributes.src.value = photo;
-nameInput.value = username
-  .split(" ")
-  .map((a) => a.replace(a[0], a[0].toUpperCase()))
-  .join(" ");
-emailInput.value = email;
-taskInput.value = task.replace(task[0], task[0].toUpperCase());
-tipInput.value = tip;
-bioInput.value = bio;
-
+// Profile
 function edit() {
   inputs.forEach((input) => {
-    input.removeAttribute("readonly");
-    input.style.border = "2px solid #002b1d";
+    input.disabled = false;
   });
-  bioInput.removeAttribute("readonly");
-  bioInput.style.border = "2px solid #002b1d";
-  profileImage.style.border = "2px solid #002b1d";
-  editDp.disabled = false;
+  underline.forEach((line) => {
+    line.style.width = "100%";
+  });
   editBtn.classList.add("hidden");
   saveBtn.classList.remove("hidden");
 }
-editBtn.addEventListener("click", () => {
-  edit();
-  allTasks(taskList);
-});
+editBtn.addEventListener("click", edit);
 
 async function save() {
   try {
     const newData = {
-      name: nameInput.value.trim().toLowerCase(),
+      name: nameInput.value.trim(),
       email: emailInput.value.trim(),
       task: taskInput.value.trim().toLowerCase(),
       bio: bioInput.value.trim(),
-      tip: tipInput.value,
     };
 
     const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
@@ -278,25 +614,21 @@ async function save() {
       body: JSON.stringify(newData),
     });
     const data = await res.json();
-    console.log(data);
 
     if (data.message == "success") {
       localStorage.setItem("name", data.name);
       localStorage.setItem("email", data.email);
       localStorage.setItem("task", data.task);
       localStorage.setItem("bio", data.bio);
-      localStorage.setItem("tip", data.tip);
 
       editBtn.classList.remove("hidden");
       saveBtn.classList.add("hidden");
       inputs.forEach((input) => {
-        input.setAttribute("readonly", "readonly");
-        input.style.border = "2px solid #68ddcb";
+        input.disabled = true;
       });
-      profileImage.style.border = "2px solid #68ddcb";
-      editDp.disabled = true;
-      bioInput.setAttribute("readonly", "readonly");
-      bioInput.style.border = "2px solid #68ddcb";
+      underline.forEach((line) => {
+        line.style.width = "0%";
+      });
     }
   } catch (err) {
     console.error(`Error: ${err}`);

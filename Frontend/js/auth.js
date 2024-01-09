@@ -73,8 +73,8 @@ SignupForm.addEventListener("submit", (e) => {
     confirmPasswordValidation()
   ) {
     let userData = {
-      name: username.value.trim().toLowerCase(),
-      email: email.value.trim().toLowerCase(),
+      name: username.value.trim(),
+      email: email.value.trim(),
       password: password.value,
       role: "setter",
     };
@@ -155,6 +155,11 @@ async function postData(url, data) {
       signupMsg.textContent = "Registration Successful";
       localStorage.setItem("token", bodydata.token);
       localStorage.setItem("id", bodydata.id);
+      localStorage.setItem("name", bodydata.name);
+      localStorage.setItem("photo", bodydata.photo);
+      localStorage.setItem("email", bodydata.email);
+      localStorage.setItem("wallet", bodydata.wallet);
+
       window.location = "main.html";
     }
     if (bodydata.message == "Already Exists") {
@@ -183,14 +188,25 @@ async function loginPost(url, data) {
       body: JSON.stringify(data),
     });
     const bodydata = await res.json();
+    console.log(bodydata);
     if (bodydata.message == "invalid") {
       signinMsg.textContent = "Invalid Email or Password";
       signinMsg.style.color = "red";
     }
     if (bodydata.message == "logged") {
       localStorage.setItem("token", bodydata.token);
-      localStorage.setItem("id", bodydata.id)
-      window.location = "main.html";
+      localStorage.setItem("id", bodydata.id);
+      localStorage.setItem("name", bodydata.name);
+      localStorage.setItem("photo", bodydata.photo);
+      localStorage.setItem("email", bodydata.email);
+      localStorage.setItem("task", bodydata.gig);
+      localStorage.setItem("bio", bodydata.bio);
+      localStorage.setItem("wallet", bodydata.wallet);
+      if (bodydata.role == "setter") {
+        window.location = "main.html";
+      } else if (bodydata.role == "runner") {
+        window.location = "account.html#dashboard";
+      }
     }
   } catch (err) {
     console.error(`Error: ${err}`);
