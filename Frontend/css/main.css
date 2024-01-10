@@ -11,6 +11,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  zoom: 120%;
 }
 
 :root {
