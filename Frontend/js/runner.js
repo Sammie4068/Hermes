@@ -106,7 +106,9 @@ function displayRunners(data) {
 // Get users info
 async function runnerInfo(id) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/${id}`
+    );
     const data = await res.json();
     return data;
   } catch (err) {
@@ -118,7 +120,7 @@ async function runnerInfo(id) {
 async function requestRunner(requestData, id) {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/activity/runner/${id}`,
+      `https://hermes-yto9.onrender.com/api/v1/activity/runner/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -225,17 +227,19 @@ async function showTaskWithRunner(id, gig, runnerID) {
     modal.innerHTML = ``;
 
     const result = await fetch(
-      `http://localhost:3000/api/v1/activity/setter/${id}`
+      `https://hermes-yto9.onrender.com/api/v1/activity/setter/${id}`
     );
     const logData = await result.json();
     const data = logData[0];
 
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/tasks/${gig}`
+    );
     const bodydata = await res.json();
     const apiData = bodydata[0];
 
     const response = await fetch(
-      `http://localhost:3000/api/v1/users/${runnerID}`
+      `https://hermes-yto9.onrender.com/api/v1/users/${runnerID}`
     );
     const runnerData = await response.json();
 
@@ -308,7 +312,7 @@ function emptyCardDiv() {
 async function getData() {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/getrunners/${gig}/${gigLocation}`
+      `https://hermes-yto9.onrender.com/api/v1/getrunners/${gig}/${gigLocation}`
     );
     const data = await res.json();
     return data;

@@ -2,7 +2,7 @@ AOS.init();
 // Get all taskers
 async function allTasks(parentEle) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<option>${dt.title}</option>`;
@@ -18,7 +18,7 @@ allTasks(taskInput);
 // Gig tip
 async function getTip(gig) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     const gigArr = data.filter((dat) => dat.title == gig);
     const gigTip = +gigArr[0].tip.split(" ")[1];
@@ -108,7 +108,7 @@ function emailValidation() {
 async function checkEmail() {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/runners/email/${email.value}`
+      `https://hermes-yto9.onrender.com/api/v1/runners/email/${email.value}`
     );
     const data = await res.json();
     if (data.message === "exists") {
@@ -202,14 +202,14 @@ backBtn2.addEventListener("click", (e) => {
 nextBtn1.addEventListener("click", async (e) => {
   e.preventDefault();
   if (
-  infoFormIsEmpty() &&
-  emailValidation() &&
-  passwordValidation() &&
-  confirmPasswordValidation() &&
-  (await checkEmail())
+    infoFormIsEmpty() &&
+    emailValidation() &&
+    passwordValidation() &&
+    confirmPasswordValidation() &&
+    (await checkEmail())
   ) {
-  infoForm.classList.add("hidden");
-  profileForm.classList.remove("hidden");
+    infoForm.classList.add("hidden");
+    profileForm.classList.remove("hidden");
   }
 });
 
@@ -250,7 +250,7 @@ submitBtn.addEventListener("click", (e) => {
 async function postData(data) {
   try {
     renderSpinner(overlay);
-    const res = await fetch(`http://localhost:3000/api/v1/runners`, {
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/runners`, {
       method: "POST",
       body: data,
     });
@@ -274,7 +274,7 @@ async function postData(data) {
 }
 
 function renderSpinner(parentEle) {
-  overlay.style.display = "flex"
+  overlay.style.display = "flex";
   parentEle.innerHTML = ``;
   const html = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   <p class="wait">Please wait..</p>
