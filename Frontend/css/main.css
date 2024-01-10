@@ -555,7 +555,6 @@ footer {
   place-content: center;
   background: var(--primary-color);
   color: #fff;
-  max-width: 1450px;
   width: 100%;
   padding: 40px 80px;
   gap: 30px;
