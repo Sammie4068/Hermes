@@ -35,4 +35,6 @@ if (app.get("env") === "development") {
   });
 }
 
-app.listen(port);
+app.listen(port, () => {
+  console.log("server don dey run...")
+});

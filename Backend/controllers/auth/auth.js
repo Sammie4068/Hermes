@@ -14,8 +14,14 @@ const uploadImage = require("../../utilities/index");
 const secret = process.env.SECRET;
 
 exports.getUsers = async (req, res) => {
-  const results = await getAllUsers();
-  res.json({ number: results.rows.length, data: results.rows });
+  try {
+
+    const results = await getAllUsers();
+    res.json({ number: results.rows.length, data: results.rows });
+  }
+  catch(err) {
+    return next(err);
+  }
 };
 
 exports.login = async (req, res, next) => {
