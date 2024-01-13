@@ -502,6 +502,7 @@ aside span:not(:last-child) {
   padding: 1rem;
 }
 .grid-col-item {
+  width: 100%;
   height: 100%;
 }
 .icon {
@@ -1842,9 +1843,13 @@ button.normal {
     font-size: 13.5px;
     margin-right: 1rem;
   }
-  .grid-cols-3 {
-    overflow-x: scroll;
+  .badges {
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+  }
+  .reviews {
+    overflow-x: scroll;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(6, minmax(100%, 1fr));
   }
   .featured_info p {
     line-height: 23px;
