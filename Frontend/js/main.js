@@ -6,9 +6,10 @@ ToggleBtnId.addEventListener("click", () => {
   navId.classList.add("show");
 });
 
-CloseBtnId.addEventListener("click", () => {
+CloseBtnId.addEventListener("click", removeMenu);
+function removeMenu() {
   navId.classList.remove("show");
-});
+}
 
 AOS.init();
 
@@ -44,6 +45,13 @@ gsap.from(".main-heading", {
   opacity: 0,
   y: 20,
   delay: 2.4,
+  duration: 1,
+});
+
+gsap.from(".grid-item-1 img", {
+  opacity: 0,
+  y: 20,
+  delay: 2.5,
   duration: 1,
 });
 

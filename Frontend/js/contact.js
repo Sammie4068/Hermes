@@ -1,3 +1,15 @@
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", () => {
+  navId.classList.remove("show");
+});
+
 AOS.init();
 
 const token = localStorage.getItem("token");
@@ -24,14 +36,6 @@ runnerBtn.addEventListener("click", () => {
 
 signin.addEventListener("click", () => {
   window.location = "auth.html";
-});
-
-userProfile.addEventListener("click", () => {
-  if (role == "setter") {
-    window.location = "profile.html#profile";
-  } else if (role == "runner") {
-    window.location = "account.html#dashboard";
-  }
 });
 
 const asSetter = document.getElementById("as-setter");
