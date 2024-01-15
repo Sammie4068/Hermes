@@ -413,7 +413,7 @@ button {
   fill: var(--grad-clr1);
 }
 
-@media (max-width: 635px) {
+@media (max-width: 768px) {
   .logo {
     position: relative;
     top: 0px;
@@ -421,7 +421,7 @@ button {
     margin: 10px;
   }
   .logo h2 {
-    font-size: 20px;
+    font-size: 25px;
   }
   .overlay {
     display: none;
@@ -451,7 +451,7 @@ button {
   }
   .modal-wrapper .card {
     padding: 20px 10px;
-    height: 120px;
+    height: 150px;
     width: 165%;
   }
 }

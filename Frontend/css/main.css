@@ -1765,6 +1765,9 @@ button.normal {
   .nav_menu_item .nav_menu_link {
     font-size: 18px;
   }
+  .dropdown {
+    z-index: 1;
+  }
   .close_btn {
     display: block;
     position: relative;
