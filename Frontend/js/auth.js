@@ -22,7 +22,9 @@ runnerCard.addEventListener("click", () => {
   window.location = "reg.html";
 });
 
-overlayBtn.addEventListener("click", () => {
+overlayBtn.addEventListener("click", showRoles);
+
+function showRoles() {
   const signuprole = localStorage.getItem("signuprole");
   if (signuprole) {
     panel();
@@ -30,7 +32,7 @@ overlayBtn.addEventListener("click", () => {
     overlayer.classList.remove("hidden");
     modal.classList.remove("hidden");
   }
-});
+}
 
 function closeModal() {
   modal.classList.add("hidden");
@@ -39,7 +41,7 @@ function closeModal() {
 
 overlayer.addEventListener("click", closeModal);
 
-document.getElementById("signup-btn2").addEventListener("click", panel);
+document.getElementById("signup-btn2").addEventListener("click", showRoles);
 document.getElementById("signin-btn2").addEventListener("click", panel);
 
 function panel() {

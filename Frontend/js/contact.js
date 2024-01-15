@@ -1,21 +1,29 @@
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", () => {
+  navId.classList.remove("show");
+});
+
 AOS.init();
 
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
 const username = localStorage.getItem("name");
-const account = document.getElementById("account");
+const activity = document.getElementById("activity");
 const signin = document.getElementById("signin");
 const runnerBtn = document.querySelector(".runner_btn");
 const services = document.getElementById("services");
-const userProfile = document.querySelector(".user");
-const user = document.querySelector(".user p");
 
 if (token) {
   signin.classList.add("hidden");
-  account.classList.remove("hidden");
+  activity.classList.remove("hidden");
   runnerBtn.classList.add("hidden");
-  userProfile.style.display = "flex";
-  user.innerText = `${username}`;
 }
 
 runnerBtn.addEventListener("click", () => {
@@ -26,9 +34,9 @@ signin.addEventListener("click", () => {
   window.location = "auth.html";
 });
 
-userProfile.addEventListener("click", () => {
+activity.addEventListener("click", () => {
   if (role == "setter") {
-    window.location = "profile.html#profile";
+    window.location = "profile.html#dashboard";
   } else if (role == "runner") {
     window.location = "account.html#dashboard";
   }
