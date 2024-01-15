@@ -119,10 +119,14 @@ searchIcon.addEventListener("click", () => {
 });
 
 const searchCancel = document.getElementById("search_cancel");
-searchCancel.addEventListener("click", () => {
+searchCancel.addEventListener("click", async () => {
   searchWrapper.style.display = "none";
   iconWrapper.style.display = "block";
+
+  const runnerActivityData = await runnerActivity();
+  displayTask(runnerActivityData);
 });
+
 
 // Task filter options
 const taskFilterOPt = document.querySelector(".task_filter_options");

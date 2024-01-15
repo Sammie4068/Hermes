@@ -72,6 +72,11 @@ async function getTableData() {
   }
 }
 
+const dashboardDisplayTab = document.querySelector(".table-data");
+dashboardDisplayTab.addEventListener("click", () => {
+  window.location.hash = "#tasks"
+})
+
 // date and time function
 function reformatDate(date) {
   const originalDate = new Date(date);
@@ -108,7 +113,7 @@ const filterCancel = document.getElementById("filter_cancel");
 filterCancel.addEventListener("click", async () => {
   filterWrapper.style.display = "none";
   iconWrapper.style.display = "block";
-  clearFilters();
+
   const setterActivityData = await getTableData();
   displayTask(setterActivityData);
 });
@@ -121,9 +126,12 @@ searchIcon.addEventListener("click", () => {
 });
 
 const searchCancel = document.getElementById("search_cancel");
-searchCancel.addEventListener("click", () => {
+searchCancel.addEventListener("click", async () => {
   searchWrapper.style.display = "none";
   iconWrapper.style.display = "block";
+
+  const setterActivityData = await getTableData();
+  displayTask(setterActivityData);
 });
 
 // Task filter options
@@ -274,7 +282,11 @@ function displayTask(data) {
                   dat.status == "pending"
                     ? `<a id="reject_task" href="#">cancel task</a>`
                     : dat.status == "processing"
-                    ? `<a id="reject_task" href="#">cancel task</a>`
+                    ? `<a id="reject_task" href="#">cancel task</a>
+                    <a id="complete_task" href="#">task accomplished</a>
+                    `
+                    : dat.status == "completed" ?
+                    ``
                     : `<a id="confirm_task" href="#">reset task</a>`
                 }
                 </div>
@@ -287,7 +299,7 @@ function displayTask(data) {
   tableTab.forEach((tab) => {
     const statusBtn = tab.querySelectorAll(".status");
     let taskData;
-    const statusData = { status: "pending" };
+    let statusData = { status: "" };
     const confirmOpt = tab.querySelectorAll("#confirm_task");
     confirmOpt.forEach((opt) => {
       opt.addEventListener("click", () => {
@@ -309,6 +321,16 @@ function displayTask(data) {
           updateStatus(taskData.id, statusData);
           location.reload();
         });
+      });
+    });
+
+    const completeOpt = tab.querySelectorAll("#complete_task");
+    completeOpt.forEach((opt) => {
+      statusBtn.forEach((btn) => {
+        taskData = JSON.parse(btn.value);
+        statusData.status = "completed";
+        updateStatus(taskData.id, statusData);
+        location.reload();
       });
     });
 
