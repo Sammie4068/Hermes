@@ -34,6 +34,11 @@ html {
   overflow-x: hidden;
 }
 
+.disappear{
+  visibility: hidden;
+  opacity: 0;
+}
+
 body {
   background: url(https://res.cloudinary.com/okorosamuel/image/upload/v1700746623/Hermes/hill1_a7eqxd.png);
   background-color: #f9f8f6;
@@ -125,6 +130,18 @@ body {
   justify-content: center;
 }
 /* SIDEBAR */
+
+/* CONTENT */
+#content {
+	position: relative;
+	width: calc(100% - 280px);
+	left: 280px;
+	transition: .3s ease;
+}
+#sidebar.hide ~ #content {
+	width: calc(100% - 60px);
+	left: 60px;
+}
 
 #content nav {
   height: 56px;
@@ -252,7 +269,7 @@ body {
   left: 2px;
   bottom: 2px;
   width: calc(25px - 4px);
-  background: var(--blue);
+  background: var(--primary);
   border-radius: 50%;
   transition: all 0.3s ease;
 }

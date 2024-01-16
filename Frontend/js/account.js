@@ -3,7 +3,7 @@ const id = localStorage.getItem("id");
 const userImage = document.getElementById("userImage");
 const userProfileName = document.getElementById("userName");
 const walletAmt = document.getElementById("wallet__amount");
-const taskCompleted = document.getElementById("task__completed");
+const taskProcessing = document.getElementById("task__processing");
 const taskPending = document.getElementById("task__pending");
 const taskTableNumber = document.querySelector(".head h3 span");
 
@@ -34,13 +34,13 @@ async function init() {
   // Dashboard
   walletAmt.innerText = wallet;
   const runnerActivityData = await runnerActivity();
-  const taskCompletedData = runnerActivityData.filter(
-    (data) => data.status == "completed"
+  const taskProcessingData = runnerActivityData.filter(
+    (data) => data.status == "processing"
   );
   const taskPendingData = runnerActivityData.filter(
     (data) => data.status == "pending"
   );
-  taskCompleted.innerText = taskCompletedData.length;
+  taskProcessing.innerText = taskProcessingData.length;
   taskPending.innerText = taskPendingData.length;
 
   // Dashboard Activity Table
@@ -60,6 +60,32 @@ async function init() {
   allTasks(taskInput);
 }
 init();
+
+// TOGGLE SIDEBAR
+const menuBar = document.querySelector("#content nav .bx.bx-menu");
+const sidebar = document.getElementById("sidebar");
+const logo = document.querySelector(".brand");
+
+menuBar.addEventListener("click", function () {
+  sidebar.classList.toggle("hide");
+  if (sidebar.attributes.class.textContent == "hide") {
+    logo.classList.add("disappear");
+  } else {
+    logo.classList.remove("disappear");
+  }
+});
+
+// Availability Toggle
+const switchMode = document.getElementById("switch-mode");
+const availabilityStatus = document.getElementById("avail_status");
+
+switchMode.addEventListener("change", function () {
+  if (this.checked) {
+    availabilityStatus.innerText = "ON";
+  } else {
+    availabilityStatus.innerText = "OFF";
+  }
+});
 
 async function runnerActivity() {
   try {

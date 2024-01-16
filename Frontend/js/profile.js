@@ -292,8 +292,9 @@ function displayTask(data) {
                   dat.status == "pending"
                     ? `<a id="reject_task" href="#">cancel task</a>`
                     : dat.status == "processing"
-                    ? `<a id="reject_task" href="#">cancel task</a>
-                    <a id="complete_task" href="#">task accomplished</a>
+                    ? `
+                    <a id="complete_task" href="#">task completed</a>
+                    <a id="reject_task" href="#">cancel task</a>
                     `
                     : dat.status == "completed"
                     ? ``
@@ -336,11 +337,13 @@ function displayTask(data) {
 
     const completeOpt = tab.querySelectorAll("#complete_task");
     completeOpt.forEach((opt) => {
-      statusBtn.forEach((btn) => {
-        taskData = JSON.parse(btn.value);
-        statusData.status = "completed";
-        updateStatus(taskData.id, statusData);
-        location.reload();
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          statusData.status = "completed";
+          updateStatus(taskData.id, statusData);
+          location.reload();
+        });
       });
     });
 
