@@ -13,8 +13,7 @@ const tableMsg = document.querySelectorAll("#table_msg");
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
-const taskInput = document.getElementById("task-input");
-const bioInput = document.getElementById("bio");
+const phoneInput = document.getElementById("phone");
 const profileImage = document.getElementById("profile_image");
 const underline = document.querySelectorAll(".underline");
 const editBtn = document.getElementById("edit__btn");
@@ -24,6 +23,7 @@ const username = localStorage.getItem("name");
 const photo = localStorage.getItem("photo");
 const wallet = localStorage.getItem("wallet");
 const email = localStorage.getItem("email");
+const phone = localStorage.getItem("phone");
 const inputs = document.querySelectorAll(".profileInputs");
 
 async function init() {
@@ -33,7 +33,7 @@ async function init() {
     photo &&
     "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg";
   // Dashboard
-  walletAmt.innerText = wallet || 0;
+  walletAmt.innerText = wallet;
   const setterActivityData = await getTableData();
   const runningTaskData = setterActivityData.filter(
     (data) => data.status == "processing"
@@ -59,6 +59,7 @@ async function init() {
     "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg";
   nameInput.value = username;
   emailInput.value = email;
+  phoneInput.value = phone;
 }
 init();
 
@@ -73,9 +74,18 @@ async function getTableData() {
 }
 
 const dashboardDisplayTab = document.querySelector(".table-data");
-dashboardDisplayTab.addEventListener("click", () => {
-  window.location.hash = "#tasks"
-})
+const runningTaskCard = document.getElementById("runningTaskCard");
+const pendingTaskCard = document.getElementById("pendingTaskCard");
+
+function changingHash(div, hash) {
+  div.addEventListener("click", () => {
+    window.location.hash = `#${hash}`;
+  });
+}
+
+changingHash(dashboardDisplayTab, "tasks");
+changingHash(runningTaskCard, "tasks");
+changingHash(pendingTaskCard, "tasks");
 
 // date and time function
 function reformatDate(date) {
@@ -285,8 +295,8 @@ function displayTask(data) {
                     ? `<a id="reject_task" href="#">cancel task</a>
                     <a id="complete_task" href="#">task accomplished</a>
                     `
-                    : dat.status == "completed" ?
-                    ``
+                    : dat.status == "completed"
+                    ? ``
                     : `<a id="confirm_task" href="#">reset task</a>`
                 }
                 </div>
@@ -629,6 +639,7 @@ async function save() {
     const newData = {
       name: nameInput.value.trim(),
       email: emailInput.value.trim(),
+      phone: phoneInput.value,
       task: null,
       bio: null,
     };
@@ -647,6 +658,7 @@ async function save() {
       localStorage.setItem("email", data.email);
       localStorage.setItem("task", data.task);
       localStorage.setItem("bio", data.bio);
+      localStorage.setItem("phone", data.phone);
 
       editBtn.classList.remove("hidden");
       saveBtn.classList.add("hidden");

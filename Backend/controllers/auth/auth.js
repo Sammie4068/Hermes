@@ -25,7 +25,7 @@ exports.login = async (req, res, next) => {
       return res.json({ message: "invalid" });
     }
 
-    const { id, role, name, email, gig, bio, photo, wallet } = foundUser.rows[0];
+    const { id, role, name, email, gig, bio, photo,phone,wallet } = foundUser.rows[0];
     const hashedPassword = await bcrypt.compare(
       req.body.password,
       foundUser.rows[0].password
@@ -47,6 +47,7 @@ exports.login = async (req, res, next) => {
       gig,
       bio,
       photo,
+      phone,
       wallet
     });
   } catch (err) {
@@ -68,9 +69,10 @@ exports.register = async (req, res, next) => {
         email,
         hashedPassword,
         role,
+        phone: req.body.phone
       };
       const result = await addUsers(user);
-      const { id, gig, bio, photo, wallet } = result.rows[0];
+      const { id, gig, bio, photo, wallet, phone } = result.rows[0];
       const token = jwt.sign({ name }, secret, {
         expiresIn: 60 * 60,
       });
@@ -83,6 +85,7 @@ exports.register = async (req, res, next) => {
         name,
         email,
         photo,
+        phone,
         wallet,
       });
     }

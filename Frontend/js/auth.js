@@ -56,6 +56,7 @@ function panel() {
 const SignupForm = document.getElementById("signup-form");
 const username = document.getElementById("username");
 const email = document.getElementById("signup-email");
+const phone = document.getElementById("phone")
 const password = document.getElementById("signup-password");
 const confirmPassword = document.getElementById("signup-confirm-password");
 const usernameErrMsg = document.getElementById("name-error-msg");
@@ -79,6 +80,7 @@ SignupForm.addEventListener("submit", (e) => {
       email: email.value.trim(),
       password: password.value,
       role: "setter",
+      phone: phone.value
     };
     postData(`${baseURL}register`, userData);
   }
@@ -161,6 +163,7 @@ async function postData(url, data) {
       localStorage.setItem("photo", bodydata.photo);
       localStorage.setItem("email", bodydata.email);
       localStorage.setItem("wallet", bodydata.wallet);
+      localStorage.setItem("phone", bodydata.phone);
 
       window.location = "index.html";
     }
@@ -204,6 +207,7 @@ async function loginPost(url, data) {
       localStorage.setItem("task", bodydata.gig);
       localStorage.setItem("bio", bodydata.bio);
       localStorage.setItem("wallet", bodydata.wallet);
+      localStorage.setItem("phone", bodydata.phone);
       if (bodydata.role == "setter") {
         window.location = "index.html";
       } else if (bodydata.role == "runner") {

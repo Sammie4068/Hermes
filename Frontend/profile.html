@@ -107,23 +107,19 @@
                 <p>NGN</p>
               </span>
             </li>
-            <li>
-              <a href="#tasks">
+            <li id="runningTaskCard">
                 <i class="bx bxs-calendar-check"></i>
                 <span class="text">
                   <h3 id="task__running">0</h3>
                   <p>Running Tasks</p>
                 </span>
-              </a>
             </li>
-            <li>
-              <a href="#tasks">
+            <li id="pendingTaskCard">
                 <i class="bx bxs-group"></i>
                 <span class="text">
                   <h3 id="task__pending">0</h3>
                   <p>Pending Tasks</p>
                 </span>
-              </a>
             </li>
           </ul>
 
@@ -285,6 +281,17 @@
                     type="email"
                     id="email"
                     class="email profileInputs"
+                    disabled
+                  />
+                  <label class="underline"></label>
+                </span>
+                <span>
+                  <label>Phone</label>
+                  <input
+                    type="text"
+                    id="phone"
+                    class="phone profileInputs"
+                    oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
                     disabled
                   />
                   <label class="underline"></label>

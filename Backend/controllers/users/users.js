@@ -22,7 +22,8 @@ exports.getRunners = async (req, res, next) => {
 exports.gerUsersById = async (req, res, next) => {
   try {
     const results = await gerUsersById(req.params.id);
-    const {id, photo, name, email, gig, bio, completed, school, wallet } = results.rows[0];
+    const { id, photo, name, email, gig, bio, completed, school, wallet } =
+      results.rows[0];
     res.json({ id, photo, name, email, gig, bio, completed, school, wallet });
   } catch (err) {
     return next(err);
@@ -31,16 +32,17 @@ exports.gerUsersById = async (req, res, next) => {
 
 exports.updateUser = async (req, res, next) => {
   try {
-    const { name, email, task, bio } = req.body;
+    const { name, email, phone, task, bio } = req.body;
     const data = {
       name,
       email,
+      phone,
       task,
       bio,
       id: req.params.id,
     };
     const results = await updateUser(data);
-    res.json({ message: "success", name, email, task, bio });
+    res.json({ message: "success", name, email, phone, task, bio });
   } catch (err) {
     return next(err);
   }
@@ -48,12 +50,12 @@ exports.updateUser = async (req, res, next) => {
 
 exports.changeImage = async (req, res, next) => {
   try {
-   const response = await uploadImage(req.file.path);
-   const { url } = response;
+    const response = await uploadImage(req.file.path);
+    const { url } = response;
 
-    const id = req.params.id
-    const result = await changeImage(url, id)
-    res.json({ message: "success" })
+    const id = req.params.id;
+    const result = await changeImage(url, id);
+    res.json({ message: "success" });
   } catch (err) {
     return next(err);
   }
