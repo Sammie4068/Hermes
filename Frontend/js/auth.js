@@ -193,7 +193,6 @@ async function loginPost(url, data) {
       body: JSON.stringify(data),
     });
     const bodydata = await res.json();
-    console.log(bodydata);
     if (bodydata.message == "invalid") {
       signinMsg.textContent = "Invalid Email or Password";
       signinMsg.style.color = "red";

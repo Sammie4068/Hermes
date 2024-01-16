@@ -633,7 +633,7 @@ body {
 }
 
 .modal .status p span.completed {
-  background: var(--primary-color);
+  background: var(--primary);
 }
 .modal .status p span.processing {
   background: #ffce26;
@@ -718,13 +718,14 @@ body {
 
 .modal .heading .setter-info .contact_icons span {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   font-size: 15px;
   transition: transform 0.5s ease-out;
   height: 30px;
   cursor: pointer;
   transition: transform 0.5s ease-out;
+  gap: 10px;
 }
 
 .modal .heading .setter-info .contact_icons span:hover {

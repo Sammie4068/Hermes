@@ -50,14 +50,14 @@ exports.getRunnerActivity = async (id) => {
 
 exports.getActivityByID = async (id) => {
   return db.query(
-    "SELECT activity.*, users.photo, users.name, users.email, users.school, users.gig, users.bio, users.wallet FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.id = $1",
+    "SELECT activity.*, users.photo, users.name, users.email, users.school, users.gig, users.bio, users.wallet, users.phone FROM activity INNER JOIN users ON activity.runnerid = users.id WHERE activity.id = $1",
     [id]
   );
 };
 
 exports.getActivityBySetterID = async (id) => {
   return db.query(
-    "SELECT activity.*, users.photo, users.name, users.email FROM activity INNER JOIN users ON activity.setterid = users.id WHERE activity.id = $1",
+    "SELECT activity.*, users.photo, users.name, users.email, users.phone FROM activity INNER JOIN users ON activity.setterid = users.id WHERE activity.id = $1",
     [id]
   );
 };

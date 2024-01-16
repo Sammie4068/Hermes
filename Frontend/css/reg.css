@@ -84,7 +84,7 @@ textarea {
   flex-direction: column;
   width: 30rem;
   background: #a8ede2;
-  height: 34rem;
+  height: 100%;
   border-radius: 8px;
   position: relative;
   left: -50px;

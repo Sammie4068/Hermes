@@ -9,6 +9,7 @@ const taskTableNumber = document.querySelector(".head h3 span");
 
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
+const phoneInput = document.getElementById("phone");
 const taskInput = document.getElementById("task-input");
 const bioInput = document.getElementById("bio");
 const profileImage = document.getElementById("profile_image");
@@ -20,6 +21,7 @@ const username = localStorage.getItem("name");
 const photo = localStorage.getItem("photo");
 const wallet = localStorage.getItem("wallet");
 const email = localStorage.getItem("email");
+const phone = localStorage.getItem("phone");
 const task = localStorage.getItem("task");
 const bio = localStorage.getItem("bio");
 const inputs = document.querySelectorAll(".profileInputs");
@@ -52,6 +54,7 @@ async function init() {
   profileImage.attributes.src.value = photo;
   nameInput.value = username;
   emailInput.value = email;
+  phoneInput.value = phone;
   taskInput.innerHTML = `<option>${task}</option>`;
   bioInput.value = bio;
   allTasks(taskInput);
@@ -126,7 +129,6 @@ searchCancel.addEventListener("click", async () => {
   const runnerActivityData = await runnerActivity();
   displayTask(runnerActivityData);
 });
-
 
 // Task filter options
 const taskFilterOPt = document.querySelector(".task_filter_options");
@@ -282,7 +284,7 @@ function displayTask(data) {
   tableTab.forEach((tab) => {
     const statusBtn = tab.querySelectorAll(".status");
     let taskData;
-    const statusData = { status: "pending" };
+    const statusData = { status: "" };
     const confirmOpt = tab.querySelectorAll("#confirm_task");
     confirmOpt.forEach((opt) => {
       opt.addEventListener("click", () => {
@@ -443,9 +445,7 @@ function seeMore(data, taskImgData) {
           <div class="setter-info">
             <h1>${data.name}</h1>
             <div class="contact_icons">
-              <span><i class="fa-solid fa-message"></i> message</span>
-              <span><i class="fa-solid fa-phone"></i> call</span>
-            </div>
+              <span><i class="fa-solid fa-phone"></i>${data.phone}</span>
           </div>
         </div>
       </div>`;
@@ -604,6 +604,7 @@ async function save() {
     const newData = {
       name: nameInput.value.trim(),
       email: emailInput.value.trim(),
+      phone: phoneInput.value,
       task: taskInput.value.trim().toLowerCase(),
       bio: bioInput.value.trim(),
     };
@@ -622,6 +623,7 @@ async function save() {
       localStorage.setItem("email", data.email);
       localStorage.setItem("task", data.task);
       localStorage.setItem("bio", data.bio);
+      localStorage.setItem("phone", data.phone);
 
       editBtn.classList.remove("hidden");
       saveBtn.classList.add("hidden");

@@ -130,13 +130,14 @@ exports.addRunner = async (req, res, next) => {
       role: "runner",
       gig: req.body.gig,
       bio: req.body.bio,
-      wallet: 0
+      wallet: 0,
+      phone: req.body.phone
     };
     const result = await addRunner(runner);
     const token = jwt.sign({ name }, secret, {
       expiresIn: 60 * 60,
     });
-    const { id, email, gig, bio, photo, wallet } = result.rows[0];
+    const { id, email, gig, bio, photo, wallet, phone } = result.rows[0];
     res.json({
       message: "success",
       id,
@@ -148,6 +149,7 @@ exports.addRunner = async (req, res, next) => {
       bio,
       photo,
       wallet,
+      phone
     });
   } catch (err) {
     return next(err);

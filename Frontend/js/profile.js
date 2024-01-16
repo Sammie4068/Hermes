@@ -480,8 +480,7 @@ function seeMore(data, taskImgData) {
           <div class="setter-info">
             <h1>${data.name}</h1>
             <div class="contact_icons">
-              <span><i class="fa-solid fa-message"></i> message</span>
-              <span><i class="fa-solid fa-phone"></i> call</span>
+              <span><i class="fa-solid fa-phone"></i>${data.phone}</span>
             </div>
           </div>
         </div>
