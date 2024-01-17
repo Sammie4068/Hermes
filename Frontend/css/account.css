@@ -34,7 +34,7 @@ html {
   overflow-x: hidden;
 }
 
-.disappear{
+.disappear {
   visibility: hidden;
   opacity: 0;
 }
@@ -72,7 +72,8 @@ body {
 #sidebar.hide {
   width: 60px;
 }
-#sidebar .brand, #sidebar .brand h2{
+#sidebar .brand,
+#sidebar .brand h2 {
   font-family: "Italianno", cursive;
   font-size: 40px;
   color: var(--primary);
@@ -133,14 +134,14 @@ body {
 
 /* CONTENT */
 #content {
-	position: relative;
-	width: calc(100% - 280px);
-	left: 280px;
-	transition: .3s ease;
+  position: relative;
+  width: calc(100% - 280px);
+  left: 280px;
+  transition: 0.3s ease;
 }
 #sidebar.hide ~ #content {
-	width: calc(100% - 60px);
-	left: 60px;
+  width: calc(100% - 60px);
+  left: 60px;
 }
 
 #content nav {
@@ -185,13 +186,15 @@ body {
   width: 100%;
   margin-right: auto;
 }
-#content nav form .form-input, .search-form {
+#content nav form .form-input,
+.search-form {
   display: none;
   align-items: center;
   height: 36px;
   gap: 10px;
 }
-#content nav form .form-input input, .search-form input {
+#content nav form .form-input input,
+.search-form input {
   flex-grow: 1;
   padding: 0 16px;
   height: 100%;
@@ -202,7 +205,8 @@ body {
   width: 300px;
   color: var(--dark);
 }
-#content nav form .form-input button, .search-form button {
+#content nav form .form-input button,
+.search-form button {
   width: 36px;
   height: 100%;
   display: flex;
@@ -481,9 +485,9 @@ body {
 }
 #table_msg {
   display: none;
- position: relative;
- left: -70px;
- color: #333;
+  position: relative;
+  left: -70px;
+  color: #333;
 }
 .task_table #table_msg a {
   color: var(--dark);
@@ -519,7 +523,7 @@ body {
   background-color: #800000;
 }
 
-.filter{
+.filter {
   display: none;
   align-items: center;
   gap: 15px;
@@ -528,7 +532,7 @@ body {
 .filter {
   margin-left: 20px;
 }
-.filter i{
+.filter i {
   font-size: 30px;
   color: #800000;
   margin-left: -10px;
@@ -551,7 +555,6 @@ body {
   padding: 0px 10px;
   border: none;
   text-transform: capitalize;
-
 }
 /* .content_display */
 
@@ -613,8 +616,6 @@ body {
   color: var(--primary);
 }
 .modal .billing h2 {
-  display: flex;
-  justify-content: center;
   color: #002b1d;
 }
 .modal .billing {
@@ -622,9 +623,14 @@ body {
   background-color: #dad6d6;
   border-radius: 5px;
   width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .modal .billing p {
   margin: 10px;
+  font-size: 25px;
 }
 
 .modal .status {
@@ -970,7 +976,7 @@ body {
   position: relative;
   left: -190px;
 }
-.button.password_save{
+.button.password_save {
   width: 11%;
   position: relative;
   left: -190px;

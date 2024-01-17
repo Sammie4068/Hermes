@@ -73,6 +73,21 @@ async function getTableData() {
   }
 }
 
+// TOGGLE SIDEBAR
+const menuBar = document.querySelector("#content nav .bx.bx-menu");
+const sidebar = document.getElementById("sidebar");
+const logo = document.querySelector(".brand");
+
+menuBar.addEventListener("click", function () {
+  sidebar.classList.toggle("hide");
+  if (sidebar.attributes.class.textContent == "hide") {
+    logo.classList.add("disappear");
+  } else {
+    logo.classList.remove("disappear");
+  }
+});
+
+//Dashboard Hashchange
 const dashboardDisplayTab = document.querySelector(".table-data");
 const runningTaskCard = document.getElementById("runningTaskCard");
 const pendingTaskCard = document.getElementById("pendingTaskCard");
@@ -468,9 +483,7 @@ function seeMore(data, taskImgData) {
         </div>
         <div class="billing">
           <h2>Pricing</h2>
-          <p>Tip: NGN 1000</p>
-          <p>Transportation: NGN 1000</p>
-          <p><strong>Total:</strong> <strong>NGN 2000</strong></p>
+          <p><strong>NGN ${data.total}</strong></p>
         </div>
       </div>
       <div>

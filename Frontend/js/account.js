@@ -87,6 +87,21 @@ switchMode.addEventListener("change", function () {
   }
 });
 
+// Dashboard HashChange
+const dashboardDisplayTab = document.querySelector(".table-data");
+const runningTaskCard = document.getElementById("runningTaskCard");
+const pendingTaskCard = document.getElementById("pendingTaskCard");
+
+function changingHash(div, hash) {
+  div.addEventListener("click", () => {
+    window.location.hash = `#${hash}`;
+  });
+}
+
+changingHash(dashboardDisplayTab, "tasks");
+changingHash(runningTaskCard, "tasks");
+changingHash(pendingTaskCard, "tasks");
+
 async function runnerActivity() {
   try {
     const res = await fetch(
@@ -450,15 +465,16 @@ function seeMore(data, taskImgData) {
             <strong>Location:</strong> ${data.location}
           </span>
           <span>
+            <strong>Task Duration:</strong> ${data.duration} Hrs
+          </span>
+          <span>
             <p><strong>Date:</strong> ${reformatDate(data.date)}</p>
             <p><strong>Time:</strong> ${reformatTime(data.time)}</p>
           </span>
         </div>
         <div class="billing">
-          <h2>Pricing</h2>
-          <p>Tip: NGN 1000</p>
-          <p>Transportation: NGN 1000</p>
-          <p><strong>Total:</strong> <strong>NGN 2000</strong></p>
+          <h2>Fee</h2>
+          <p><strong>NGN ${data.price}</strong></p>
         </div>
       </div>
       <div>

@@ -2,6 +2,13 @@ AOS.init();
 // Url instance
 const urlParams = new URLSearchParams(window.location.search);
 
+//Activity
+const activity = document.getElementById("activity");
+
+activity.addEventListener("click", () => {
+  window.location = "profile.html#dashboard";
+});
+
 // Filter Active Switch
 function active(parentEle, ele) {
   parentEle.forEach((i) => i.classList.remove("active_option"));
@@ -252,9 +259,9 @@ async function showTaskWithRunner(id, gig, runnerID) {
           </div>
           <div class="billing">
             <h2>Pricing</h2>
-            <p>Tip: NGN 1000</p>
-            <p>Transportation: NGN 1000</p>
-            <p> <strong>Total:</strong> <strong>NGN 2000</strong> </p>
+            <p>Tip: NGN ${data.price}</p>
+            <p>Service Charge: NGN 500.00</p>
+            <p> <strong>Total:</strong> <strong>NGN ${data.total}</strong> </p>
           </div>
         </div>
         <h2>Runner</h2>

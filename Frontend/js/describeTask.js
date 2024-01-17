@@ -53,6 +53,7 @@ const gig = document.querySelector(".task-input");
 const gigDescription = document.getElementById("task-decription");
 const gigLocation = document.querySelector(".task-location");
 const locationState = document.getElementById("states");
+const gigDuration = document.getElementById("duration")
 const gigOption = document.querySelector(".task-options");
 const gigDate = document.getElementById("date");
 const gigTime = document.getElementById("time");
@@ -60,7 +61,6 @@ const id = localStorage.getItem("id");
 
 nextBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  const option = gigOption.value;
 
   const data = {
     task: gig.value.trim(),
@@ -70,6 +70,7 @@ nextBtn.addEventListener("click", (e) => {
     time: gigTime.value,
     status: "pending",
     setterid: id,
+    duration: gigDuration.value,
   };
   createTask(data);
 });

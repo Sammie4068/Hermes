@@ -41,8 +41,21 @@ exports.getAllRunners = async (req, res, next) => {
 
 exports.addActivity = async (req, res, next) => {
   try {
-    const { task, description, location, date, time, status, setterid } =
-      req.body;
+    const {
+      task,
+      description,
+      location,
+      duration,
+      date,
+      time,
+      status,
+      setterid,
+    } = req.body;
+
+    const taskData = await getTaskByName(task);
+    const { tip } = taskData.rows[0];
+    const price = duration * tip;
+    const total = price + 500;
     const data = {
       task,
       description,
@@ -51,6 +64,9 @@ exports.addActivity = async (req, res, next) => {
       time,
       status,
       setterid,
+      duration,
+      price,
+      total,
     };
     const result = await addActivity(data);
     const { id } = result.rows[0];
@@ -65,7 +81,7 @@ exports.updateRunnerID = async (req, res, next) => {
     const { runnerID } = req.body;
     const id = req.params.id;
     const result = await updateRunnerID(runnerID, id);
-    return res.json({ message: "success"});
+    return res.json({ message: "success" });
   } catch (err) {
     return next(err);
   }
@@ -76,7 +92,7 @@ exports.updateStatus = async (req, res, next) => {
     const { status } = req.body;
     const id = req.params.id;
     const result = await updateStatus(status, id);
-    return res.json({ message: "success"});
+    return res.json({ message: "success" });
   } catch (err) {
     return next(err);
   }
