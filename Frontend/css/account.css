@@ -364,7 +364,7 @@ body {
   flex-wrap: wrap;
   grid-gap: 24px;
   margin-top: 24px;
-  width: 100%;
+  /* width: 100%; */
   color: var(--dark);
   text-transform: capitalize;
   transition: 0.4s ease-in-out;
@@ -1044,5 +1044,209 @@ body {
   }
   #content .content_display .table-data .todo .todo-list {
     min-width: 420px;
+  }
+}
+
+/* Wallet */
+
+/* MAIN */
+.wallet_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.wallet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.balance {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  width: 80%;
+  height: 200px;
+  gap: 100px;
+}
+
+.balance span .bx {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+  background: var(--lite);
+  color: var(--primary);
+}
+
+.balance_left {
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  gap: 20px;
+}
+
+.balance_title {
+  font-weight: 500;
+  font-size: 35px;
+  text-wrap: nowrap;
+}
+
+.balance_date {
+  color: #333;
+}
+
+.balance_amt {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.balance_amt p {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.balance_amt h3 {
+  font-size: 50px;
+  font-weight: 600;
+  color: #333;
+}
+
+.operations {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  padding: 20px;
+}
+
+.operations span {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+  background-color: #eee;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.operations span:hover {
+  transform: scale(1.05);
+}
+
+.transaction_table {
+  width: 50%;
+}
+
+.transaction_table .table_amt {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.transaction_table .table_amt span {
+  font-size: 10px;
+}
+
+/* Payment gateway */
+.payment {
+  background: #f3f7f9;
+  max-width: 360px;
+  margin: auto;
+  height: 100%;
+  padding: 35px;
+  padding-top: 70px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.form .label {
+  display: block;
+  color: #555555;
+  margin-bottom: 6px;
+}
+
+.input {
+  padding: 13px 0px 13px 25px;
+  width: 100%;
+  text-align: center;
+  border: 2px solid #dddddd;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  word-spacing: 3px;
+  outline: none;
+  font-size: 16px;
+  color: #555555;
+}
+
+.card-grp {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-item {
+  width: 48%;
+}
+
+.space {
+  margin-bottom: 20px;
+}
+
+.icon-relative {
+  position: relative;
+}
+
+.icon-relative .fas,
+.icon-relative .far,
+.icon-relative .fa-solid {
+  position: absolute;
+  bottom: 12px;
+  left: 15px;
+  font-size: 20px;
+  color: #555555;
+}
+
+.btn {
+  margin-top: 40px;
+  background: #2196f3;
+  padding: 12px;
+  text-align: center;
+  color: #f8f8f8;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.paystack-footer {
+  width: 300px;
+  max-width: 100%;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin: 40px auto;
+  text-align: center;
+  opacity: 0.7;
+  clear: both;
+}
+
+.paystack-footer img {
+  width: 200px;
+}
+
+@media screen and (max-width: 420px) {
+  .card-grp {
+    flex-direction: column;
+  }
+  .card-item {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .btn {
+    margin-top: 20px;
   }
 }

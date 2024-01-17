@@ -11,6 +11,9 @@ const taskPending = document.getElementById("task__pending");
 const taskTableNumber = document.querySelector(".head h3 span");
 const tableMsg = document.querySelectorAll("#table_msg");
 
+const balanceAmt = document.getElementById("balance-amount");
+const balanceDate = document.querySelector(".balance_date span");
+
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
 const phoneInput = document.getElementById("phone");
@@ -53,6 +56,10 @@ async function init() {
   // Tasks
   allTasks(taskFilterOPt);
 
+  // Wallet
+  balanceAmt.innerText = wallet;
+  balanceDate.innerText = reformatDate(new Date());
+
   // Profile
   profileImage.attributes.src.value =
     photo &&
@@ -88,6 +95,7 @@ menuBar.addEventListener("click", function () {
 });
 
 //Dashboard Hashchange
+const walletCard = document.getElementById("walletCard");
 const dashboardDisplayTab = document.querySelector(".table-data");
 const runningTaskCard = document.getElementById("runningTaskCard");
 const pendingTaskCard = document.getElementById("pendingTaskCard");
@@ -98,6 +106,7 @@ function changingHash(div, hash) {
   });
 }
 
+changingHash(walletCard, "wallet");
 changingHash(dashboardDisplayTab, "tasks");
 changingHash(runningTaskCard, "tasks");
 changingHash(pendingTaskCard, "tasks");
@@ -397,9 +406,11 @@ async function updateStatus(id, statusData) {
 const contents = document.querySelectorAll(".content_display");
 const dashboardDisplay = document.getElementById("dashboard_display");
 const tasksDisplay = document.getElementById("tasks_display");
+const walletDisplay = document.getElementById("wallet_display");
 const profileDisplay = document.getElementById("profile_display");
 const dashboardLink = document.getElementById("dashboardLink");
 const tasksLink = document.getElementById("tasksLink");
+const walletLink = document.getElementById("walletLink");
 const profileLink = document.getElementById("profileLink");
 // const messagesDisplay = document.querySelector(".messages");
 // const messagesLink = document.getElementById("messagesLink");
@@ -433,10 +444,10 @@ function updateDisplay() {
       displayContent(profileDisplay);
       active(profileLink);
       break;
-    // case "messages":
-    //   displayContent(messagesDisplay);
-    //   active(messagesLink);
-    //   break;
+    case "wallet":
+      displayContent(walletDisplay);
+      active(walletLink);
+      break;
     // case "settings":
     //   displayContent(settingsDisplay);
     //   break;
@@ -525,6 +536,7 @@ async function taskTableInfo(id, gig) {
 // close modal
 overlay.addEventListener("click", () => {
   modal.innerHTML = ``;
+  modal.style.padding = "25px";
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
 });
@@ -689,3 +701,113 @@ async function save() {
   }
 }
 saveBtn.addEventListener("click", save);
+
+// Wallet Operations
+const depositBtn = document.getElementById("deposit");
+const withdrawalBtn = document.getElementById("withdrawal");
+
+depositBtn.addEventListener("click", () => {
+  const html = `<div class="payment_wrapper">
+      <div class="payment">
+        <div class="form">
+          <div class="card space icon-relative">
+            <label class="label">Amount:</label>
+            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" />
+            <i class="fa-solid fa-money-bill"></i>
+          </div>
+          <div class="card space icon-relative">
+            <label class="label">Card number:</label>
+            <input
+              type="text"
+              class="input"
+              data-mask="0000 0000 0000 0000"
+              placeholder="Card Number"
+              oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+            />
+            <i class="far fa-credit-card"></i>
+          </div>
+          <div class="card-grp space">
+            <div class="card-item icon-relative">
+              <label class="label">Expiry date:</label>
+              <input
+                type="text"
+                name="expiry-data"
+                class="input"
+                data-mask="00 / 00"
+                placeholder="00 / 00"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+              />
+              <i class="far fa-calendar-alt"></i>
+            </div>
+            <div class="card-item icon-relative">
+              <label class="label">CVC:</label>
+              <input
+                type="text"
+                class="input"
+                data-mask="000"
+                placeholder="000"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+              />
+              <i class="fas fa-lock"></i>
+            </div>
+          </div>
+
+          <div class="btn">Enter</div>
+
+          <div id="paystack-footer" class="paystack-footer animated fadeIn">
+            <a target="_blank" href="https://paystack.com/what-is-paystack">
+              <img
+                alt="Paystack secured badge"
+                src="https://koboline.com.ng/wp-content/uploads/2020/05/paystack-badge-cards-ngn.png"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  modal.insertAdjacentHTML("beforeend", html);
+  overlay.classList.remove("hidden");
+  modal.classList.remove("hidden");
+  modal.style.padding = "0px";
+});
+
+withdrawalBtn.addEventListener("click", () => {
+  html = `<div class="payment_wrapper">
+      <div class="payment">
+        <div class="form">
+          <div class="card space icon-relative">
+            <label class="label">Amount:</label>
+            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" />
+            <i class="fa-solid fa-money-bill"></i>
+          </div>
+          <div class="card space icon-relative">
+            <label class="label">Account Number:</label>
+            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"/>
+            <i class="fas fa-user"></i>
+          </div>
+          
+          <div class="card space icon-relative">
+            <label class="label">Bank:</label>
+            <input type="text" class="input"/>
+            <i class="fas fa-bank"></i>
+          </div>
+          <div class="btn">Enter</div>
+
+          <div id="paystack-footer" class="paystack-footer animated fadeIn">
+            <a target="_blank" href="https://paystack.com/what-is-paystack">
+              <img
+                alt="Paystack secured badge"
+                src="https://koboline.com.ng/wp-content/uploads/2020/05/paystack-badge-cards-ngn.png"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>`;
+
+  modal.insertAdjacentHTML("beforeend", html);
+  overlay.classList.remove("hidden");
+  modal.classList.remove("hidden");
+  modal.style.padding = "0px";
+});
