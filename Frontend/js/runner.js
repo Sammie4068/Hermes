@@ -282,10 +282,19 @@ async function showTaskWithRunner(id, gig, runnerID) {
     overlay.classList.remove("hidden");
 
     document.querySelector(".proceed_btn").addEventListener("click", () => {
+      let status;
+      if (
+        parseFloat(localStorage.getItem("wallet")) >= parseFloat(data.total)
+      ) {
+        status = "pending";
+      } else {
+        status = "unpaid";
+      }
       renderSpinner(overlay);
       setTimeout(() => {
         const requestData = {
           runnerID: localStorage.getItem("runnerID"),
+          status,
         };
         const id = localStorage.getItem("taskID");
         requestRunner(requestData, id);

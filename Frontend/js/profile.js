@@ -24,10 +24,13 @@ const saveBtn = document.getElementById("saveBtn");
 
 const username = localStorage.getItem("name");
 const photo = localStorage.getItem("photo");
-const wallet = localStorage.getItem("wallet");
+const walletBalance = localStorage.getItem("wallet");
 const email = localStorage.getItem("email");
 const phone = localStorage.getItem("phone");
 const inputs = document.querySelectorAll(".profileInputs");
+
+let number = +walletBalance;
+let wallet = number.toLocaleString("en-US") + "." + walletBalance.split(".")[1];
 
 async function init() {
   // Nav bar profile
@@ -322,6 +325,8 @@ function displayTask(data) {
                     `
                     : dat.status == "completed"
                     ? ``
+                    : dat.status == "unpaid"
+                    ? `<a href="#wallet">make payment</a>`
                     : `<a id="confirm_task" href="#">reset task</a>`
                 }
                 </div>
@@ -709,10 +714,13 @@ const withdrawalBtn = document.getElementById("withdrawal");
 depositBtn.addEventListener("click", () => {
   const html = `<div class="payment_wrapper">
       <div class="payment">
-        <div class="form">
+      <p class="hidden">Successful</p>
+        <form class="form" id="depositForm">
           <div class="card space icon-relative">
             <label class="label">Amount:</label>
-            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" />
+            <input type="text" class="input"
+            id="depositAmt"
+            oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" required />
             <i class="fa-solid fa-money-bill"></i>
           </div>
           <div class="card space icon-relative">
@@ -723,6 +731,7 @@ depositBtn.addEventListener("click", () => {
               data-mask="0000 0000 0000 0000"
               placeholder="Card Number"
               oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+              required
             />
             <i class="far fa-credit-card"></i>
           </div>
@@ -736,6 +745,7 @@ depositBtn.addEventListener("click", () => {
                 data-mask="00 / 00"
                 placeholder="00 / 00"
                 oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
               />
               <i class="far fa-calendar-alt"></i>
             </div>
@@ -747,12 +757,13 @@ depositBtn.addEventListener("click", () => {
                 data-mask="000"
                 placeholder="000"
                 oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
               />
               <i class="fas fa-lock"></i>
             </div>
           </div>
 
-          <div class="btn">Enter</div>
+          <button type="submit" class="btn" id="depositEnter">Enter</button>
 
           <div id="paystack-footer" class="paystack-footer animated fadeIn">
             <a target="_blank" href="https://paystack.com/what-is-paystack">
@@ -762,7 +773,7 @@ depositBtn.addEventListener("click", () => {
               />
             </a>
           </div>
-        </div>
+        </form>
       </div>
     </div>`;
 
@@ -770,29 +781,57 @@ depositBtn.addEventListener("click", () => {
   overlay.classList.remove("hidden");
   modal.classList.remove("hidden");
   modal.style.padding = "0px";
+
+  //depositing
+  const depositAmt = document.getElementById("depositAmt");
+  const depositForm = document.getElementById("depositForm");
+  const successMsg = document.querySelectorAll(".payment p");
+
+  depositForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    successMsg.forEach((msg) => {
+      return msg.classList.remove("hidden");
+    });
+
+    const data = {
+      id,
+      amount: depositAmt.value,
+      type: "deposit",
+    };
+    addTransaction(data);
+
+    const updateWalletData = {
+      amount: parseFloat(walletBalance) + Number(depositAmt.value),
+      id,
+    };
+    updateWallet(updateWalletData);
+  });
 });
 
 withdrawalBtn.addEventListener("click", () => {
   html = `<div class="payment_wrapper">
       <div class="payment">
-        <div class="form">
+      <p class="hidden">Successful</p>
+        <form class="form" id="withdrawalForm">
           <div class="card space icon-relative">
             <label class="label">Amount:</label>
-            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" />
+            <input type="text" class="input" 
+            id="withdrawalAmt"
+            oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" required/>
             <i class="fa-solid fa-money-bill"></i>
           </div>
           <div class="card space icon-relative">
             <label class="label">Account Number:</label>
-            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"/>
+            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" required/>
             <i class="fas fa-user"></i>
           </div>
           
           <div class="card space icon-relative">
             <label class="label">Bank:</label>
-            <input type="text" class="input"/>
+            <input type="text" class="input" required/>
             <i class="fas fa-bank"></i>
           </div>
-          <div class="btn">Enter</div>
+          <button type="submit" class="btn" id="withdrawalEnter">Enter</button>
 
           <div id="paystack-footer" class="paystack-footer animated fadeIn">
             <a target="_blank" href="https://paystack.com/what-is-paystack">
@@ -802,7 +841,7 @@ withdrawalBtn.addEventListener("click", () => {
               />
             </a>
           </div>
-        </div>
+        </form>
       </div>
     </div>`;
 
@@ -810,4 +849,68 @@ withdrawalBtn.addEventListener("click", () => {
   overlay.classList.remove("hidden");
   modal.classList.remove("hidden");
   modal.style.padding = "0px";
+
+  //withdrawal
+  const withdrawalAmt = document.getElementById("withdrawalAmt");
+  const withdrawalForm = document.getElementById("withdrawalForm");
+  const successMsg = document.querySelectorAll(".payment p");
+
+  withdrawalForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    successMsg.forEach((msg) => {
+      return msg.classList.remove("hidden");
+    });
+
+    const data = {
+      id,
+      amount: withdrawalAmt.value,
+      type: "withdrawal",
+    };
+    addTransaction(data);
+
+    const updateWalletData = {
+      amount: parseFloat(walletBalance) - Number(withdrawalAmt.value),
+      id,
+    };
+    updateWallet(updateWalletData);
+  });
 });
+
+async function addTransaction(data) {
+  try {
+    const res = await fetch("http://localhost:3000/api/v1/transaction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const apiData = await res.json();
+    if (apiData.message) {
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}
+
+async function updateWallet(data) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/users/wallet`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const apiData = await res.json();
+    if (apiData.message) {
+      localStorage.setItem("wallet", apiData.data.wallet);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}

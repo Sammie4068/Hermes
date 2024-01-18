@@ -503,7 +503,7 @@ body {
   border-radius: 20px;
   font-weight: 700;
   border: none;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
 #content .content_display .table-data .order table tr td .status.completed,
 .task_table .order table tr td .status.status.completed {
@@ -521,6 +521,11 @@ body {
 #content .content_display .table-data .order table tr td .status.cancelled,
 .task_table .order table tr td .status.cancelled {
   background-color: #800000;
+}
+
+#content .content_display .table-data .order table tr td .status.cancelled,
+.task_table .order table tr td .status.unpaid {
+  background-color: #333;
 }
 
 .filter {
@@ -1063,13 +1068,13 @@ body {
 
 .balance {
   padding: 15px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
   display: flex;
   align-items: center;
   width: 80%;
   height: 200px;
-  gap: 100px;
+  justify-content: space-between;
 }
 
 .balance span .bx {
@@ -1090,11 +1095,13 @@ body {
   align-items: center;
   color: var(--primary);
   gap: 20px;
+  /* border-right: 1px solid #333;
+  padding-right: 7px;  */
 }
 
 .balance_title {
   font-weight: 500;
-  font-size: 35px;
+  font-size: 20px;
   text-wrap: nowrap;
 }
 
@@ -1115,7 +1122,7 @@ body {
 }
 
 .balance_amt h3 {
-  font-size: 50px;
+  font-size: 40px;
   font-weight: 600;
   color: #333;
 }
@@ -1165,6 +1172,12 @@ body {
   padding-top: 70px;
   border-radius: 5px;
   position: relative;
+}
+
+.payment p {
+  color: #002b1d;
+  margin-left: 100px;
+  font-weight: 600;
 }
 
 .form .label {
@@ -1221,6 +1234,8 @@ body {
   color: #f8f8f8;
   border-radius: 5px;
   cursor: pointer;
+  border: none;
+  width: 100%;
 }
 
 .paystack-footer {

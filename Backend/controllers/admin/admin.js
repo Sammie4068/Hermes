@@ -10,6 +10,8 @@ const {
   getRunnerActivity,
   getActivityBySetterID,
   updateStatus,
+  addTransaction,
+  updateWallet,
 } = require("../../models/index");
 
 exports.getTasks = async (req, res, next) => {
@@ -78,10 +80,13 @@ exports.addActivity = async (req, res, next) => {
 
 exports.updateRunnerID = async (req, res, next) => {
   try {
-    const { runnerID } = req.body;
+    const { runnerID, status } = req.body;
+   
+    console.log(status)
+
     const id = req.params.id;
-    const result = await updateRunnerID(runnerID, id);
-    return res.json({ message: "success" });
+    const result = await updateRunnerID(runnerID, status, id);
+    return res.json({ message: "success", data: result.rows });
   } catch (err) {
     return next(err);
   }
@@ -129,6 +134,29 @@ exports.getActivityBySetterID = async (req, res, next) => {
   try {
     const results = await getActivityBySetterID(req.params.id);
     return res.json(results.rows);
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.addTransaction = async (req, res, next) => {
+  try {
+    const { id, type, amount } = req.body;
+    const date = new Date();
+
+    const result = await addTransaction(id, type, amount, date);
+    res.json({ message: "success" });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.updateWallet = async (req, res, next) => {
+  try {
+    const { amount, id } = req.body;
+
+    const result = await updateWallet(amount, id);
+    res.json({ message: "success", data: result.rows[0] });
   } catch (err) {
     return next(err);
   }

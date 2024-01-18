@@ -25,14 +25,15 @@ exports.addActivity = async (data) => {
       data.setterid,
       data.duration,
       data.price,
-      data.total
+      data.total,
     ]
   );
 };
 
-exports.updateRunnerID = async (runnerID, id) => {
-  return db.query("UPDATE activity SET runnerid = $1 WHERE id=$2", [
+exports.updateRunnerID = async (runnerID, status, id) => {
+  return db.query("UPDATE activity SET runnerid = $1, status = $2 WHERE id=$3 RETURNING*", [
     runnerID,
+    status,
     id,
   ]);
 };
@@ -67,4 +68,18 @@ exports.getActivityBySetterID = async (id) => {
 
 exports.updateStatus = async (status, id) => {
   return db.query("UPDATE activity SET status = $1 WHERE id=$2", [status, id]);
+};
+
+exports.addTransaction = async (id, type, amount, date) => {
+  return db.query(
+    "INSERT INTO transactions (userid, type, amount, date) VALUES ($1, $2, $3, $4)",
+    [id, type, amount, date]
+  );
+};
+
+exports.updateWallet = async (amount, id) => {
+  return db.query("UPDATE users SET wallet = $1 WHERE id=$2 RETURNING wallet", [
+    amount,
+    id,
+  ]);
 };
