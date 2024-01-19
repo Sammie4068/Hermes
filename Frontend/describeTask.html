@@ -151,23 +151,23 @@
             </select>
           </div>
           <div class="input-field">
-            <label>Task Options</label>
-            <select required class="task-options">
-              <option disabled selected>How big is your task?</option>
-              <option>Small - 1hr max</option>
-              <option>Medium - 3hrs max</option>
-              <option>Big - 3hrs+</option>
-            </select>
-            <div class="input-field">
-              <label for="date"
-                >Task Date
-                <input type="date" id="date" />
-              </label>
-              <label for="time">
-                Task Time
-                <input type="time" id="time" />
-              </label>
-            </div>
+            <label>Task Duration</label>
+            <input
+              type="text"
+              id="duration"
+              oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+              placeholder="How many Hours will the task take?"
+            />
+          </div>
+          <div class="input-field">
+            <label for="date"
+              >Task Date
+              <input type="date" id="date" />
+            </label>
+            <label for="time">
+              Task Time
+              <input type="time" id="time" />
+            </label>
           </div>
           <!-- <div class="button__wrapper"> -->
           <button class="btn next-btn">Next</button>

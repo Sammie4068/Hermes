@@ -2,6 +2,13 @@ AOS.init();
 // Url instance
 const urlParams = new URLSearchParams(window.location.search);
 
+//Activity
+const activity = document.getElementById("activity");
+
+activity.addEventListener("click", () => {
+  window.location = "profile.html#dashboard";
+});
+
 // Filter Active Switch
 function active(parentEle, ele) {
   parentEle.forEach((i) => i.classList.remove("active_option"));
@@ -42,7 +49,6 @@ const gig = localStorage.getItem("gig");
 const gigLocation = localStorage.getItem("state");
 
 function displayRunners(data) {
-  console.log(data);
   data.map((dat) => {
     let value = JSON.stringify(dat.id);
     let markup = `<div class="card_container" data-aos="fade-left"
@@ -257,9 +263,9 @@ async function showTaskWithRunner(id, gig, runnerID) {
           </div>
           <div class="billing">
             <h2>Pricing</h2>
-            <p>Tip: NGN 1000</p>
-            <p>Transportation: NGN 1000</p>
-            <p> <strong>Total:</strong> <strong>NGN 2000</strong> </p>
+            <p>Tip: NGN ${data.price}</p>
+            <p>Service Charge: NGN 500.00</p>
+            <p> <strong>Total:</strong> <strong>NGN ${data.total}</strong> </p>
           </div>
         </div>
         <h2>Runner</h2>
@@ -280,10 +286,34 @@ async function showTaskWithRunner(id, gig, runnerID) {
     overlay.classList.remove("hidden");
 
     document.querySelector(".proceed_btn").addEventListener("click", () => {
+      let status;
+      
+      if (
+        parseFloat(localStorage.getItem("wallet")) >= parseFloat(data.total)
+      ) {
+        status = "pending";
+       const newWallet = parseFloat(localStorage.getItem("wallet")) - parseFloat(data.total);
+        const updateWalletData = {
+        amount: newWallet,
+        id: localStorage.getItem("id")
+      }
+        updateWallet(updateWalletData);
+
+            const transactionTableData = {
+              id: localStorage.getItem("id"),
+              amount: data.total,
+              type: "paid",
+            };
+            addTransaction(transactionTableData);
+
+      } else {
+        status = "unpaid";
+      }
       renderSpinner(overlay);
       setTimeout(() => {
         const requestData = {
           runnerID: localStorage.getItem("runnerID"),
+          status,
         };
         const id = localStorage.getItem("taskID");
         requestRunner(requestData, id);
@@ -291,6 +321,42 @@ async function showTaskWithRunner(id, gig, runnerID) {
     });
   } catch (err) {
     console.log(err);
+  }
+}
+
+//Add transaction
+async function addTransaction(data) {
+  try {
+    const res = await fetch("http://localhost:3000/api/v1/transaction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const apiData = await res.json();
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}
+
+// Update wallet
+async function updateWallet(data) {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/users/wallet`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    const apiData = await res.json();
+    if (apiData.message) {
+      localStorage.setItem("wallet", apiData.data.wallet);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
   }
 }
 

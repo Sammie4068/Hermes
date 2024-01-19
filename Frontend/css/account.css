@@ -34,6 +34,11 @@ html {
   overflow-x: hidden;
 }
 
+.disappear {
+  visibility: hidden;
+  opacity: 0;
+}
+
 body {
   background: url(https://res.cloudinary.com/okorosamuel/image/upload/v1700746623/Hermes/hill1_a7eqxd.png);
   background-color: #f9f8f6;
@@ -67,7 +72,8 @@ body {
 #sidebar.hide {
   width: 60px;
 }
-#sidebar .brand, #sidebar .brand h2{
+#sidebar .brand,
+#sidebar .brand h2 {
   font-family: "Italianno", cursive;
   font-size: 40px;
   color: var(--primary);
@@ -126,6 +132,18 @@ body {
 }
 /* SIDEBAR */
 
+/* CONTENT */
+#content {
+  position: relative;
+  width: calc(100% - 280px);
+  left: 280px;
+  transition: 0.3s ease;
+}
+#sidebar.hide ~ #content {
+  width: calc(100% - 60px);
+  left: 60px;
+}
+
 #content nav {
   height: 56px;
   background: var(--light);
@@ -168,13 +186,15 @@ body {
   width: 100%;
   margin-right: auto;
 }
-#content nav form .form-input, .search-form {
+#content nav form .form-input,
+.search-form {
   display: none;
   align-items: center;
   height: 36px;
   gap: 10px;
 }
-#content nav form .form-input input, .search-form input {
+#content nav form .form-input input,
+.search-form input {
   flex-grow: 1;
   padding: 0 16px;
   height: 100%;
@@ -185,7 +205,8 @@ body {
   width: 300px;
   color: var(--dark);
 }
-#content nav form .form-input button, .search-form button {
+#content nav form .form-input button,
+.search-form button {
   width: 36px;
   height: 100%;
   display: flex;
@@ -252,7 +273,7 @@ body {
   left: 2px;
   bottom: 2px;
   width: calc(25px - 4px);
-  background: var(--blue);
+  background: var(--primary);
   border-radius: 50%;
   transition: all 0.3s ease;
 }
@@ -343,7 +364,7 @@ body {
   flex-wrap: wrap;
   grid-gap: 24px;
   margin-top: 24px;
-  width: 100%;
+  /* width: 100%; */
   color: var(--dark);
   text-transform: capitalize;
   transition: 0.4s ease-in-out;
@@ -464,9 +485,9 @@ body {
 }
 #table_msg {
   display: none;
- position: relative;
- left: -70px;
- color: #333;
+  position: relative;
+  left: -70px;
+  color: #333;
 }
 .task_table #table_msg a {
   color: var(--dark);
@@ -482,27 +503,32 @@ body {
   border-radius: 20px;
   font-weight: 700;
   border: none;
-  text-transform: capitalize;
+  text-transform: uppercase;
 }
-#content .content_display .table-data .order table tr td .status.completed,
+#content .content_display .table-data .order table tr td .status.completed,#content .content_display .table-data .order table tr td .status.deposit,
 .task_table .order table tr td .status.status.completed {
   background: var(--primary);
 }
-#content .content_display .table-data .order table tr td .status.processing,
+#content .content_display .table-data .order table tr td .status.processing,  #content .content_display .table-data .order table tr td .status.reward,
 .task_table .order table tr td .status.processing {
   background: var(--yellow);
 }
-#content .content_display .table-data .order table tr td .status.pending,
+#content .content_display .table-data .order table tr td .status.pending,  #content .content_display .table-data .order table tr td .status.withdrawal,
 .task_table .order table tr td .status.pending {
   background: var(--orange);
 }
 
-#content .content_display .table-data .order table tr td .status.cancelled,
+#content .content_display .table-data .order table tr td .status.cancelled, #content .content_display .table-data .order table tr td .status.paid,
 .task_table .order table tr td .status.cancelled {
   background-color: #800000;
 }
 
-.filter{
+#content .content_display .table-data .order table tr td .status.unpaid,
+.task_table .order table tr td .status.unpaid {
+  background-color: #333;
+}
+
+.filter {
   display: none;
   align-items: center;
   gap: 15px;
@@ -511,7 +537,7 @@ body {
 .filter {
   margin-left: 20px;
 }
-.filter i{
+.filter i {
   font-size: 30px;
   color: #800000;
   margin-left: -10px;
@@ -534,7 +560,6 @@ body {
   padding: 0px 10px;
   border: none;
   text-transform: capitalize;
-
 }
 /* .content_display */
 
@@ -596,8 +621,6 @@ body {
   color: var(--primary);
 }
 .modal .billing h2 {
-  display: flex;
-  justify-content: center;
   color: #002b1d;
 }
 .modal .billing {
@@ -605,9 +628,14 @@ body {
   background-color: #dad6d6;
   border-radius: 5px;
   width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .modal .billing p {
   margin: 10px;
+  font-size: 25px;
 }
 
 .modal .status {
@@ -633,7 +661,7 @@ body {
 }
 
 .modal .status p span.completed {
-  background: var(--primary-color);
+  background: var(--primary);
 }
 .modal .status p span.processing {
   background: #ffce26;
@@ -644,6 +672,9 @@ body {
 
 .modal .status p span.cancelled {
   background-color: #800000;
+}
+.modal .status p span.unpaid {
+  background-color: #333;
 }
 
 .modal .status p span:hover {
@@ -718,13 +749,14 @@ body {
 
 .modal .heading .setter-info .contact_icons span {
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   font-size: 15px;
   transition: transform 0.5s ease-out;
   height: 30px;
   cursor: pointer;
   transition: transform 0.5s ease-out;
+  gap: 10px;
 }
 
 .modal .heading .setter-info .contact_icons span:hover {
@@ -881,6 +913,11 @@ body {
   border: none;
 }
 
+.profile-info .phone {
+  font-size: 1.5rem;
+  border: none;
+}
+
 .profile-info .task-input {
   font-size: 1.5rem;
   cursor: pointer;
@@ -947,7 +984,7 @@ body {
   position: relative;
   left: -190px;
 }
-.button.password_save{
+.button.password_save {
   width: 11%;
   position: relative;
   left: -190px;
@@ -1015,5 +1052,219 @@ body {
   }
   #content .content_display .table-data .todo .todo-list {
     min-width: 420px;
+  }
+}
+
+/* Wallet */
+
+/* MAIN */
+.wallet_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.wallet-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.balance {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  width: 80%;
+  height: 200px;
+  justify-content: space-between;
+}
+
+.balance span .bx {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+  background: var(--lite);
+  color: var(--primary);
+}
+
+.balance_left {
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+  gap: 20px;
+  /* border-right: 1px solid #333;
+  padding-right: 7px;  */
+}
+
+.balance_title {
+  font-weight: 500;
+  font-size: 20px;
+  text-wrap: nowrap;
+}
+
+.balance_date {
+  color: #333;
+}
+
+.balance_amt {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.balance_amt p {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.balance_amt h3 {
+  font-size: 40px;
+  font-weight: 600;
+  color: #333;
+}
+
+.operations {
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  padding: 20px;
+}
+
+.operations span {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  color: #333;
+  background-color: #eee;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.operations span:hover {
+  transform: scale(1.05);
+}
+
+.transaction_table {
+  width: 50%;
+}
+
+.transaction_table .table_amt {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.transaction_table .table_amt span {
+  font-size: 10px;
+}
+
+/* Payment gateway */
+.payment {
+  background: #f3f7f9;
+  max-width: 360px;
+  margin: auto;
+  height: 100%;
+  padding: 35px;
+  padding-top: 70px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.payment p {
+  color: #002b1d;
+  margin-left: 100px;
+  font-weight: 600;
+}
+
+.form .label {
+  display: block;
+  color: #555555;
+  margin-bottom: 6px;
+}
+
+.input {
+  padding: 13px 0px 13px 25px;
+  width: 100%;
+  text-align: center;
+  border: 2px solid #dddddd;
+  border-radius: 5px;
+  letter-spacing: 1px;
+  word-spacing: 3px;
+  outline: none;
+  font-size: 16px;
+  color: #555555;
+}
+
+.card-grp {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-item {
+  width: 48%;
+}
+
+.space {
+  margin-bottom: 20px;
+}
+
+.icon-relative {
+  position: relative;
+}
+
+.icon-relative .fas,
+.icon-relative .far,
+.icon-relative .fa-solid {
+  position: absolute;
+  bottom: 12px;
+  left: 15px;
+  font-size: 20px;
+  color: #555555;
+}
+
+.btn {
+  margin-top: 40px;
+  background: #2196f3;
+  padding: 12px;
+  text-align: center;
+  color: #f8f8f8;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+}
+
+.paystack-footer {
+  width: 300px;
+  max-width: 100%;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin: 40px auto;
+  text-align: center;
+  opacity: 0.7;
+  clear: both;
+}
+
+.paystack-footer img {
+  width: 200px;
+}
+
+@media screen and (max-width: 420px) {
+  .card-grp {
+    flex-direction: column;
+  }
+  .card-item {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .btn {
+    margin-top: 20px;
   }
 }

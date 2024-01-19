@@ -11,6 +11,10 @@ const {
   getRunnerActivity,
   getActivityBySetterID,
   updateStatus,
+  addTransaction,
+  updateWallet,
+  getTransactions,
+  addToWallet,
 } = require("../../controllers/index");
 
 router.get("/tasks", getTasks);
@@ -23,6 +27,9 @@ router.get("/activity/:id", getUserActivity);
 router.get("/activity/id/:id", getActivityByID);
 router.get("/activity/runner/:id", getRunnerActivity);
 router.get("/activity/setter/:id", getActivityBySetterID);
-
+router.post("/transaction", addTransaction);
+router.get("/transaction/:id", getTransactions);
+router.patch("/users/wallet", updateWallet);
+router.patch("/users/wallet/reward", addToWallet);
 
 module.exports = router;

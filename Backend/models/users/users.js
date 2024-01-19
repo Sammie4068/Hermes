@@ -9,10 +9,11 @@ exports.gerUsersById = async (id) => {
 }
 
 exports.updateUser = async (data) => {
-    return db.query("UPDATE users SET name = $1, email = $2, gig = $3, bio = $4 WHERE id=$5", 
+    return db.query("UPDATE users SET name = $1, email = $2, phone= $3, gig = $4, bio = $5 WHERE id=$6", 
     [
         data.name,
         data.email,
+        data.phone,
         data.task,
         data.bio,
         data.id

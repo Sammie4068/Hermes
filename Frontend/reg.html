@@ -54,6 +54,16 @@
               <input type="email" name="email" id="email" required />
             </div>
             <div>
+              <label for="phone">Phone</label>
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
+              />
+            </div>
+            <div>
               <label for="password">Password </label>
               <input type="password" name="password" id="password" required />
             </div>

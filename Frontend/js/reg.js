@@ -42,6 +42,7 @@ const fullName = document.getElementById("fullname");
 const gender = document.getElementById("gender");
 const photo = document.getElementById("profilePic");
 const email = document.getElementById("email");
+const phone = document.getElementById("phone");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("cpassword");
 const showCheckbox = document.getElementById("showpassword");
@@ -85,6 +86,7 @@ function infoFormIsEmpty() {
   if (
     fullName.value == "" ||
     email.value == "" ||
+    phone.value == "" ||
     password.value == "" ||
     confirmPassword.value == "" ||
     photo.files.length < 1
@@ -231,6 +233,7 @@ submitBtn.addEventListener("click", (e) => {
 
     formData.append("name", fullName.value);
     formData.append("email", email.value);
+    formData.append("phone", phone.value);
     formData.append("gender", gender.value);
     formData.append("image", photo.files[0]);
     formData.append("password", password.value);
@@ -266,6 +269,7 @@ async function postData(data) {
       localStorage.setItem("task", bodydata.gig);
       localStorage.setItem("bio", bodydata.bio);
       localStorage.setItem("wallet", bodydata.wallet);
+      localStorage.setItem("phone", bodydata.phone);
       window.location = "account.html#dashboard";
     }
   } catch (err) {

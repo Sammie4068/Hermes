@@ -1176,7 +1176,7 @@ footer .follow .socials i:hover {
   align-items: center;
   white-space: nowrap;
   overflow: hidden;
-  /* animation: marquee 30s linear infinite; */
+  animation: marquee 30s linear infinite;
 }
 
 .assurance h4 {

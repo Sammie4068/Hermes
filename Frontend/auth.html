@@ -43,6 +43,19 @@
             <p class="errMsg" id="email-error-msg"></p>
           </div>
           <div class="infield">
+            <i class="fas fa-phone"></i>
+
+            <input
+              type="text"
+              placeholder="Phone Number"
+              name="phone_number"
+              id="phone"
+              oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+            />
+            <label id="phone-line"></label>
+            <p class="errMsg" id="phone-error-msg"></p>
+          </div>
+          <div class="infield">
             <i class="fas fa-lock"></i>
 
             <input
