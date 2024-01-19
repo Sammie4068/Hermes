@@ -287,25 +287,25 @@ async function showTaskWithRunner(id, gig, runnerID) {
 
     document.querySelector(".proceed_btn").addEventListener("click", () => {
       let status;
-      
+
       if (
         parseFloat(localStorage.getItem("wallet")) >= parseFloat(data.total)
       ) {
         status = "pending";
-       const newWallet = parseFloat(localStorage.getItem("wallet")) - parseFloat(data.total);
+        const newWallet =
+          parseFloat(localStorage.getItem("wallet")) - parseFloat(data.total);
         const updateWalletData = {
-        amount: newWallet,
-        id: localStorage.getItem("id")
-      }
+          amount: newWallet,
+          id: localStorage.getItem("id"),
+        };
         updateWallet(updateWalletData);
 
-            const transactionTableData = {
-              id: localStorage.getItem("id"),
-              amount: data.total,
-              type: "paid",
-            };
-            addTransaction(transactionTableData);
-
+        const transactionTableData = {
+          id: localStorage.getItem("id"),
+          amount: data.total,
+          type: "paid",
+        };
+        addTransaction(transactionTableData);
       } else {
         status = "unpaid";
       }
@@ -327,13 +327,16 @@ async function showTaskWithRunner(id, gig, runnerID) {
 //Add transaction
 async function addTransaction(data) {
   try {
-    const res = await fetch("http://localhost:3000/api/v1/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      "https://hermes-yto9.onrender.com/api/v1/transaction",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const apiData = await res.json();
   } catch (err) {
@@ -344,13 +347,16 @@ async function addTransaction(data) {
 // Update wallet
 async function updateWallet(data) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/users/wallet`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/wallet`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const apiData = await res.json();
     if (apiData.message) {
       localStorage.setItem("wallet", apiData.data.wallet);

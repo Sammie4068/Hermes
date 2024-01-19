@@ -325,8 +325,8 @@ function displayTask(data) {
                   <a id="reject_task" href="#">reject task</a>`
                     : dat.status == "processing"
                     ? `<a id="reject_task" href="#">cancel task</a>`
-                    : dat.status == "completed" || dat.status == "cancelled" ? 
-                    ``
+                    : dat.status == "completed" || dat.status == "cancelled"
+                    ? ``
                     : `<a id="confirm_task" href="#">confirm task</a>`
                 }
                 </div>
@@ -882,13 +882,16 @@ withdrawalBtn.addEventListener("click", () => {
 
 async function addTransaction(data) {
   try {
-    const res = await fetch("http://localhost:3000/api/v1/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      "https://hermes-yto9.onrender.com/api/v1/transaction",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const apiData = await res.json();
     if (apiData.message) {
@@ -903,13 +906,16 @@ async function addTransaction(data) {
 
 async function updateWallet(data) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/users/wallet`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/wallet`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const apiData = await res.json();
     if (apiData.message) {
       localStorage.setItem("wallet", apiData.data.wallet);
@@ -943,7 +949,9 @@ function transactionDisplay(data) {
 
 async function transactionData() {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/transaction/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/transaction/${id}`
+    );
     const data = await res.json();
 
     transactionDisplay(data);
