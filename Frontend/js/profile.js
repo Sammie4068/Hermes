@@ -302,6 +302,7 @@ function displayTask(data) {
       task: dat.task,
       runnerid: dat.runnerid,
       price: dat.price,
+      total: dat.total,
     });
 
     let markup = `<tr id="table_tab">
@@ -396,14 +397,14 @@ function displayTask(data) {
     const payOpt = tab.querySelectorAll("#make_payment");
     payOpt.forEach((opt) => {
       opt.addEventListener("click", () => {
-        makePaymentMArkup();
-        const payForm = document.getElementById("payForm");
-        const amtToPay = document.querySelectorAll(".amt_to_pay");
-        payForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          amtToPay.innerText = "Successful";
-          statusBtn.forEach((btn) => {
-            taskData = JSON.parse(btn.value);
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          makePaymentMArkup(taskData.total);
+          const payForm = document.getElementById("payForm");
+          const amtToPay = document.querySelectorAll(".amt_to_pay");
+          payForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            amtToPay.innerText = "Successful";
             statusData.status = "pending";
             updateStatus(taskData.id, statusData);
             location.reload();
@@ -1015,12 +1016,12 @@ async function transactionData() {
 
 transactionData();
 
-function makePaymentMArkup() {
+function makePaymentMArkup(amount) {
   const html = `<div class="payment_wrapper">
       <div class="payment">
       <p class="hidden">Successful</p>
         <form class="form" id="payForm">
-          <p class="amt_to_pay">Pay NGN 1000 </p>
+          <p class="amt_to_pay">Pay NGN ${amount} </p>
           <div class="card space icon-relative">
             <label class="label">Card number:</label>
             <input
