@@ -417,7 +417,7 @@ button {
   .logo {
     position: relative;
     top: 0px;
-    left: 0px;
+    left: 5%;
     margin: 10px;
   }
   .logo h2 {
@@ -430,7 +430,7 @@ button {
     display: none;
   }
   .container {
-    width: 60vh;
+    width: 50vh;
   }
   .form-container {
     width: 100%;
