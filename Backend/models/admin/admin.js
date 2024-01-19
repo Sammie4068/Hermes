@@ -83,3 +83,7 @@ exports.updateWallet = async (amount, id) => {
     id,
   ]);
 };
+
+exports.getTransactions = async (id) => {
+  return db.query("SELECT * FROM transactions WHERE userid= $1", [id])
+}

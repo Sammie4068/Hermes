@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
     <link
@@ -36,6 +36,12 @@
           <a href="#tasks">
             <i class="bx bxs-calendar"></i>
             <span class="text">Tasks</span>
+          </a>
+        </li>
+        <li id="walletLink">
+          <a href="#wallet">
+            <i class="bx bxs-wallet"></i>
+            <span class="text">Wallet</span>
           </a>
         </li>
         <li id="profileLink">
@@ -102,7 +108,7 @@
         </div>
         <div class="display_body">
           <ul class="box-info">
-            <li>
+            <li id="walletCard">
               <i class="bx bxs-wallet"></i>
               <span class="text">
                 <h3 id="wallet__amount">1000</h3>
@@ -236,6 +242,73 @@
         </div>
       </div>
 
+      <div class="content_display" id="wallet_display">
+        <div class="head-title">
+          <div class="left">
+            <h1>Wallet</h1>
+          </div>
+        </div>
+
+        <div class="wallet_wrapper">
+          <!-- BALANCE -->
+          <div class="wallet-top">
+            <div class="balance">
+              <span class="balance_left">
+                <i class="bx bxs-wallet"></i>
+                <span>
+                  <p class="balance_title">Current Balance</p>
+                  <p class="balance_date">as at <span></span></p>
+                </span>
+              </span>
+              <span class="balance_amt">
+                <p>NGN</p>
+                <h3 id="balance-amount"></h3>
+              </span>
+            </div>
+
+            <div class="operations">
+              <span id="deposit">
+                <i class="bx bx-money"></i>
+                Deposit
+              </span>
+              <span id="withdrawal">
+                <i class="bx bx-money-withdraw"></i>
+                Withdrawal</span
+              >
+            </div>
+          </div>
+
+          <div class="wallet_history">
+            <div class="table-data transaction_table">
+              <div class="order">
+                <div class="head">
+                  <h3>Transaction History</h3>
+                </div>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Category</th>
+                      <th>Date</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody id="transaction_table">
+                    <!-- <tr>
+                      <td><span class="status completed">deposit</span></td>
+                      <td>20 Jan 2024</td>
+                      <td class="table_amt">
+                        <span>NGN</span>
+                        <p>1000</p>
+                      </td>
+                    </tr> -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="content_display" id="profile_display">
         <div class="head-title">
           <div class="left">
@@ -343,141 +416,8 @@
       </div>
     </section>
 
-    <!-- <section id="content" class="my_profile">
-      <main>
-        <div class="head-title">
-          <div class="left">
-            <h1>Profile</h1>
-          </div>
-        </div>
-
-        <div class="display_body">
-          <div class="profile">
-            <div class="profile_card">
-              <div class="profile_card_img">
-                <img
-                  src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
-                  alt="Profile Picture"
-                  id="profile_image"
-                  class="dp"
-                />
-                <input type="file" class="edit_dp" id="edit_dp" disabled />
-              </div>
-              <div class="profile-info">
-                <span>
-                  <label>Name </label>
-                  <input class="name" type="text" readonly />
-                </span>
-                <span>
-                  <label>Email </label>
-                  <input class="email" type="text" readonly />
-                </span>
-                <span>
-                  <label>Task</label>
-                  <input type="text" class="task-input" readonly required />
-                  <ul class="task-dropdown" id="task-dropdown"></ul>
-                </span>
-                <span>
-                  <label>Tip</label>
-                  <input class="tip" type="number" readonly />
-                </span>
-                <span>
-                  <label>Bio</label>
-                  <textarea id="bio" readonly></textarea>
-                </span>
-                <div class="btn-wrapper">
-                  <a href="#" class="change-password">Change Password </a>
-                  <a href="#" class="button edit_btn" id="edit__btn"
-                    >Edit Profile</a
-                  >
-                  <a href="#" class="button hidden" id="saveBtn">Save</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="password_card">
-              <div class="password_card_top">
-                <i class="bx bx-left-arrow-alt" id="back_arrow"></i>
-                <p id="change_password_msg"></p>
-              </div>
-              <span>
-                <label>Old Password </label>
-                <input class="password" type="password" id="old_password" />
-              </span>
-              <span>
-                <label>New Password </label>
-                <input class="password" type="password" id="new_password" />
-              </span>
-              <span>
-                <label>Confirm Password </label>
-                <input
-                  class="password"
-                  type="password"
-                  id="confirm_new_password"
-                />
-              </span>
-              <a href="#" class="button save_password" id="password_saveBtn"
-                >Save</a
-              >
-            </div>
-          </div>
-        </div>
-      </main>
-    </section> -->
-    <!-- <section id="content" class="messages">
-      <h1>Coming Soon...</h1>
-    </section>
-
-    <section id="content" class="settings">
-      <h1>Coming Soon...</h1>
-    </section> -->
-
     <div class="overlay hidden"></div>
-    <div class="modal hidden">
-      <!-- <div class="card_body">
-        <div class="task_side">
-          <span>
-            <h1>Errand</h1>
-            <img
-              src="https://res.cloudinary.com/okorosamuel/image/upload/v1703005535/Hermes/bicycle-svgrepo-com_udv9jl.svg"
-              alt="errand"
-            />
-          </span>
-          <span class="status">
-            <p><strong>Status:</strong><span class="pending">pending</span></p>
-          </span>
-          <span>
-            <strong>Location:</strong> 12 Hong avenue, Gwanna rd. Kaduna
-          </span>
-          <span>
-            <p><strong>Date:</strong> 12-12-2024</p>
-            <p><strong>Time:</strong> 10:12 AM</p>
-          </span>
-        </div>
-        <div class="billing">
-          <h2>Pricing</h2>
-          <p>Tip: NGN 1000</p>
-          <p>Transportation: NGN 1000</p>
-          <p><strong>Total:</strong> <strong>NGN 2000</strong></p>
-        </div>
-      </div>
-      <div>
-        <h2>Runner info</h2>
-        <div class="heading">
-          <img
-            src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
-            alt="sample"
-          />
-          <div class="setter-info">
-            <h1>Okoro Samuel</h1>
-            <div class="contact_icons">
-              <span><i class="fa-solid fa-message"></i> message</span>
-              <span><i class="fa-solid fa-phone"></i> call</span>
-            </div>
-          </div>
-        </div>
-      </div> -->
-    </div>
+    <div class="modal hidden"></div>
     <script src="./js/account.js"></script>
   </body>
 </html>

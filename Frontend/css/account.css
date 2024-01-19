@@ -505,25 +505,25 @@ body {
   border: none;
   text-transform: uppercase;
 }
-#content .content_display .table-data .order table tr td .status.completed,
+#content .content_display .table-data .order table tr td .status.completed,#content .content_display .table-data .order table tr td .status.deposit,
 .task_table .order table tr td .status.status.completed {
   background: var(--primary);
 }
-#content .content_display .table-data .order table tr td .status.processing,
+#content .content_display .table-data .order table tr td .status.processing,  #content .content_display .table-data .order table tr td .status.reward,
 .task_table .order table tr td .status.processing {
   background: var(--yellow);
 }
-#content .content_display .table-data .order table tr td .status.pending,
+#content .content_display .table-data .order table tr td .status.pending,  #content .content_display .table-data .order table tr td .status.withdrawal,
 .task_table .order table tr td .status.pending {
   background: var(--orange);
 }
 
-#content .content_display .table-data .order table tr td .status.cancelled,
+#content .content_display .table-data .order table tr td .status.cancelled, #content .content_display .table-data .order table tr td .status.paid,
 .task_table .order table tr td .status.cancelled {
   background-color: #800000;
 }
 
-#content .content_display .table-data .order table tr td .status.cancelled,
+#content .content_display .table-data .order table tr td .status.unpaid,
 .task_table .order table tr td .status.unpaid {
   background-color: #333;
 }
@@ -672,6 +672,9 @@ body {
 
 .modal .status p span.cancelled {
   background-color: #800000;
+}
+.modal .status p span.unpaid {
+  background-color: #333;
 }
 
 .modal .status p span:hover {

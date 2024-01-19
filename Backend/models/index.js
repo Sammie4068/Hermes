@@ -11,6 +11,7 @@ const {
   updateStatus,
   addTransaction,
   updateWallet,
+  getTransactions,
 } = require("./admin/admin");
 
 const {
@@ -54,4 +55,5 @@ module.exports = {
   changeImage,
   addTransaction,
   updateWallet,
+  getTransactions,
 };

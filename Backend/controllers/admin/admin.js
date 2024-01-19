@@ -12,6 +12,8 @@ const {
   updateStatus,
   addTransaction,
   updateWallet,
+  getTransactions,
+  gerUsersById
 } = require("../../models/index");
 
 exports.getTasks = async (req, res, next) => {
@@ -161,3 +163,28 @@ exports.updateWallet = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.getTransactions = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const result = await getTransactions(id)
+    return res.json(result.rows);
+  } catch (err) {
+    return next(err)
+  }
+}
+
+exports.addToWallet = async (req, res, next) => {
+  try {
+    const { id, price } = req.body;
+    
+    const result = await gerUsersById(id)
+    const { wallet } = result.rows[0]
+    const amount = parseFloat(wallet) + parseFloat(price)
+
+    const results = await updateWallet(amount, id)
+    res.json({ message: "success", data: results.rows[0] });
+  } catch (err) {
+    return next(err)
+  }
+}

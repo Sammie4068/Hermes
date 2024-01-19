@@ -297,7 +297,12 @@ function displayTask(data) {
   const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
   taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
-    let value = JSON.stringify({ id: dat.id, task: dat.task });
+    let value = JSON.stringify({
+      id: dat.id,
+      task: dat.task,
+      runnerid: dat.runnerid,
+      price: dat.price,
+    });
 
     let markup = `<tr id="table_tab">
                 <td id="table_element">
@@ -326,7 +331,7 @@ function displayTask(data) {
                     : dat.status == "completed"
                     ? ``
                     : dat.status == "unpaid"
-                    ? `<a href="#wallet">make payment</a>`
+                    ? `<a href="#tasks" id="make_payment">make payment</a>`
                     : `<a id="confirm_task" href="#">reset task</a>`
                 }
                 </div>
@@ -369,9 +374,40 @@ function displayTask(data) {
       opt.addEventListener("click", () => {
         statusBtn.forEach((btn) => {
           taskData = JSON.parse(btn.value);
+          const updateWalletData = {
+            price: taskData.price,
+            id: taskData.runnerid,
+          };
+          rewardRunner(updateWalletData);
           statusData.status = "completed";
           updateStatus(taskData.id, statusData);
+
+          const transactData = {
+            id: taskData.runnerid,
+            amount: taskData.price,
+            type: "reward",
+          };
+          addTransaction(transactData);
           location.reload();
+        });
+      });
+    });
+
+    const payOpt = tab.querySelectorAll("#make_payment");
+    payOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        makePaymentMArkup();
+        const payForm = document.getElementById("payForm");
+        const amtToPay = document.querySelectorAll(".amt_to_pay");
+        payForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          amtToPay.innerText = "Successful";
+          statusBtn.forEach((btn) => {
+            taskData = JSON.parse(btn.value);
+            statusData.status = "pending";
+            updateStatus(taskData.id, statusData);
+            location.reload();
+          });
         });
       });
     });
@@ -512,7 +548,11 @@ function seeMore(data, taskImgData) {
           <div class="setter-info">
             <h1>${data.name}</h1>
             <div class="contact_icons">
-              <span><i class="fa-solid fa-phone"></i>${data.phone}</span>
+          ${
+            data.status == "unpaid"
+              ? ``
+              : `<span><i class="fa-solid fa-phone"></i>${data.phone}</span>`
+          }
             </div>
           </div>
         </div>
@@ -711,7 +751,7 @@ saveBtn.addEventListener("click", save);
 const depositBtn = document.getElementById("deposit");
 const withdrawalBtn = document.getElementById("withdrawal");
 
-depositBtn.addEventListener("click", () => {
+function depositFormMarkup() {
   const html = `<div class="payment_wrapper">
       <div class="payment">
       <p class="hidden">Successful</p>
@@ -781,6 +821,10 @@ depositBtn.addEventListener("click", () => {
   overlay.classList.remove("hidden");
   modal.classList.remove("hidden");
   modal.style.padding = "0px";
+}
+
+depositBtn.addEventListener("click", () => {
+  depositFormMarkup();
 
   //depositing
   const depositAmt = document.getElementById("depositAmt");
@@ -913,4 +957,126 @@ async function updateWallet(data) {
   } catch (err) {
     console.log(`Error: ${err}`);
   }
+}
+
+async function rewardRunner(data) {
+  try {
+    const res = await fetch(
+      `http://localhost:3000/api/v1/users/wallet/reward`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const apiData = await res.json();
+    if (apiData.message) {
+      localStorage.setItem("wallet", apiData.data.wallet);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}
+
+// Transaction Table
+const transactionTable = document.getElementById("transaction_table");
+
+function transactionDisplay(data) {
+  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  sortedData.map((dat) => {
+    let value = JSON.stringify(dat);
+
+    let markup = `<tr>
+                      <td><span class="status ${dat.type}">${
+      dat.type
+    }</span></td>
+                      <td>${reformatDate(dat.date)}</td>
+                      <td class="table_amt">
+                        <span>NGN</span>
+                        <p>${dat.amount}</p>
+                      </td>
+                    </tr>`;
+    transactionTable.insertAdjacentHTML("beforeend", markup);
+  });
+}
+
+async function transactionData() {
+  try {
+    const res = await fetch(`http://localhost:3000/api/v1/transaction/${id}`);
+    const data = await res.json();
+
+    transactionDisplay(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+transactionData();
+
+function makePaymentMArkup() {
+  const html = `<div class="payment_wrapper">
+      <div class="payment">
+      <p class="hidden">Successful</p>
+        <form class="form" id="payForm">
+          <p class="amt_to_pay">Pay NGN 1000 </p>
+          <div class="card space icon-relative">
+            <label class="label">Card number:</label>
+            <input
+              type="text"
+              class="input"
+              data-mask="0000 0000 0000 0000"
+              placeholder="Card Number"
+              oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+              required
+            />
+            <i class="far fa-credit-card"></i>
+          </div>
+          <div class="card-grp space">
+            <div class="card-item icon-relative">
+              <label class="label">Expiry date:</label>
+              <input
+                type="text"
+                name="expiry-data"
+                class="input"
+                data-mask="00 / 00"
+                placeholder="00 / 00"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
+              />
+              <i class="far fa-calendar-alt"></i>
+            </div>
+            <div class="card-item icon-relative">
+              <label class="label">CVC:</label>
+              <input
+                type="text"
+                class="input"
+                data-mask="000"
+                placeholder="000"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
+              />
+              <i class="fas fa-lock"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Enter</button>
+
+          <div id="paystack-footer" class="paystack-footer animated fadeIn">
+            <a target="_blank" href="https://paystack.com/what-is-paystack">
+              <img
+                alt="Paystack secured badge"
+                src="https://koboline.com.ng/wp-content/uploads/2020/05/paystack-badge-cards-ngn.png"
+              />
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>`;
+
+  modal.insertAdjacentHTML("beforeend", html);
+  overlay.classList.remove("hidden");
+  modal.classList.remove("hidden");
+  modal.style.padding = "0px";
 }
