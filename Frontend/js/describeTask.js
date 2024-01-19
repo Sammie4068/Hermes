@@ -41,7 +41,7 @@ taskList.addEventListener("click", function (event) {
     taskInput.value = event.target.textContent;
     taskList.style.display = "none";
   }
-  if(taskInput.value.trim() == 'errand'){
+  if(taskInput.value.trim() == 'errands'){
     deliveryAddr.classList.remove("hidden")
   }
 });
