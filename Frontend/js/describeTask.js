@@ -34,12 +34,18 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 
+const deliveryAddr = document.querySelector(".deliveryAddress");
+
 taskList.addEventListener("click", function (event) {
   if (event.target.tagName === "LI") {
     taskInput.value = event.target.textContent;
     taskList.style.display = "none";
   }
+  if(taskInput.value.trim() == 'errand'){
+    deliveryAddr.classList.remove("hidden")
+  }
 });
+
 
 // Describe task
 const nextBtn = document.querySelector(".next-btn");
