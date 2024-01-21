@@ -4,15 +4,85 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registration Form</title>
+    <title>Hermes</title>
     <link rel="stylesheet" href="./css/reg.css" />
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
   </head>
   <body>
-    <div class="logo">
-      <a href="index.html"><h2>Hermes.</h2></a>
-    </div>
-    <div class="container" data-aos="fade-left" data-aos-duration="1000">
+    <header class="container header">
+      <nav class="nav">
+        <div class="logo">
+          <a href="index.html"><h2>Hermes.</h2></a>
+        </div>
+
+        <div class="nav_menu" id="nav_menu">
+          <button class="close_btn" id="close_btn">
+            <i class="ri-close-fill"></i>
+          </button>
+
+          <ul class="nav_menu_list">
+            <li class="nav_menu_item">
+              <a
+                href="index.html#services"
+                class="nav_menu_link"
+                onclick="removeMenu()"
+                >services</a
+              >
+            </li>
+            <li class="nav_menu_item">
+              <a href="contact.html" class="nav_menu_link">contact</a>
+            </li>
+            <li class="nav_menu_item hidden" id="activity">
+              <a href="#" class="nav_menu_link">Activity</a>
+            </li>
+            <li class="nav_menu_item" id="runner_link">
+              <a href="reg.html" class="nav_menu_link active_nav_link"
+                >Become a runner</a
+              >
+            </li>
+            <li class="nav_menu_item signin">
+              <a href="#" class="nav_menu_link" id="signin">Sign in</a>
+              <div class="dropdown__wrapper">
+                <div class="dropdown">
+                  <ul class="list-items">
+                    <li id="as-setter">
+                      <div class="item-title">
+                        <h3 class="as-setter">as Setter</h3>
+                      </div>
+                    </li>
+                    <li id="as-runner">
+                      <div class="item-title">
+                        <h3>as Runner</h3>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <button class="toggle_btn" id="toggle_btn">
+          <i class="ri-menu-line"></i>
+        </button>
+      </nav>
+    </header>
+
+    <div class="wrapper">
       <div class="first">
         <img
           src="https://res.cloudinary.com/okorosamuel/image/upload/v1701085284/Hermes/linkedin-sales-solutions-jJFrkJP_-RA-unsplash_znizu3.jpg"
@@ -79,7 +149,7 @@
               <input type="submit" value="Next" id="nextBtn1" />
             </div>
             <p class="signin">
-              Already have an account? <a href="#" id="signin">Sign in</a>
+              Already have an account? <a href="#" id="signinLink">Sign in</a>
             </p>
           </div>
 
@@ -127,42 +197,7 @@
                 <option disabled selected>
                   What state is your school located?
                 </option>
-                <!-- <option value="Abia">Abia</option>
-                <option value="Adamawa">Adamawa</option>
-                <option value="Akwa Ibom">Akwa Ibom</option>
-                <option value="Anambra">Anambra</option>
-                <option value="Bauchi">Bauchi</option>
-                <option value="Bayelsa">Bayelsa</option>
-                <option value="Benue">Benue</option>
-                <option value="Borno">Borno</option>
-                <option value="Cross River">Cross River</option>
-                <option value="Delta">Delta</option>
-                <option value="Ebonyi">Ebonyi</option>
-                <option value="Edo">Edo</option>
-                <option value="Ekiti">Ekiti</option>
-                <option value="Enugu">Enugu</option>
-                <option value="Gombe">Gombe</option>
-                <option value="Imo">Imo</option>
-                <option value="Jigawa">Jigawa</option> -->
                 <option value="Kaduna">Kaduna</option>
-                <!-- <option value="Kano">Kano</option>
-                <option value="Katsina">Katsina</option>
-                <option value="Kebbi">Kebbi</option>
-                <option value="Kogi">Kogi</option>
-                <option value="Kwara">Kwara</option>
-                <option value="Lagos">Lagos</option>
-                <option value="Nasarawa">Nasarawa</option>
-                <option value="Niger">Niger</option>
-                <option value="Ogun">Ogun</option>
-                <option value="Ondo">Ondo</option>
-                <option value="Osun">Osun</option>
-                <option value="Oyo">Oyo</option>
-                <option value="Plateau">Plateau</option>
-                <option value="Rivers">Rivers</option>
-                <option value="Sokoto">Sokoto</option>
-                <option value="Taraba">Taraba</option>
-                <option value="Yobe">Yobe</option>
-                <option value="Zamfara">Zamfara</option> -->
               </select>
             </div>
             <div>
@@ -203,7 +238,6 @@
       </form>
     </div>
     <div class="overlay hidden"></div>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="./js/reg.js"></script>
   </body>
 </html>

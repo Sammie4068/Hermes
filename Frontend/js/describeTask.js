@@ -1,3 +1,16 @@
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", removeMenu);
+function removeMenu() {
+  navId.classList.remove("show");
+}
+
 AOS.init();
 
 // Describe task
@@ -41,31 +54,32 @@ taskList.addEventListener("click", function (event) {
     taskInput.value = event.target.textContent;
     taskList.style.display = "none";
   }
-  if(taskInput.value.trim() == 'errands'){
-    deliveryAddr.classList.remove("hidden")
+  if (taskInput.value.trim() == "errands") {
+    deliveryAddr.classList.remove("hidden");
+  } else {
+    deliveryAddr.classList.add("hidden");
   }
 });
-
 
 // Describe task
 const nextBtn = document.querySelector(".next-btn");
 const overlay = document.querySelector(".overlay");
 const modal = document.querySelector(".modal");
 const taskCont = document.querySelector(".task_container");
-const describeTaskForm = document.getElementById("describe_task");
+const describeTaskForm = document.querySelector(".task-info");
 
 // Describe Task Form
 const gig = document.querySelector(".task-input");
 const gigDescription = document.getElementById("task-decription");
 const gigLocation = document.querySelector(".task-location");
 const locationState = document.getElementById("states");
-const gigDuration = document.getElementById("duration")
+const gigDuration = document.getElementById("duration");
 const gigOption = document.querySelector(".task-options");
 const gigDate = document.getElementById("date");
 const gigTime = document.getElementById("time");
 const id = localStorage.getItem("id");
 
-nextBtn.addEventListener("click", (e) => {
+describeTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const data = {
@@ -123,20 +137,3 @@ function closeModal() {
   overlay.classList.add("hidden");
   modal.innerHTML = "";
 }
-
-//Services
-const services = document.getElementById("services");
-services.addEventListener("click", () => {
-  window.location = "index.html#services";
-});
-
-//Account
-const role = localStorage.getItem("role");
-const account = document.getElementById("account");
-account.addEventListener("click", () => {
-  if (role == "setter") {
-    window.location = "profile.html#profile";
-  } else if (role == "runner") {
-    window.location = "account.html#dashboard";
-  }
-});

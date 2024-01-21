@@ -10,29 +10,19 @@ CloseBtnId.addEventListener("click", () => {
   navId.classList.remove("show");
 });
 
-AOS.init();
-
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
 const username = localStorage.getItem("name");
 const activity = document.getElementById("activity");
 const signin = document.getElementById("signin");
-const runnerBtn = document.querySelector(".runner_btn");
+const runnerLink = document.getElementById("runner_link");
 const services = document.getElementById("services");
 
 if (token) {
   signin.classList.add("hidden");
   activity.classList.remove("hidden");
-  runnerBtn.classList.add("hidden");
+  runnerLink.classList.add("hidden");
 }
-
-runnerBtn.addEventListener("click", () => {
-  window.location = "reg.html";
-});
-
-signin.addEventListener("click", () => {
-  window.location = "auth.html";
-});
 
 activity.addEventListener("click", () => {
   if (role == "setter") {
@@ -58,8 +48,4 @@ asSetter.addEventListener("click", () => {
 });
 asRunner.addEventListener("click", () => {
   setRole(asRunner);
-});
-
-services.addEventListener("click", () => {
-  window.location = "index.html#services";
 });

@@ -1,4 +1,36 @@
-AOS.init();
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", removeMenu);
+function removeMenu() {
+  navId.classList.remove("show");
+}
+
+const asSetter = document.getElementById("as-setter");
+const asRunner = document.getElementById("as-runner");
+const signinLink = document.getElementById("signinLink");
+
+
+function setRole(role) {
+  window.location = "auth.html";
+  localStorage.setItem("role", role);
+}
+
+asSetter.addEventListener("click", () => {
+  setRole("setter");
+});
+asRunner.addEventListener("click", () => {
+  setRole("runner");
+});
+signinLink.addEventListener("click", () => {
+  setRole("runner");
+});
+
 // Get all taskers
 async function allTasks(parentEle) {
   try {
@@ -27,13 +59,6 @@ async function getTip(gig) {
     console.log(err);
   }
 }
-
-// signin
-const signin = document.getElementById("signin");
-signin.addEventListener("click", () => {
-  localStorage.setItem("role", "runner");
-  window.location = "auth.html";
-});
 
 const infoForm = document.querySelector(".personal_info");
 const profileForm = document.querySelector(".profile_card");

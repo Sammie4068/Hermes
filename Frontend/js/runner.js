@@ -1,13 +1,17 @@
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", removeMenu);
+function removeMenu() {
+  navId.classList.remove("show");
+}
 AOS.init();
 // Url instance
 const urlParams = new URLSearchParams(window.location.search);
-
-//Activity
-const activity = document.getElementById("activity");
-
-activity.addEventListener("click", () => {
-  window.location = "profile.html#dashboard";
-});
 
 // Filter Active Switch
 function active(parentEle, ele) {
@@ -18,12 +22,6 @@ function active(parentEle, ele) {
 function removeAllactive(parentEle) {
   parentEle.forEach((i) => i.classList.remove("active_option"));
 }
-
-//Services
-const services = document.getElementById("services");
-services.addEventListener("click", () => {
-  window.location = "index.html#services";
-});
 
 // Render Error
 const errorContainer = document.querySelector(".render_error");
