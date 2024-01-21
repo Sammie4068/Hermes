@@ -24,7 +24,7 @@ userImg.addEventListener("click", () => {
 // Services
 const services = document.getElementById("services");
 services.addEventListener("click", () => {
-  window.location = "main.html#services";
+  window.location = "index.html#services";
 });
 
 // AOS.init();
@@ -65,7 +65,7 @@ function displayTask(data) {
               </tr>`;
     table.insertAdjacentHTML("beforeend", markup);
   });
- 
+
   const tableEle = document.querySelectorAll("#table_element");
   tableEle.forEach((tab) => {
     tab.addEventListener("click", () => {
@@ -87,7 +87,9 @@ function displayTask(data) {
 
 async function getTableData() {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity/${id}`
+    );
     const data = await res.json();
     return data;
   } catch (err) {
@@ -113,7 +115,7 @@ function emptyCardDiv() {
 const filterTask = document.querySelector(".task_filter_options");
 async function allTasks(parentEle) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<option>${dt.title}</option>`;
@@ -142,10 +144,14 @@ async function filterByTasks(task) {
 // more Info
 async function taskTableInfo(id, gig) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity/id/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity/id/${id}`
+    );
     const data = await res.json();
 
-    const result = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const result = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/tasks/${gig}`
+    );
     const bodydata = await result.json();
     const taskImgData = bodydata[0];
 
@@ -160,11 +166,11 @@ const modal = document.querySelector(".modal");
 function statusDisplay(data, taskImgData) {
   modal.innerHTML = ``;
 
-    const originalDate = new Date(data.date);
-    const options = { year: "numeric", month: "short", day: "numeric" };
-    const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
-      originalDate
-    );
+  const originalDate = new Date(data.date);
+  const options = { year: "numeric", month: "short", day: "numeric" };
+  const formattedDate = new Intl.DateTimeFormat("en-UK", options).format(
+    originalDate
+  );
   let html = `<div class="card_body">
         <div class="task__info">
           <span>

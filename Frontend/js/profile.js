@@ -11,10 +11,12 @@ const taskPending = document.getElementById("task__pending");
 const taskTableNumber = document.querySelector(".head h3 span");
 const tableMsg = document.querySelectorAll("#table_msg");
 
+const balanceAmt = document.getElementById("balance-amount");
+const balanceDate = document.querySelector(".balance_date span");
+
 const nameInput = document.getElementById("name");
 const emailInput = document.getElementById("email");
-const taskInput = document.getElementById("task-input");
-const bioInput = document.getElementById("bio");
+const phoneInput = document.getElementById("phone");
 const profileImage = document.getElementById("profile_image");
 const underline = document.querySelectorAll(".underline");
 const editBtn = document.getElementById("edit__btn");
@@ -22,9 +24,13 @@ const saveBtn = document.getElementById("saveBtn");
 
 const username = localStorage.getItem("name");
 const photo = localStorage.getItem("photo");
-const wallet = localStorage.getItem("wallet");
+const walletBalance = localStorage.getItem("wallet");
 const email = localStorage.getItem("email");
+const phone = localStorage.getItem("phone");
 const inputs = document.querySelectorAll(".profileInputs");
+
+let number = +walletBalance;
+let wallet = number.toLocaleString("en-US") + "." + walletBalance.split(".")[1];
 
 async function init() {
   // Nav bar profile
@@ -33,7 +39,7 @@ async function init() {
     photo &&
     "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg";
   // Dashboard
-  walletAmt.innerText = wallet || 0;
+  walletAmt.innerText = wallet;
   const setterActivityData = await getTableData();
   const runningTaskData = setterActivityData.filter(
     (data) => data.status == "processing"
@@ -53,24 +59,62 @@ async function init() {
   // Tasks
   allTasks(taskFilterOPt);
 
+  // Wallet
+  balanceAmt.innerText = wallet;
+  balanceDate.innerText = reformatDate(new Date());
+
   // Profile
   profileImage.attributes.src.value =
     photo &&
     "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg";
   nameInput.value = username;
   emailInput.value = email;
+  phoneInput.value = phone;
 }
 init();
 
 async function getTableData() {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity/${id}`
+    );
     const data = await res.json();
     return data;
   } catch (err) {
     console.log(err);
   }
 }
+
+// TOGGLE SIDEBAR
+const menuBar = document.querySelector("#content nav .bx.bx-menu");
+const sidebar = document.getElementById("sidebar");
+const logo = document.querySelector(".brand");
+
+menuBar.addEventListener("click", function () {
+  sidebar.classList.toggle("hide");
+  if (sidebar.attributes.class.textContent == "hide") {
+    logo.classList.add("disappear");
+  } else {
+    logo.classList.remove("disappear");
+  }
+});
+
+//Dashboard Hashchange
+const walletCard = document.getElementById("walletCard");
+const dashboardDisplayTab = document.querySelector(".table-data");
+const runningTaskCard = document.getElementById("runningTaskCard");
+const pendingTaskCard = document.getElementById("pendingTaskCard");
+
+function changingHash(div, hash) {
+  div.addEventListener("click", () => {
+    window.location.hash = `#${hash}`;
+  });
+}
+
+changingHash(walletCard, "wallet");
+changingHash(dashboardDisplayTab, "tasks");
+changingHash(runningTaskCard, "tasks");
+changingHash(pendingTaskCard, "tasks");
 
 // date and time function
 function reformatDate(date) {
@@ -108,7 +152,7 @@ const filterCancel = document.getElementById("filter_cancel");
 filterCancel.addEventListener("click", async () => {
   filterWrapper.style.display = "none";
   iconWrapper.style.display = "block";
-  clearFilters();
+
   const setterActivityData = await getTableData();
   displayTask(setterActivityData);
 });
@@ -121,16 +165,19 @@ searchIcon.addEventListener("click", () => {
 });
 
 const searchCancel = document.getElementById("search_cancel");
-searchCancel.addEventListener("click", () => {
+searchCancel.addEventListener("click", async () => {
   searchWrapper.style.display = "none";
   iconWrapper.style.display = "block";
+
+  const setterActivityData = await getTableData();
+  displayTask(setterActivityData);
 });
 
 // Task filter options
 const taskFilterOPt = document.querySelector(".task_filter_options");
 async function allTasks(parentEle) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<option>${dt.title}</option>`;
@@ -252,7 +299,13 @@ function displayTask(data) {
   const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
   taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
-    let value = JSON.stringify({ id: dat.id, task: dat.task });
+    let value = JSON.stringify({
+      id: dat.id,
+      task: dat.task,
+      runnerid: dat.runnerid,
+      price: dat.price,
+      total: dat.total,
+    });
 
     let markup = `<tr id="table_tab">
                 <td id="table_element">
@@ -274,7 +327,14 @@ function displayTask(data) {
                   dat.status == "pending"
                     ? `<a id="reject_task" href="#">cancel task</a>`
                     : dat.status == "processing"
-                    ? `<a id="reject_task" href="#">cancel task</a>`
+                    ? `
+                    <a id="complete_task" href="#">task completed</a>
+                    <a id="reject_task" href="#">cancel task</a>
+                    `
+                    : dat.status == "completed"
+                    ? ``
+                    : dat.status == "unpaid"
+                    ? `<a href="#tasks" id="make_payment">make payment</a>`
                     : `<a id="confirm_task" href="#">reset task</a>`
                 }
                 </div>
@@ -287,7 +347,7 @@ function displayTask(data) {
   tableTab.forEach((tab) => {
     const statusBtn = tab.querySelectorAll(".status");
     let taskData;
-    const statusData = { status: "pending" };
+    let statusData = { status: "" };
     const confirmOpt = tab.querySelectorAll("#confirm_task");
     confirmOpt.forEach((opt) => {
       opt.addEventListener("click", () => {
@@ -312,6 +372,49 @@ function displayTask(data) {
       });
     });
 
+    const completeOpt = tab.querySelectorAll("#complete_task");
+    completeOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          const updateWalletData = {
+            price: taskData.price,
+            id: taskData.runnerid,
+          };
+          rewardRunner(updateWalletData);
+          statusData.status = "completed";
+          updateStatus(taskData.id, statusData);
+
+          const transactData = {
+            id: taskData.runnerid,
+            amount: taskData.price,
+            type: "reward",
+          };
+          addTransaction(transactData);
+          location.reload();
+        });
+      });
+    });
+
+    const payOpt = tab.querySelectorAll("#make_payment");
+    payOpt.forEach((opt) => {
+      opt.addEventListener("click", () => {
+        statusBtn.forEach((btn) => {
+          taskData = JSON.parse(btn.value);
+          makePaymentMArkup(taskData.total);
+          const payForm = document.getElementById("payForm");
+          const amtToPay = document.querySelectorAll(".amt_to_pay");
+          payForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            amtToPay.innerText = "Successful";
+            statusData.status = "pending";
+            updateStatus(taskData.id, statusData);
+            location.reload();
+          });
+        });
+      });
+    });
+
     const tableEle = tab.querySelectorAll("#table_element");
     tableEle.forEach((ele) => {
       ele.addEventListener("click", () => {
@@ -328,7 +431,7 @@ function displayTask(data) {
 async function updateStatus(id, statusData) {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/activity/status/${id}`,
+      `https://hermes-yto9.onrender.com/api/v1/activity/status/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -347,9 +450,11 @@ async function updateStatus(id, statusData) {
 const contents = document.querySelectorAll(".content_display");
 const dashboardDisplay = document.getElementById("dashboard_display");
 const tasksDisplay = document.getElementById("tasks_display");
+const walletDisplay = document.getElementById("wallet_display");
 const profileDisplay = document.getElementById("profile_display");
 const dashboardLink = document.getElementById("dashboardLink");
 const tasksLink = document.getElementById("tasksLink");
+const walletLink = document.getElementById("walletLink");
 const profileLink = document.getElementById("profileLink");
 // const messagesDisplay = document.querySelector(".messages");
 // const messagesLink = document.getElementById("messagesLink");
@@ -383,10 +488,10 @@ function updateDisplay() {
       displayContent(profileDisplay);
       active(profileLink);
       break;
-    // case "messages":
-    //   displayContent(messagesDisplay);
-    //   active(messagesLink);
-    //   break;
+    case "wallet":
+      displayContent(walletDisplay);
+      active(walletLink);
+      break;
     // case "settings":
     //   displayContent(settingsDisplay);
     //   break;
@@ -433,9 +538,7 @@ function seeMore(data, taskImgData) {
         </div>
         <div class="billing">
           <h2>Pricing</h2>
-          <p>Tip: NGN 1000</p>
-          <p>Transportation: NGN 1000</p>
-          <p><strong>Total:</strong> <strong>NGN 2000</strong></p>
+          <p><strong>NGN ${data.total}</strong></p>
         </div>
       </div>
       <div>
@@ -448,8 +551,11 @@ function seeMore(data, taskImgData) {
           <div class="setter-info">
             <h1>${data.name}</h1>
             <div class="contact_icons">
-              <span><i class="fa-solid fa-message"></i> message</span>
-              <span><i class="fa-solid fa-phone"></i> call</span>
+          ${
+            data.status == "unpaid"
+              ? ``
+              : `<span><i class="fa-solid fa-phone"></i>${data.phone}</span>`
+          }
             </div>
           </div>
         </div>
@@ -462,10 +568,14 @@ function seeMore(data, taskImgData) {
 // more Info
 async function taskTableInfo(id, gig) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity/id/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity/id/${id}`
+    );
     const data = await res.json();
 
-    const result = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const result = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/tasks/${gig}`
+    );
     const bodydata = await result.json();
     const taskImgData = bodydata[0];
 
@@ -478,6 +588,7 @@ async function taskTableInfo(id, gig) {
 // close modal
 overlay.addEventListener("click", () => {
   modal.innerHTML = ``;
+  modal.style.padding = "25px";
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
 });
@@ -555,7 +666,7 @@ async function changePassword() {
     };
 
     const res = await fetch(
-      `http://localhost:3000/api/v1/users/password/${id}`,
+      `https://hermes-yto9.onrender.com/api/v1/users/password/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -586,7 +697,7 @@ const logoutLink = document.getElementById("logout");
 logoutLink.addEventListener("click", logout);
 function logout() {
   localStorage.clear();
-  window.location = "main.html";
+  window.location = "index.html";
 }
 
 // Profile
@@ -607,17 +718,21 @@ async function save() {
     const newData = {
       name: nameInput.value.trim(),
       email: emailInput.value.trim(),
+      phone: phoneInput.value,
       task: null,
       bio: null,
     };
 
-    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newData),
-    });
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newData),
+      }
+    );
     const data = await res.json();
 
     if (data.message == "success") {
@@ -625,6 +740,7 @@ async function save() {
       localStorage.setItem("email", data.email);
       localStorage.setItem("task", data.task);
       localStorage.setItem("bio", data.bio);
+      localStorage.setItem("phone", data.phone);
 
       editBtn.classList.remove("hidden");
       saveBtn.classList.add("hidden");
@@ -640,3 +756,345 @@ async function save() {
   }
 }
 saveBtn.addEventListener("click", save);
+
+// Wallet Operations
+const depositBtn = document.getElementById("deposit");
+const withdrawalBtn = document.getElementById("withdrawal");
+
+function depositFormMarkup() {
+  const html = `<div class="payment_wrapper">
+      <div class="payment">
+      <p class="hidden">Successful</p>
+        <form class="form" id="depositForm">
+          <div class="card space icon-relative">
+            <label class="label">Amount:</label>
+            <input type="text" class="input"
+            id="depositAmt"
+            oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" required />
+            <i class="fa-solid fa-money-bill"></i>
+          </div>
+          <div class="card space icon-relative">
+            <label class="label">Card number:</label>
+            <input
+              type="text"
+              class="input"
+              data-mask="0000 0000 0000 0000"
+              placeholder="Card Number"
+              oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+              required
+            />
+            <i class="far fa-credit-card"></i>
+          </div>
+          <div class="card-grp space">
+            <div class="card-item icon-relative">
+              <label class="label">Expiry date:</label>
+              <input
+                type="text"
+                name="expiry-data"
+                class="input"
+                data-mask="00 / 00"
+                placeholder="00 / 00"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
+              />
+              <i class="far fa-calendar-alt"></i>
+            </div>
+            <div class="card-item icon-relative">
+              <label class="label">CVC:</label>
+              <input
+                type="text"
+                class="input"
+                data-mask="000"
+                placeholder="000"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
+              />
+              <i class="fas fa-lock"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" id="depositEnter">Enter</button>
+
+          <div id="paystack-footer" class="paystack-footer animated fadeIn">
+            <a target="_blank" href="https://paystack.com/what-is-paystack">
+              <img
+                alt="Paystack secured badge"
+                src="https://koboline.com.ng/wp-content/uploads/2020/05/paystack-badge-cards-ngn.png"
+              />
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>`;
+
+  modal.insertAdjacentHTML("beforeend", html);
+  overlay.classList.remove("hidden");
+  modal.classList.remove("hidden");
+  modal.style.padding = "0px";
+}
+
+depositBtn.addEventListener("click", () => {
+  depositFormMarkup();
+
+  //depositing
+  const depositAmt = document.getElementById("depositAmt");
+  const depositForm = document.getElementById("depositForm");
+  const successMsg = document.querySelectorAll(".payment p");
+
+  depositForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    successMsg.forEach((msg) => {
+      return msg.classList.remove("hidden");
+    });
+
+    const data = {
+      id,
+      amount: depositAmt.value,
+      type: "deposit",
+    };
+    addTransaction(data);
+
+    const updateWalletData = {
+      amount: parseFloat(walletBalance) + Number(depositAmt.value),
+      id,
+    };
+    updateWallet(updateWalletData);
+  });
+});
+
+withdrawalBtn.addEventListener("click", () => {
+  html = `<div class="payment_wrapper">
+      <div class="payment">
+      <p class="hidden">Successful</p>
+        <form class="form" id="withdrawalForm">
+          <div class="card space icon-relative">
+            <label class="label">Amount:</label>
+            <input type="text" class="input" 
+            id="withdrawalAmt"
+            oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" required/>
+            <i class="fa-solid fa-money-bill"></i>
+          </div>
+          <div class="card space icon-relative">
+            <label class="label">Account Number:</label>
+            <input type="text" class="input" oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')" required/>
+            <i class="fas fa-user"></i>
+          </div>
+          
+          <div class="card space icon-relative">
+            <label class="label">Bank:</label>
+            <input type="text" class="input" required/>
+            <i class="fas fa-bank"></i>
+          </div>
+          <button type="submit" class="btn" id="withdrawalEnter">Enter</button>
+
+          <div id="paystack-footer" class="paystack-footer animated fadeIn">
+            <a target="_blank" href="https://paystack.com/what-is-paystack">
+              <img
+                alt="Paystack secured badge"
+                src="https://koboline.com.ng/wp-content/uploads/2020/05/paystack-badge-cards-ngn.png"
+              />
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>`;
+
+  modal.insertAdjacentHTML("beforeend", html);
+  overlay.classList.remove("hidden");
+  modal.classList.remove("hidden");
+  modal.style.padding = "0px";
+
+  //withdrawal
+  const withdrawalAmt = document.getElementById("withdrawalAmt");
+  const withdrawalForm = document.getElementById("withdrawalForm");
+  const successMsg = document.querySelectorAll(".payment p");
+
+  withdrawalForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    successMsg.forEach((msg) => {
+      return msg.classList.remove("hidden");
+    });
+
+    const data = {
+      id,
+      amount: withdrawalAmt.value,
+      type: "withdrawal",
+    };
+    addTransaction(data);
+
+    const updateWalletData = {
+      amount: parseFloat(walletBalance) - Number(withdrawalAmt.value),
+      id,
+    };
+    updateWallet(updateWalletData);
+  });
+});
+
+async function addTransaction(data) {
+  try {
+    const res = await fetch(
+      "https://hermes-yto9.onrender.com/api/v1/transaction",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    const apiData = await res.json();
+    if (apiData.message) {
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}
+
+async function updateWallet(data) {
+  try {
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/wallet`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const apiData = await res.json();
+    if (apiData.message) {
+      localStorage.setItem("wallet", apiData.data.wallet);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}
+
+async function rewardRunner(data) {
+  try {
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/wallet/reward`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    const apiData = await res.json();
+    if (apiData.message) {
+      localStorage.setItem("wallet", apiData.data.wallet);
+    }
+  } catch (err) {
+    console.log(`Error: ${err}`);
+  }
+}
+
+// Transaction Table
+const transactionTable = document.getElementById("transaction_table");
+
+function transactionDisplay(data) {
+  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  sortedData.map((dat) => {
+    let value = JSON.stringify(dat);
+
+    let markup = `<tr>
+                      <td><span class="status ${dat.type}">${
+      dat.type
+    }</span></td>
+                      <td>${reformatDate(dat.date)}</td>
+                      <td class="table_amt">
+                        <span>NGN</span>
+                        <p>${dat.amount}</p>
+                      </td>
+                    </tr>`;
+    transactionTable.insertAdjacentHTML("beforeend", markup);
+  });
+}
+
+async function transactionData() {
+  try {
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/transaction/${id}`
+    );
+    const data = await res.json();
+
+    transactionDisplay(data);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+transactionData();
+
+function makePaymentMArkup(amount) {
+  const html = `<div class="payment_wrapper">
+      <div class="payment">
+      <p class="hidden">Successful</p>
+        <form class="form" id="payForm">
+          <p class="amt_to_pay">Pay NGN ${amount} </p>
+          <div class="card space icon-relative">
+            <label class="label">Card number:</label>
+            <input
+              type="text"
+              class="input"
+              data-mask="0000 0000 0000 0000"
+              placeholder="Card Number"
+              oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+              required
+            />
+            <i class="far fa-credit-card"></i>
+          </div>
+          <div class="card-grp space">
+            <div class="card-item icon-relative">
+              <label class="label">Expiry date:</label>
+              <input
+                type="text"
+                name="expiry-data"
+                class="input"
+                data-mask="00 / 00"
+                placeholder="00 / 00"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
+              />
+              <i class="far fa-calendar-alt"></i>
+            </div>
+            <div class="card-item icon-relative">
+              <label class="label">CVC:</label>
+              <input
+                type="text"
+                class="input"
+                data-mask="000"
+                placeholder="000"
+                oninput="this.value = this.value.replace(/[^0-9+/-]/g, '')"
+                required
+              />
+              <i class="fas fa-lock"></i>
+            </div>
+          </div>
+
+          <button type="submit" class="btn">Enter</button>
+
+          <div id="paystack-footer" class="paystack-footer animated fadeIn">
+            <a target="_blank" href="https://paystack.com/what-is-paystack">
+              <img
+                alt="Paystack secured badge"
+                src="https://koboline.com.ng/wp-content/uploads/2020/05/paystack-badge-cards-ngn.png"
+              />
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>`;
+
+  modal.insertAdjacentHTML("beforeend", html);
+  overlay.classList.remove("hidden");
+  modal.classList.remove("hidden");
+  modal.style.padding = "0px";
+}

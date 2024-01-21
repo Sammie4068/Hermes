@@ -14,8 +14,14 @@ const uploadImage = require("../../utilities/index");
 const secret = process.env.SECRET;
 
 exports.getUsers = async (req, res) => {
-  const results = await getAllUsers();
-  res.json({ number: results.rows.length, data: results.rows });
+  try {
+
+    const results = await getAllUsers();
+    res.json({ number: results.rows.length, data: results.rows });
+  }
+  catch(err) {
+    return next(err);
+  }
 };
 
 exports.login = async (req, res, next) => {
@@ -25,7 +31,7 @@ exports.login = async (req, res, next) => {
       return res.json({ message: "invalid" });
     }
 
-    const { id, role, name, email, gig, bio, photo, wallet } = foundUser.rows[0];
+    const { id, role, name, email, gig, bio, photo,phone,wallet } = foundUser.rows[0];
     const hashedPassword = await bcrypt.compare(
       req.body.password,
       foundUser.rows[0].password
@@ -47,6 +53,7 @@ exports.login = async (req, res, next) => {
       gig,
       bio,
       photo,
+      phone,
       wallet
     });
   } catch (err) {
@@ -68,9 +75,10 @@ exports.register = async (req, res, next) => {
         email,
         hashedPassword,
         role,
+        phone: req.body.phone
       };
       const result = await addUsers(user);
-      const { id, gig, bio, photo, wallet } = result.rows[0];
+      const { id, gig, bio, photo, wallet, phone } = result.rows[0];
       const token = jwt.sign({ name }, secret, {
         expiresIn: 60 * 60,
       });
@@ -83,6 +91,7 @@ exports.register = async (req, res, next) => {
         name,
         email,
         photo,
+        phone,
         wallet,
       });
     }
@@ -127,13 +136,14 @@ exports.addRunner = async (req, res, next) => {
       role: "runner",
       gig: req.body.gig,
       bio: req.body.bio,
-      wallet: 0
+      wallet: 0,
+      phone: req.body.phone
     };
     const result = await addRunner(runner);
     const token = jwt.sign({ name }, secret, {
       expiresIn: 60 * 60,
     });
-    const { id, email, gig, bio, photo, wallet } = result.rows[0];
+    const { id, email, gig, bio, photo, wallet, phone } = result.rows[0];
     res.json({
       message: "success",
       id,
@@ -145,6 +155,7 @@ exports.addRunner = async (req, res, next) => {
       bio,
       photo,
       wallet,
+      phone
     });
   } catch (err) {
     return next(err);

@@ -1,8 +1,40 @@
-AOS.init();
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", removeMenu);
+function removeMenu() {
+  navId.classList.remove("show");
+}
+
+const asSetter = document.getElementById("as-setter");
+const asRunner = document.getElementById("as-runner");
+const signinLink = document.getElementById("signinLink");
+
+
+function setRole(role) {
+  window.location = "auth.html";
+  localStorage.setItem("role", role);
+}
+
+asSetter.addEventListener("click", () => {
+  setRole("setter");
+});
+asRunner.addEventListener("click", () => {
+  setRole("runner");
+});
+signinLink.addEventListener("click", () => {
+  setRole("runner");
+});
+
 // Get all taskers
 async function allTasks(parentEle) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<option>${dt.title}</option>`;
@@ -18,7 +50,7 @@ allTasks(taskInput);
 // Gig tip
 async function getTip(gig) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     const gigArr = data.filter((dat) => dat.title == gig);
     const gigTip = +gigArr[0].tip.split(" ")[1];
@@ -28,13 +60,6 @@ async function getTip(gig) {
   }
 }
 
-// signin
-const signin = document.getElementById("signin");
-signin.addEventListener("click", () => {
-  localStorage.setItem("role", "runner");
-  window.location = "auth.html";
-});
-
 const infoForm = document.querySelector(".personal_info");
 const profileForm = document.querySelector(".profile_card");
 const schoolForm = document.querySelector(".school_info");
@@ -42,6 +67,7 @@ const fullName = document.getElementById("fullname");
 const gender = document.getElementById("gender");
 const photo = document.getElementById("profilePic");
 const email = document.getElementById("email");
+const phone = document.getElementById("phone");
 const password = document.getElementById("password");
 const confirmPassword = document.getElementById("cpassword");
 const showCheckbox = document.getElementById("showpassword");
@@ -85,6 +111,7 @@ function infoFormIsEmpty() {
   if (
     fullName.value == "" ||
     email.value == "" ||
+    phone.value == "" ||
     password.value == "" ||
     confirmPassword.value == "" ||
     photo.files.length < 1
@@ -108,7 +135,7 @@ function emailValidation() {
 async function checkEmail() {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/runners/email/${email.value}`
+      `https://hermes-yto9.onrender.com/api/v1/runners/email/${email.value}`
     );
     const data = await res.json();
     if (data.message === "exists") {
@@ -202,14 +229,14 @@ backBtn2.addEventListener("click", (e) => {
 nextBtn1.addEventListener("click", async (e) => {
   e.preventDefault();
   if (
-  infoFormIsEmpty() &&
-  emailValidation() &&
-  passwordValidation() &&
-  confirmPasswordValidation() &&
-  (await checkEmail())
+    infoFormIsEmpty() &&
+    emailValidation() &&
+    passwordValidation() &&
+    confirmPasswordValidation() &&
+    (await checkEmail())
   ) {
-  infoForm.classList.add("hidden");
-  profileForm.classList.remove("hidden");
+    infoForm.classList.add("hidden");
+    profileForm.classList.remove("hidden");
   }
 });
 
@@ -231,6 +258,7 @@ submitBtn.addEventListener("click", (e) => {
 
     formData.append("name", fullName.value);
     formData.append("email", email.value);
+    formData.append("phone", phone.value);
     formData.append("gender", gender.value);
     formData.append("image", photo.files[0]);
     formData.append("password", password.value);
@@ -250,7 +278,7 @@ submitBtn.addEventListener("click", (e) => {
 async function postData(data) {
   try {
     renderSpinner(overlay);
-    const res = await fetch(`http://localhost:3000/api/v1/runners`, {
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/runners`, {
       method: "POST",
       body: data,
     });
@@ -266,6 +294,7 @@ async function postData(data) {
       localStorage.setItem("task", bodydata.gig);
       localStorage.setItem("bio", bodydata.bio);
       localStorage.setItem("wallet", bodydata.wallet);
+      localStorage.setItem("phone", bodydata.phone);
       window.location = "account.html#dashboard";
     }
   } catch (err) {
@@ -274,7 +303,7 @@ async function postData(data) {
 }
 
 function renderSpinner(parentEle) {
-  overlay.style.display = "flex"
+  overlay.style.display = "flex";
   parentEle.innerHTML = ``;
   const html = `<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
   <p class="wait">Please wait..</p>

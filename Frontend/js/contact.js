@@ -1,34 +1,32 @@
-AOS.init();
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", () => {
+  navId.classList.remove("show");
+});
 
 const token = localStorage.getItem("token");
 const role = localStorage.getItem("role");
 const username = localStorage.getItem("name");
-const account = document.getElementById("account");
+const activity = document.getElementById("activity");
 const signin = document.getElementById("signin");
-const runnerBtn = document.querySelector(".runner_btn");
+const runnerLink = document.getElementById("runner_link");
 const services = document.getElementById("services");
-const userProfile = document.querySelector(".user");
-const user = document.querySelector(".user p");
 
 if (token) {
   signin.classList.add("hidden");
-  account.classList.remove("hidden");
-  runnerBtn.classList.add("hidden");
-    userProfile.style.display = "flex";
-    user.innerText = `${username}`;
+  activity.classList.remove("hidden");
+  runnerLink.classList.add("hidden");
 }
 
-runnerBtn.addEventListener("click", () => {
-  window.location = "reg.html";
-});
-
-signin.addEventListener("click", () => {
-  window.location = "auth.html";
-});
-
-userProfile.addEventListener("click", () => {
+activity.addEventListener("click", () => {
   if (role == "setter") {
-    window.location = "profile.html#profile";
+    window.location = "profile.html#dashboard";
   } else if (role == "runner") {
     window.location = "account.html#dashboard";
   }
@@ -50,8 +48,4 @@ asSetter.addEventListener("click", () => {
 });
 asRunner.addEventListener("click", () => {
   setRole(asRunner);
-});
-
-services.addEventListener("click", () => {
-  window.location = "main.html#services";
 });

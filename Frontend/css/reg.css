@@ -14,17 +14,41 @@
 }
 
 body {
+  width: 100%;
+  height: 100vh;
   overflow-x: hidden;
-  background: url(https://res.cloudinary.com/okorosamuel/image/upload/v1700746623/Hermes/hill1_a7eqxd.png);
-  background-position: center;
-  background-size: cover;
+  background-color: #f9f8f6;
   font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  padding: 20px;
 }
 
-.logo a {
+ul li {
+  list-style-type: none;
+}
+a {
   text-decoration: none;
+}
+.container {
+  width: 100%;
+}
+
+@media screen and (min-width: 1040px) {
+  .container {
+    width: 1040px;
+    margin: 0 auto;
+  }
+}
+
+.header {
+  height: 4.5rem;
+  padding: 0 1.7rem;
+}
+
+.nav {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .logo h2 {
@@ -33,9 +57,155 @@ body {
   color: #002b1d;
 }
 
+.nav_menu_list {
+  display: flex;
+  align-items: center;
+}
+.nav_menu_list .nav_menu_item {
+  margin: 0 2rem;
+  position: relative;
+}
+
+.nav_menu_link {
+  font-size: 20.5px;
+  line-height: 27px;
+  color: #002b1d;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.nav_menu_list .nav_menu_item::after,
+.active_nav_link::after {
+  content: "";
+  height: 3px;
+  width: 0%;
+  background-color: #009688;
+  position: absolute;
+  left: 0;
+  transition: 0.5s;
+  bottom: 0px;
+}
+
+.nav_menu_item:hover::after,
+.active_nav_link::after {
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.99) translateY(-0.7em);
+    transform-origin: top;
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+.signin {
+  cursor: pointer;
+  position: relative;
+  left: 50px;
+}
+
+.signin:hover .dropdown {
+  display: block;
+}
+
+.dropdown__wrapper {
+  position: absolute;
+  top: 0px;
+  left: -50px;
+  padding-top: 35px;
+  z-index: 1;
+}
+
+.dropdown {
+  border-radius: 8px;
+  background-color: #fff;
+  display: none;
+  padding: 8px;
+  width: 100%;
+  max-width: 600px;
+  border: 1px solid #f3f3f3;
+  box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.item-title {
+  width: 6rem;
+}
+
+.item-title h3 {
+  padding: 10px;
+}
+
+.item-title .as-setter {
+  border-right: 1px solid #07492eed;
+}
+.list-items {
+  list-style-type: none;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+}
+
+.list-itemsli {
+  display: flex;
+  padding: 8px;
+  gap: 16px;
+  width: 100%;
+  text-wrap: nowrap;
+}
+
+.list-items li:hover {
+  background-color: #f3f3f3;
+  border-radius: 4px;
+}
+
+.item-title h3 {
+  font-weight: 500;
+  font-size: 14px;
+  color: #07492eed;
+}
+
+.item-title p {
+  font-size: 12px;
+  white-space: nowrap;
+  color: #07492eed;
+}
+
+.toggle_btn {
+  font-size: 20px;
+  font-weight: 600;
+  color: #07492eed;
+  z-index: 4;
+  border: none;
+  background-color: inherit;
+}
+.nav_menu,
+.close_btn {
+  display: none;
+  border: none;
+  background-color: inherit;
+}
+.show {
+  right: 3% !important;
+}
+@media screen and (min-width: 768px) {
+  .toggle_btn {
+    display: none;
+  }
+  .nav_menu {
+    display: block;
+  }
+}
+
 form {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -57,37 +227,40 @@ textarea {
   transition: all 0.25s ease-out;
 }
 
-.container {
+.wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: url(https://res.cloudinary.com/okorosamuel/image/upload/v1700746623/Hermes/hill1_a7eqxd.png);
+  background-color: #f9f8f6;
+  background-position: center;
+  background-size: cover;
   width: 100%;
-  height: 500px;
-}
-.container .first {
   padding: 20px;
+  overflow-x: hidden;
+}
+.wrapper .first {
+  /* padding: 20px; */
+  width: 65%;
 }
 
-.container .first h4 {
+.wrapper .first h4 {
   color: #002b1d;
+  background-color: #f9f8f6;
+  padding: 10px;
 }
-.container img {
-  width: 80%;
+.wrapper img {
+  width: 93%;
   height: 50%;
 }
 
-.form-left,
-.form-right {
-  margin-left: -10px;
+.form-left {
   padding: 20px;
   flex-direction: column;
-  width: 30rem;
+  width: 100%;
   background: #a8ede2;
-  height: 34rem;
+  height: 100%;
   border-radius: 8px;
-  position: relative;
-  left: -50px;
 }
 
 label,
@@ -212,15 +385,17 @@ input:required:valid {
 .btnCont {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 5px;
 }
 
-.dates input {
+/* .dates input {
   width: 13rem;
-}
+} */
 
 .btnCont .back_btn {
   background-color: #800000;
-  width: 20%;
+  width: 30%;
   margin-right: 10px;
 }
 
@@ -228,20 +403,85 @@ input:required:valid {
   display: none;
 }
 
-@media (max-width: 800px) {
+@media screen and (max-width: 768px) {
   h1 {
     text-align: center;
   }
-
-  form {
-    flex-direction: column;
+  .logo h2 {
+    font-size: 30px;
   }
 
-  .form-left,
-  .form-right {
+  .toggle_btn {
+    position: relative;
+    left: 0;
+  }
+
+  .runner_btn {
+    margin-left: -25px;
+    margin-top: 5px;
+    z-index: 0;
+  }
+  .wrapper {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  .nav_menu {
+    position: fixed;
+    width: 93%;
+    height: 100vh;
+    display: block;
+    top: 2.5%;
+    right: -100%;
+    background-color: #f9f8f6;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+    z-index: 10;
+    transition: 0.4s;
+  }
+  .nav_menu_list {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .nav_menu_list .nav_menu_item {
+    margin: 1rem 0;
+  }
+  .nav_menu_item .nav_menu_link {
+    font-size: 18px;
+  }
+
+  .signin {
+    cursor: pointer;
+    position: relative;
+    left: 0;
+  }
+
+  .close_btn {
+    display: block;
+    position: relative;
+    left: 100%;
+    font-size: 25px;
+    color: #002b1d;
+    top: -7%;
+    margin-right: -16.5px;
+  }
+  .close_btn:hover {
+    color: #000;
+  }
+
+  .first {
+    display: none;
+  }
+  .form-left {
+    width: 100%;
+  }
+  .wrapper form {
     width: 100%;
   }
 
+  input[type="file"] {
+    width: 100%;
+  }
   .required-text {
     text-align: center;
   }
@@ -283,7 +523,7 @@ input:required:valid {
   }
 }
 
-.wait{
+.wait {
   color: #fff;
   font-size: 15px;
   font-weight: 600;
@@ -304,4 +544,3 @@ input:required:valid {
   transition: all 0.5s;
   cursor: pointer;
 }
-

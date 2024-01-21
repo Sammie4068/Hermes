@@ -9,6 +9,9 @@ const {
   getRunnerActivity,
   getActivityBySetterID,
   updateStatus,
+  addTransaction,
+  updateWallet,
+  getTransactions,
 } = require("./admin/admin");
 
 const {
@@ -50,4 +53,7 @@ module.exports = {
   getActivityBySetterID,
   updateStatus,
   changeImage,
+  addTransaction,
+  updateWallet,
+  getTransactions,
 };

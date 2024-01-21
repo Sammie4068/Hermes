@@ -1,3 +1,16 @@
+const navId = document.getElementById("nav_menu"),
+  ToggleBtnId = document.getElementById("toggle_btn"),
+  CloseBtnId = document.getElementById("close_btn");
+
+ToggleBtnId.addEventListener("click", () => {
+  navId.classList.add("show");
+});
+
+CloseBtnId.addEventListener("click", removeMenu);
+function removeMenu() {
+  navId.classList.remove("show");
+}
+
 AOS.init();
 
 // Describe task
@@ -5,7 +18,7 @@ AOS.init();
 async function allTasks(parentEle) {
   try {
     parentEle.innerHTML = ``;
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<li>${dt.title}  <img src="${dt.icons}"></li>`;
@@ -34,10 +47,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 
+const deliveryAddr = document.querySelector(".deliveryAddress");
+
 taskList.addEventListener("click", function (event) {
   if (event.target.tagName === "LI") {
     taskInput.value = event.target.textContent;
     taskList.style.display = "none";
+  }
+  if (taskInput.value.trim() == "errands") {
+    deliveryAddr.classList.remove("hidden");
+  } else {
+    deliveryAddr.classList.add("hidden");
   }
 });
 
@@ -46,21 +66,21 @@ const nextBtn = document.querySelector(".next-btn");
 const overlay = document.querySelector(".overlay");
 const modal = document.querySelector(".modal");
 const taskCont = document.querySelector(".task_container");
-const describeTaskForm = document.getElementById("describe_task");
+const describeTaskForm = document.querySelector(".task-info");
 
 // Describe Task Form
 const gig = document.querySelector(".task-input");
 const gigDescription = document.getElementById("task-decription");
 const gigLocation = document.querySelector(".task-location");
 const locationState = document.getElementById("states");
+const gigDuration = document.getElementById("duration");
 const gigOption = document.querySelector(".task-options");
 const gigDate = document.getElementById("date");
 const gigTime = document.getElementById("time");
 const id = localStorage.getItem("id");
 
-nextBtn.addEventListener("click", (e) => {
+describeTaskForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const option = gigOption.value;
 
   const data = {
     task: gig.value.trim(),
@@ -70,19 +90,23 @@ nextBtn.addEventListener("click", (e) => {
     time: gigTime.value,
     status: "pending",
     setterid: id,
+    duration: gigDuration.value,
   };
   createTask(data);
 });
 
 async function createTask(data) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const apiData = await res.json();
     if (apiData.id) {
       localStorage.setItem("gig", data.task);
@@ -113,20 +137,3 @@ function closeModal() {
   overlay.classList.add("hidden");
   modal.innerHTML = "";
 }
-
-//Services
-const services = document.getElementById("services");
-services.addEventListener("click", () => {
-  window.location = "main.html#services";
-});
-
-//Account
-const role = localStorage.getItem("role");
-const account = document.getElementById("account");
-account.addEventListener("click", () => {
-  if (role == "setter") {
-    window.location = "profile.html#profile";
-  } else if (role == "runner") {
-    window.location = "account.html#dashboard";
-  }
-});

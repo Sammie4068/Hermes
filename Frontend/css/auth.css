@@ -360,7 +360,7 @@ button {
   cursor: pointer;
 }
 
-.hidden{
+.hidden {
   display: none;
 }
 
@@ -388,7 +388,6 @@ button {
   gap: 20px;
   transition: transform 1s ease-out;
   background-color: #f3f7f9;
-
 }
 
 .modal-wrapper .card:hover {
@@ -402,7 +401,7 @@ button {
   color: var(--grad-clr1);
 }
 
-.modal-wrapper .card aside p{
+.modal-wrapper .card aside p {
   width: 80%;
   color: var(--grad-clr1);
   font-size: 15px;
@@ -414,7 +413,16 @@ button {
   fill: var(--grad-clr1);
 }
 
-@media (max-width: 635px) {
+@media (max-width: 768px) {
+  .logo {
+    position: relative;
+    top: 0px;
+    left: 5%;
+    margin: 10px;
+  }
+  .logo h2 {
+    font-size: 30px;
+  }
   .overlay {
     display: none;
   }
@@ -422,20 +430,28 @@ button {
     display: none;
   }
   .container {
-    width: 50vh;
+    width: 94dvw;
   }
   .form-container {
     width: 100%;
   }
   form {
-    width: 356px;
+    width: 410px;
     margin-left: -73px;
   }
   #signup-form {
-    margin-left: -260px;
+    margin-left: -300px;
   }
   .account-text {
     display: block;
     margin-left: -5px;
+  }
+  .modal {
+    width: 100%;
+  }
+  .modal-wrapper .card {
+    padding: 20px 10px;
+    height: 150px;
+    width: 165%;
   }
 }

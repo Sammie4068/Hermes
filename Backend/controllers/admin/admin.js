@@ -10,6 +10,10 @@ const {
   getRunnerActivity,
   getActivityBySetterID,
   updateStatus,
+  addTransaction,
+  updateWallet,
+  getTransactions,
+  gerUsersById
 } = require("../../models/index");
 
 exports.getTasks = async (req, res, next) => {
@@ -41,8 +45,21 @@ exports.getAllRunners = async (req, res, next) => {
 
 exports.addActivity = async (req, res, next) => {
   try {
-    const { task, description, location, date, time, status, setterid } =
-      req.body;
+    const {
+      task,
+      description,
+      location,
+      duration,
+      date,
+      time,
+      status,
+      setterid,
+    } = req.body;
+
+    const taskData = await getTaskByName(task);
+    const { tip } = taskData.rows[0];
+    const price = duration * tip;
+    const total = price + 500;
     const data = {
       task,
       description,
@@ -51,6 +68,9 @@ exports.addActivity = async (req, res, next) => {
       time,
       status,
       setterid,
+      duration,
+      price,
+      total,
     };
     const result = await addActivity(data);
     const { id } = result.rows[0];
@@ -62,10 +82,13 @@ exports.addActivity = async (req, res, next) => {
 
 exports.updateRunnerID = async (req, res, next) => {
   try {
-    const { runnerID } = req.body;
+    const { runnerID, status } = req.body;
+   
+    console.log(status)
+
     const id = req.params.id;
-    const result = await updateRunnerID(runnerID, id);
-    return res.json({ message: "success"});
+    const result = await updateRunnerID(runnerID, status, id);
+    return res.json({ message: "success", data: result.rows });
   } catch (err) {
     return next(err);
   }
@@ -76,7 +99,7 @@ exports.updateStatus = async (req, res, next) => {
     const { status } = req.body;
     const id = req.params.id;
     const result = await updateStatus(status, id);
-    return res.json({ message: "success"});
+    return res.json({ message: "success" });
   } catch (err) {
     return next(err);
   }
@@ -117,3 +140,51 @@ exports.getActivityBySetterID = async (req, res, next) => {
     return next(err);
   }
 };
+
+exports.addTransaction = async (req, res, next) => {
+  try {
+    const { id, type, amount } = req.body;
+    const date = new Date();
+
+    const result = await addTransaction(id, type, amount, date);
+    res.json({ message: "success" });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.updateWallet = async (req, res, next) => {
+  try {
+    const { amount, id } = req.body;
+
+    const result = await updateWallet(amount, id);
+    res.json({ message: "success", data: result.rows[0] });
+  } catch (err) {
+    return next(err);
+  }
+};
+
+exports.getTransactions = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const result = await getTransactions(id)
+    return res.json(result.rows);
+  } catch (err) {
+    return next(err)
+  }
+}
+
+exports.addToWallet = async (req, res, next) => {
+  try {
+    const { id, price } = req.body;
+    
+    const result = await gerUsersById(id)
+    const { wallet } = result.rows[0]
+    const amount = parseFloat(wallet) + parseFloat(price)
+
+    const results = await updateWallet(amount, id)
+    res.json({ message: "success", data: results.rows[0] });
+  } catch (err) {
+    return next(err)
+  }
+}

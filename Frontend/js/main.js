@@ -6,67 +6,69 @@ ToggleBtnId.addEventListener("click", () => {
   navId.classList.add("show");
 });
 
-CloseBtnId.addEventListener("click", () => {
+CloseBtnId.addEventListener("click", removeMenu);
+function removeMenu() {
   navId.classList.remove("show");
-});
+}
 
 AOS.init();
 
-gsap.from(".logo", {
-  opacity: 0,
-  y: -10,
-  delay: 1,
-  duration: 0.5,
-});
+// gsap.from(".logo", {
+//   opacity: 0,
+//   y: -10,
+//   delay: 1,
+//   duration: 0.5,
+// });
 
-gsap.from(".nav_menu_list .nav_menu_item", {
-  opacity: 0,
-  y: -10,
-  delay: 1.4,
-  duration: 0.5,
-  stagger: 0.3,
-});
-gsap.from(".runner_btn", {
-  opacity: 0,
-  y: 20,
-  delay: 3,
-  duration: 1,
-});
+// gsap.from(".nav_menu_list .nav_menu_item", {
+//   opacity: 0,
+//   y: -10,
+//   delay: 1.4,
+//   duration: 0.5,
+//   stagger: 0.3,
+// });
 
-gsap.from(".toggle_btn", {
-  opacity: 0,
-  y: -10,
-  delay: 1.4,
-  duration: 0.5,
-});
+// gsap.from(".toggle_btn", {
+//   opacity: 0,
+//   y: -10,
+//   delay: 1.4,
+//   duration: 0.5,
+// });
 
-gsap.from(".main-heading", {
-  opacity: 0,
-  y: 20,
-  delay: 2.4,
-  duration: 1,
-});
+// gsap.from(".main-heading", {
+//   opacity: 0,
+//   y: 20,
+//   delay: 2.4,
+//   duration: 1,
+// });
 
-gsap.from(".info-text", {
-  opacity: 0,
-  y: 20,
-  delay: 2.8,
-  duration: 1,
-});
+// gsap.from(".grid-item-1 img", {
+//   opacity: 0,
+//   y: 20,
+//   delay: 2.5,
+//   duration: 1,
+// });
 
-gsap.from(".btn_wrapper", {
-  opacity: 0,
-  y: 20,
-  delay: 2.8,
-  duration: 1,
-});
+// gsap.from(".info-text", {
+//   opacity: 0,
+//   y: 20,
+//   delay: 2.8,
+//   duration: 1,
+// });
 
-gsap.from(".img_wrapper img", {
-  opacity: 0,
-  y: 20,
-  delay: 3,
-  duration: 1,
-});
+// gsap.from(".btn_wrapper", {
+//   opacity: 0,
+//   y: 20,
+//   delay: 2.8,
+//   duration: 1,
+// });
+
+// gsap.from(".img_wrapper img", {
+//   opacity: 0,
+//   y: 20,
+//   delay: 3,
+//   duration: 1,
+// });
 
 // Authentication
 const token = localStorage.getItem("token");
@@ -74,46 +76,27 @@ const role = localStorage.getItem("role");
 const username = localStorage.getItem("name");
 const activity = document.getElementById("activity");
 const signin = document.getElementById("signin");
-const runnerBtn = document.querySelector(".runner_btn");
+const runnerLink = document.getElementById("runner_link");
 
 if (token) {
   signin.classList.add("hidden");
   activity.classList.remove("hidden");
-  runnerBtn.classList.add("hidden");
+  runnerLink.classList.add("hidden");
 }
-
-runnerBtn.addEventListener("click", () => {
-  window.location = "reg.html";
-});
-
-signin.addEventListener("click", () => {
-  window.location = "auth.html";
-});
-
-activity.addEventListener("click", () => {
-  if (role == "setter") {
-    window.location = "profile.html#dashboard";
-  } else if (role == "runner") {
-    window.location = "account.html#dashboard";
-  }
-});
 
 const asSetter = document.getElementById("as-setter");
 const asRunner = document.getElementById("as-runner");
 
 function setRole(role) {
   window.location = "auth.html";
-  localStorage.setItem(
-    "role",
-    role.textContent.trim().split(" ")[1].toLowerCase()
-  );
+  localStorage.setItem("role", role);
 }
 
 asSetter.addEventListener("click", () => {
-  setRole(asSetter);
+  setRole("setter");
 });
 asRunner.addEventListener("click", () => {
-  setRole(asRunner);
+  setRole("runner");
 });
 
 // Task cards
@@ -140,7 +123,9 @@ const startingTip = document.getElementById("starting_tip");
 
 async function displayTask(title) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${title}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/tasks/${title}`
+    );
     const data = await res.json();
 
     taskImage.attributes.src.nodeValue = data[0].image;

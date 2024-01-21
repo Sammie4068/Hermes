@@ -21,14 +21,13 @@
       href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
       rel="stylesheet"
     />
-
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   </head>
   <body>
     <header class="container header">
       <nav class="nav">
         <div class="logo">
-          <a href="main.html"><h2>Hermes.</h2></a>
+          <a href="index.html"><h2>Hermes.</h2></a>
         </div>
 
         <div class="nav_menu" id="nav_menu">
@@ -38,13 +37,16 @@
 
           <ul class="nav_menu_list">
             <li class="nav_menu_item">
-              <a href="#services" class="nav_menu_link">services</a>
+              <a href="#services" class="nav_menu_link" onclick="removeMenu()">services</a>
             </li>
             <li class="nav_menu_item">
               <a href="contact.html" class="nav_menu_link">contact</a>
             </li>
             <li class="nav_menu_item hidden" id="activity">
-              <a href="#" class="nav_menu_link">Activity</a>
+              <a href="profile.html#dashboard" class="nav_menu_link">Activity</a>
+            </li>
+            <li class="nav_menu_item" id="runner_link">
+              <a href="reg.html" class="nav_menu_link">Become a runner</a>
             </li>
             <li class="nav_menu_item signin">
               <a href="#" class="nav_menu_link" id="signin">Sign in</a>
@@ -65,7 +67,7 @@
                 </div>
               </div>
             </li>
-            <button class="btn runner_btn">Become a Runner</button>
+            
           </ul>
         </div>
 
@@ -84,6 +86,10 @@
               <br />
               Let's... <span>Run am</span>
             </h1>
+            <img
+                src="https://res.cloudinary.com/okorosamuel/image/upload/v1700746670/Hermes/Architetto----Bicicletta_gfc9yf.svg"
+                alt="hero-image"
+              />
             <p class="info-text">
               Get trusted help to handle tasks and errands with speed
             </p>
@@ -98,7 +104,7 @@
             <div class="img_wrapper">
               <img
                 src="https://res.cloudinary.com/okorosamuel/image/upload/v1700746670/Hermes/Architetto----Bicicletta_gfc9yf.svg"
-                alt="team-img"
+                alt="hero-image"
               />
             </div>
           </div>
@@ -509,20 +515,15 @@
             <h4 class="task_title" id="task_title">Errands</h4>
 
             <p id="task_text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Voluptatum maxime fuga possimus asperiores, voluptate repellendus
-              ratione inventore quas officia veniam dolorem cupiditate minima
-              ipsam. Sunt aperiam magnam animi, id facere eos laborum, ducimus
-              officia excepturi consequatur voluptatibus ab laboriosam tempora
-              ipsum sint natus magni modi praesentium perferendis corrupti vel!
+              Employing someone to run errands is pivotal for time optimization and reducing the burden of daily tasks. It allows individuals to prioritize work, family, and personal pursuits while ensuring necessary chores are efficiently handled, leading to a more balanced and stress-free lifestyle.
             </p>
             <aside>
               <span>
-                <h4 class="aside_num" id="runner_number">0</h4>
+                <h4 class="aside_num" id="runner_number">50+</h4>
                 <p class="aside_text">Available Runners</p>
               </span>
               <span>
-                <h4 class="aside_num" id="starting_tip">NGN 0</h4>
+                <h4 class="aside_num" id="starting_tip">NGN 500</h4>
                 <p class="aside_text">Starting Tip</p>
               </span>
             </aside>
@@ -538,7 +539,7 @@
     <section class="wrapper">
       <div class="container" data-aos="fade-up" data-aos-duration="1000">
         <h1 class="sub-heading">Customer Satisfaction is our Priority</h1>
-        <div class="grid-cols-3">
+        <div class="grid-cols-3 badges">
           <div class="grid-col-item">
             <div class="icon">
               <img
@@ -591,7 +592,7 @@
         <h1 class="sub-heading sub-heading-hermes">
           Everyone's talking about <span> Hermes.</span>
         </h1>
-        <div class="grid-cols-3">
+        <div class="grid-cols-3 reviews">
           <div class="grid-col-item">
             <div class="feedbacks">
               <h4>Fatima Ali</h4>

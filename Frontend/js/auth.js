@@ -22,7 +22,9 @@ runnerCard.addEventListener("click", () => {
   window.location = "reg.html";
 });
 
-overlayBtn.addEventListener("click", () => {
+overlayBtn.addEventListener("click", showRoles);
+
+function showRoles() {
   const signuprole = localStorage.getItem("signuprole");
   if (signuprole) {
     panel();
@@ -30,7 +32,7 @@ overlayBtn.addEventListener("click", () => {
     overlayer.classList.remove("hidden");
     modal.classList.remove("hidden");
   }
-});
+}
 
 function closeModal() {
   modal.classList.add("hidden");
@@ -39,7 +41,7 @@ function closeModal() {
 
 overlayer.addEventListener("click", closeModal);
 
-document.getElementById("signup-btn2").addEventListener("click", panel);
+document.getElementById("signup-btn2").addEventListener("click", showRoles);
 document.getElementById("signin-btn2").addEventListener("click", panel);
 
 function panel() {
@@ -54,6 +56,7 @@ function panel() {
 const SignupForm = document.getElementById("signup-form");
 const username = document.getElementById("username");
 const email = document.getElementById("signup-email");
+const phone = document.getElementById("phone")
 const password = document.getElementById("signup-password");
 const confirmPassword = document.getElementById("signup-confirm-password");
 const usernameErrMsg = document.getElementById("name-error-msg");
@@ -77,6 +80,7 @@ SignupForm.addEventListener("submit", (e) => {
       email: email.value.trim(),
       password: password.value,
       role: "setter",
+      phone: phone.value
     };
     postData(`${baseURL}register`, userData);
   }
@@ -138,7 +142,7 @@ function confirmPasswordValidation() {
 confirmPassword.addEventListener("input", confirmPasswordValidation);
 
 // Post request to server
-const baseURL = "http://localhost:3000/api/v1/";
+const baseURL = "https://hermes-yto9.onrender.com/api/v1/";
 
 async function postData(url, data) {
   try {
@@ -159,8 +163,9 @@ async function postData(url, data) {
       localStorage.setItem("photo", bodydata.photo);
       localStorage.setItem("email", bodydata.email);
       localStorage.setItem("wallet", bodydata.wallet);
+      localStorage.setItem("phone", bodydata.phone);
 
-      window.location = "main.html";
+      window.location = "index.html";
     }
     if (bodydata.message == "Already Exists") {
       signupMsg.textContent = "Email Already Exist";
@@ -188,7 +193,6 @@ async function loginPost(url, data) {
       body: JSON.stringify(data),
     });
     const bodydata = await res.json();
-    console.log(bodydata);
     if (bodydata.message == "invalid") {
       signinMsg.textContent = "Invalid Email or Password";
       signinMsg.style.color = "red";
@@ -202,8 +206,9 @@ async function loginPost(url, data) {
       localStorage.setItem("task", bodydata.gig);
       localStorage.setItem("bio", bodydata.bio);
       localStorage.setItem("wallet", bodydata.wallet);
+      localStorage.setItem("phone", bodydata.phone);
       if (bodydata.role == "setter") {
-        window.location = "main.html";
+        window.location = "index.html";
       } else if (bodydata.role == "runner") {
         window.location = "account.html#dashboard";
       }
