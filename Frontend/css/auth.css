@@ -421,7 +421,7 @@ button {
     margin: 10px;
   }
   .logo h2 {
-    font-size: 25px;
+    font-size: 30px;
   }
   .overlay {
     display: none;
@@ -430,7 +430,7 @@ button {
     display: none;
   }
   .container {
-    width: 50vh;
+    width: 94dvw;
   }
   .form-container {
     width: 100%;

@@ -11,7 +11,6 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  /* zoom: 100%; */
 }
 
 :root {
@@ -224,55 +223,8 @@ button {
   display: none;
 }
 .show {
-  right: 3% !important;
+  right: 0% !important;
 }
-.user {
-  display: none;
-  align-items: center;
-  gap: 10px;
-  color: var(--primary-color);
-  font-weight: 600;
-  position: relative;
-  left: 100px;
-  cursor: pointer;
-}
-.user p {
-  text-transform: capitalize;
-}
-
-.user img {
-  width: 50px;
-  height: 50px;
-}
-.notification {
-  font-size: 25px;
-  position: relative;
-  transition: 0.4s ease-out;
-}
-.notification:hover {
-  transform: scale(1.07);
-}
-
-.notification i {
-  color: var(--primary-color);
-}
-.notification .num {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid #f9f9f9;
-  background: #db504a;
-  color: #f9f9f9;
-  font-weight: 700;
-  font-size: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .wrapper {
   width: 100%;
   padding-left: 1.7rem;
@@ -795,10 +747,8 @@ footer .follow .socials i:hover {
 }
 
 .location .route {
-  /* display: flex; */
   justify-content: space-between;
   align-items: center;
-  /* width: 80%; */
 }
 .location .route input {
   width: 40%;
@@ -1680,42 +1630,6 @@ button.normal {
   height: 3.1rem;
 }
 
-.lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid #fff;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 .grid-item-1 img {
   display: none;
 }
@@ -1733,7 +1647,6 @@ button.normal {
   .logo h2 {
     font-size: 30px;
   }
-
   .toggle_btn {
     position: relative;
     left: 0;
@@ -1749,7 +1662,7 @@ button.normal {
   }
   .nav_menu {
     position: fixed;
-    width: 93%;
+    width: 100%;
     height: 100vh;
     display: block;
     top: 2.5%;
@@ -1773,11 +1686,11 @@ button.normal {
   }
 
   .signin {
-  cursor: pointer;
-  position: relative;
-  left: 0;
-}
-  
+    cursor: pointer;
+    position: relative;
+    left: 0;
+  }
+
   .close_btn {
     display: block;
     position: relative;
@@ -1787,6 +1700,7 @@ button.normal {
     top: -7%;
     margin-right: -16.5px;
   }
+
   .close_btn:hover {
     color: #000;
   }
@@ -1896,7 +1810,7 @@ button.normal {
     font-size: 15px;
   }
   .contact-details {
-  padding: 20px 20px;
+    padding: 20px 20px;
     flex-direction: column;
   }
   .contact-details .txt {
@@ -1911,7 +1825,7 @@ button.normal {
     height: 300px;
   }
   .form-details {
-    padding: 20px
+    padding: 20px;
   }
   .form-details form {
     width: 100%;
@@ -1926,8 +1840,8 @@ button.normal {
   .s6 .newsletter .input {
     margin-top: 25px;
   }
-  .s6 .newsletter .input input{
-  font-size: 14px;
+  .s6 .newsletter .input input {
+    font-size: 14px;
     width: 200px;
   }
 
@@ -1936,7 +1850,7 @@ button.normal {
     display: none;
   }
   .contain {
-    width: 50vh;
+    width: 100%;
   }
 
   /* runner.html */
@@ -1945,41 +1859,43 @@ button.normal {
   }
 
   .assurance {
- width: 30px;
-}
+    width: 100%;
+  }
+  .assurance span {
+    animation: none;
+  }
 
+  .assurance h4 {
+    color: var(--primary-color);
+    font-size: 15px;
+    text-wrap: wrap;
+  }
+  .assurance svg {
+    width: 90%;
+  }
 
-.assurance h4 {
-  color: var(--primary-color);
-  font-size: 15px;
-}
-.assurance svg {
-  width: 20px;
-  height: 20px;
-}
+  .sort_runners {
+    left: 0px;
+    width: 100%;
+  }
+  .sort_runners label {
+    font-size: 15px;
+    font-weight: 700;
+  }
 
-.sort_runners {
-  left: 0px;
-}
-.sort_runners label {
-  font-size: 15px;
-  font-weight: 700;
-}
+  .sort_runners select {
+    padding: 0px 10px;
+    height: 40px;
+    font-size: 20px;
+  }
 
-.sort_runners select {
-  width: 100%;
-  padding: 0px 10px;
-  height: 30px;
-  font-size: 15px;
-}
-
-
-.runners_wrapper {
-  width: 40vh;
-}
+  .runners_wrapper {
+    width: 40vh;
+  }
 
   .filter_box {
     width: 70%;
+    display: none;
   }
   .gender_options {
     flex-direction: column;
@@ -1988,15 +1904,19 @@ button.normal {
   .slide-card {
     height: 100%;
   }
-.card_container{
-    width: 40vh;
-}
-
+  .card_container {
+    width: 70%;
+  }
   .slide-card .card-content {
     flex-direction: column;
-    width: 40vh;
   }
+  
   .slide-card .about {
+    width: 180%;
+    display: none;
+    width: 100%;
+  }
+  .slide-card .name-profession .name{
     width: 100%;
   }
 }
