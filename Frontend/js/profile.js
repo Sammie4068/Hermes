@@ -406,10 +406,12 @@ function displayTask(data) {
           const amtToPay = document.querySelectorAll(".amt_to_pay");
           payForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            amtToPay.innerText = "Successful";
+            amtToPay.forEach((ele) => (ele.innerText = "Successful"));
             statusData.status = "pending";
             updateStatus(taskData.id, statusData);
-            location.reload();
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
           });
         });
       });
