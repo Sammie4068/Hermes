@@ -191,7 +191,7 @@ a {
   background-color: inherit;
 }
 .show {
-  right: 3% !important;
+  right: 0% !important;
 }
 @media screen and (min-width: 768px) {
   .toggle_btn {
@@ -427,7 +427,7 @@ input:required:valid {
   }
   .nav_menu {
     position: fixed;
-    width: 93%;
+    width: 100%;
     height: 100vh;
     display: block;
     top: 2.5%;
