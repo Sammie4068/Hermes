@@ -123,7 +123,9 @@ const startingTip = document.getElementById("starting_tip");
 
 async function displayTask(title) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${title}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/tasks/${title}`
+    );
     const data = await res.json();
 
     taskImage.attributes.src.nodeValue = data[0].image;

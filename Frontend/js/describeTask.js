@@ -18,7 +18,7 @@ AOS.init();
 async function allTasks(parentEle) {
   try {
     parentEle.innerHTML = ``;
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<li>${dt.title}  <img src="${dt.icons}"></li>`;
@@ -97,13 +97,16 @@ describeTaskForm.addEventListener("submit", (e) => {
 
 async function createTask(data) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const apiData = await res.json();
     if (apiData.id) {
       localStorage.setItem("gig", data.task);
