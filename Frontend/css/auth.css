@@ -455,7 +455,6 @@ button {
     width: 165%;
   }
   .sign-in-container {
-    /* margin-left: 35px; */
-    margin: 0px auto;
+    margin-left: 40px;
   }
 }
