@@ -29,13 +29,16 @@ body {
 
 .logo a {
   text-decoration: none;
-}
-
-.logo h2 {
-  font-family: "Italianno", cursive;
+   font-family: "Italianno", cursive;
   font-size: 40px;
   color: #002b1d;
 }
+
+/* .logo h2 {
+  font-family: "Italianno", cursive;
+  font-size: 40px;
+  color: #002b1d;
+} */
 .container {
   position: relative;
   width: 850px;
