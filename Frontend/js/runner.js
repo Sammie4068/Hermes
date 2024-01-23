@@ -488,7 +488,7 @@ window.addEventListener("popstate", displayData);
 const filterOpenBtn = document.getElementById("filter_open_btn")
 const filterBox = document.querySelector(".filter_box")
 filterOpenBtn.addEventListener("click", () => {
-  if(filterBox.style.display == "none"){
+  if(filterBox.style.display == "none" || !filterBox.style.display){
     filterBox.style.display = "block"
   } else {
     filterBox.style.display = "none";
