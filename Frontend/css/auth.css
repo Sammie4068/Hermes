@@ -454,4 +454,7 @@ button {
     height: 150px;
     width: 165%;
   }
+  .sign-in-container {
+    margin-left: 20px;
+  }
 }
