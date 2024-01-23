@@ -29,10 +29,7 @@ body {
 
 .logo a {
   text-decoration: none;
-}
-
-.logo h2 {
-  font-family: "Italianno", cursive;
+   font-family: "Italianno", cursive;
   font-size: 40px;
   color: #002b1d;
 }
@@ -436,7 +433,7 @@ button {
     width: 100%;
   }
   form {
-    width: 410px;
+    width: 160%;
     margin-left: -73px;
   }
   #signup-form {
@@ -453,5 +450,8 @@ button {
     padding: 20px 10px;
     height: 150px;
     width: 165%;
+  }
+  .sign-in-container {
+    margin-left: 40px;
   }
 }

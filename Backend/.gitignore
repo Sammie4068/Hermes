@@ -1,7 +1,6 @@
 DS_store
 request.rest
 package-lock.json
-sample.sql
 uploads
 
 # Logs
@@ -134,3 +133,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+hermes.bak
+hermes.sql
+sample.sql
+uploads
