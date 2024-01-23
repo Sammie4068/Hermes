@@ -9,7 +9,7 @@ CloseBtnId.addEventListener("click", removeMenu);
 function removeMenu() {
   navId.classList.remove("show");
 }
-AOS.init();
+// AOS.init();
 // Url instance
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -49,8 +49,7 @@ const gigLocation = localStorage.getItem("state");
 function displayRunners(data) {
   data.map((dat) => {
     let value = JSON.stringify(dat.id);
-    let markup = `<div class="card_container" data-aos="fade-left"
-        data-aos-duration="1000">
+    let markup = `<div class="card_container">
           <div class="slide-card">
             <div class="card-content">
               <div class="image">
@@ -58,7 +57,6 @@ function displayRunners(data) {
                   src="${dat.photo}"
                   alt="sample"
                 />
-                <h4>Trust Level: ${dat.trust}%</h4>
                 <span>
                   <button id="reqBtn" value='${value}'>Request</button>
                 </span>
@@ -110,9 +108,7 @@ function displayRunners(data) {
 // Get users info
 async function runnerInfo(id) {
   try {
-    const res = await fetch(
-      `https://hermes-yto9.onrender.com/api/v1/users/${id}`
-    );
+    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`);
     const data = await res.json();
     return data;
   } catch (err) {
@@ -124,7 +120,7 @@ async function runnerInfo(id) {
 async function requestRunner(requestData, id) {
   try {
     const res = await fetch(
-      `https://hermes-yto9.onrender.com/api/v1/activity/runner/${id}`,
+      `http://localhost:3000/api/v1/activity/runner/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -149,6 +145,9 @@ function statusDisplay(data) {
   modal.innerHTML = ``;
   let value = JSON.stringify(data.id);
   let html = `
+      <button class="close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
       <div class="heading">
       <div class="image_side">
         <img src="${data.photo}" alt="sample" />
@@ -231,19 +230,17 @@ async function showTaskWithRunner(id, gig, runnerID) {
     modal.innerHTML = ``;
 
     const result = await fetch(
-      `https://hermes-yto9.onrender.com/api/v1/activity/setter/${id}`
+      `http://localhost:3000/api/v1/activity/setter/${id}`
     );
     const logData = await result.json();
     const data = logData[0];
 
-    const res = await fetch(
-      `https://hermes-yto9.onrender.com/api/v1/tasks/${gig}`
-    );
+    const res = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
     const bodydata = await res.json();
     const apiData = bodydata[0];
 
     const response = await fetch(
-      `https://hermes-yto9.onrender.com/api/v1/users/${runnerID}`
+      `http://localhost:3000/api/v1/users/${runnerID}`
     );
     const runnerData = await response.json();
 
@@ -325,16 +322,13 @@ async function showTaskWithRunner(id, gig, runnerID) {
 //Add transaction
 async function addTransaction(data) {
   try {
-    const res = await fetch(
-      "https://hermes-yto9.onrender.com/api/v1/transaction",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const res = await fetch("http://localhost:3000/api/v1/transaction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
     const apiData = await res.json();
   } catch (err) {
@@ -345,16 +339,13 @@ async function addTransaction(data) {
 // Update wallet
 async function updateWallet(data) {
   try {
-    const res = await fetch(
-      `https://hermes-yto9.onrender.com/api/v1/users/wallet`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }
-    );
+    const res = await fetch(`http://localhost:3000/api/v1/users/wallet`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
     const apiData = await res.json();
     if (apiData.message) {
       localStorage.setItem("wallet", apiData.data.wallet);
@@ -382,7 +373,7 @@ function emptyCardDiv() {
 async function getData() {
   try {
     const res = await fetch(
-      `https://hermes-yto9.onrender.com/api/v1/getrunners/${gig}/${gigLocation}`
+      `http://localhost:3000/api/v1/getrunners/${gig}/${gigLocation}`
     );
     const data = await res.json();
     return data;
@@ -491,3 +482,15 @@ async function displayData() {
   displayRunners(filterArr);
 }
 window.addEventListener("popstate", displayData);
+
+
+// Bring forth filter
+const filterOpenBtn = document.getElementById("filter_open_btn")
+const filterBox = document.querySelector(".filter_box")
+filterOpenBtn.addEventListener("click", () => {
+  if(filterBox.style.display == "none"){
+    filterBox.style.display = "block"
+  } else {
+    filterBox.style.display = "none";
+  }
+})

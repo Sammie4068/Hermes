@@ -56,7 +56,7 @@ function panel() {
 const SignupForm = document.getElementById("signup-form");
 const username = document.getElementById("username");
 const email = document.getElementById("signup-email");
-const phone = document.getElementById("phone")
+const phone = document.getElementById("phone");
 const password = document.getElementById("signup-password");
 const confirmPassword = document.getElementById("signup-confirm-password");
 const usernameErrMsg = document.getElementById("name-error-msg");
@@ -80,7 +80,7 @@ SignupForm.addEventListener("submit", (e) => {
       email: email.value.trim(),
       password: password.value,
       role: "setter",
-      phone: phone.value
+      phone: phone.value,
     };
     postData(`${baseURL}register`, userData);
   }
@@ -142,7 +142,7 @@ function confirmPasswordValidation() {
 confirmPassword.addEventListener("input", confirmPasswordValidation);
 
 // Post request to server
-const baseURL = "https://hermes-yto9.onrender.com/api/v1/";
+const baseURL = "http://localhost:3000/api/v1/";
 
 async function postData(url, data) {
   try {
