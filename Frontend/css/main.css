@@ -1921,6 +1921,7 @@ button.normal {
     margin-bottom: 100px;
     position: relative;
     top: 0px;
+    animation: fadeIn 0.4s ease-in-out;
   }
 
   .gender_options {
@@ -1968,7 +1969,6 @@ button.normal {
     font-size: 20px;
   }
   .modal {
-    height: inherit;
     width: 100%;
   }
   .modal .heading {
