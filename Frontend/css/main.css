@@ -1080,6 +1080,10 @@ footer .follow .socials i:hover {
   transform: translateY(-3px);
 }
 
+.modal .close_modal {
+  display: none;
+}
+
 .modal .about_runner {
   background-color: #f3f3f3;
   padding: 15px;
@@ -1143,6 +1147,10 @@ footer .follow .socials i:hover {
   display: flex;
   justify-content: space-between;
   padding-top: 0rem;
+}
+
+.filter_btn {
+  display: none;
 }
 
 .filter_box {
@@ -1272,11 +1280,10 @@ footer .follow .socials i:hover {
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 800px;
 }
 
 .card_container {
-  width: 800px;
+  width: 100%;
   border-radius: 10px;
   border: 2px solid var(--lite-color);
   margin-bottom: 30px;
@@ -1318,15 +1325,15 @@ footer .follow .socials i:hover {
   align-items: center;
   padding: 30px;
   position: relative;
-  z-index: 100;
   width: 100%;
 }
 
 section .slide-card .image {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
+  gap: 50px;
 }
 
 section .slide-card .image h4 {
@@ -1856,6 +1863,7 @@ button.normal {
   /* runner.html */
   #wrapper_container {
     flex-direction: column;
+    align-items: center;
   }
 
   .assurance {
@@ -1886,37 +1894,114 @@ button.normal {
   .sort_runners select {
     padding: 0px 10px;
     height: 40px;
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .runners_wrapper {
-    width: 40vh;
+    margin: 0px;
+    width: 100%;
+  }
+  .filter_btn {
+    font-size: 20px;
+    background-color: #fff;
+    width: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    padding: 5px;
+    position: relative;
+    left: 32%;
   }
 
   .filter_box {
-    width: 70%;
     display: none;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 100px;
+    position: relative;
+    top: 0px;
   }
+
   .gender_options {
-    flex-direction: column;
     gap: 10px;
+    padding: 10px;
+  }
+  .runner_types {
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .gender_options span,
+  .runner_types span {
+    padding: 5px 10px;
+  }
+  .card_container {
+    width: 100%;
+    border-radius: 5px;
   }
   .slide-card {
     height: 100%;
-  }
-  .card_container {
-    width: 70%;
+    width: 100%;
+    border-radius: 0px;
   }
   .slide-card .card-content {
-    flex-direction: column;
+    padding: 5%;
   }
-  
+  section .slide-card .image {
+    gap: 20px;
+  }
+
+  section .slide-card .image img {
+    height: 100px;
+    width: 100px;
+  }
+
   .slide-card .about {
-    width: 180%;
     display: none;
+  }
+  .slide-card .name-profession {
+    align-items: flex-start;
+  }
+  .name-profession .name {
+    font-size: 20px;
+  }
+  .modal {
+    height: inherit;
     width: 100%;
   }
-  .slide-card .name-profession .name{
+  .modal .heading {
     width: 100%;
+    gap: 20%;
+    margin-bottom: 40px;
+  }
+  .modal .review_runner {
+    margin-top: 20px;
+  }
+
+  .modal .close_modal {
+    display: block;
+    float: right;
+    font-size: 30px;
+    color: #800000;
+    cursor: pointer;
+  }
+  .modal .card_body {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .modal .card_body .task_side {
+    width: 100%;
+  }
+  .modal .billing {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .modal .heading .runner-info {
+    align-items: flex-start;
+  }
+  .render_error {
+    flex-direction: column;
   }
 }

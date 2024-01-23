@@ -37,13 +37,17 @@
 
           <ul class="nav_menu_list">
             <li class="nav_menu_item">
-              <a href="index.html#services" class="nav_menu_link" id="services">services</a>
+              <a href="index.html#services" class="nav_menu_link" id="services"
+                >services</a
+              >
             </li>
             <li class="nav_menu_item">
               <a href="contact.html" class="nav_menu_link">contact</a>
             </li>
             <li class="nav_menu_item" id="activity">
-              <a href="profile.html#dashboard" class="nav_menu_link">Activity</a>
+              <a href="profile.html#dashboard" class="nav_menu_link"
+                >Activity</a
+              >
             </li>
           </ul>
         </div>
@@ -83,7 +87,10 @@
     </div>
 
     <section class="wrapper" id="wrapper_container">
-      <div class="filter_box" data-aos="fade-right" data-aos-duration="1000">
+      <div class="filter_btn">
+        <button id="filter_open_btn"><i class="bx bx-filter" id="filterIcon"></i> Filter</button>
+      </div>
+      <div class="filter_box">
         <div class="heading">
           <h3>Filter runner</h3>
           <button class="filter_clear">Clear Filter</button>
@@ -223,10 +230,8 @@
       </div>
     </section>
     <div class="overlay hidden"></div>
-    <div class="modal hidden">
-    </div>
+    <div class="modal hidden"></div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="./js/runner.js"></script>
   </body>
 </html>
