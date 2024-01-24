@@ -775,6 +775,9 @@ const withdrawalBtn = document.getElementById("withdrawal");
 function depositFormMarkup() {
   const html = `<div class="payment_wrapper">
       <div class="payment">
+      <button class="payment_close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
       <p class="hidden">Successful</p>
         <form class="form" id="depositForm">
           <div class="card space icon-relative">
@@ -876,6 +879,9 @@ depositBtn.addEventListener("click", () => {
 withdrawalBtn.addEventListener("click", () => {
   html = `<div class="payment_wrapper">
       <div class="payment">
+      <button class="payment_close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
       <p class="hidden">Successful</p>
         <form class="form" id="withdrawalForm">
           <div class="card space icon-relative">
@@ -1013,7 +1019,7 @@ function transactionDisplay(data) {
                       <td><span class="status ${dat.type}">${
       dat.type
     }</span></td>
-                      <td>${reformatDate(dat.date)}</td>
+                      <td class="remove_tab">${reformatDate(dat.date)}</td>
                       <td class="table_amt">
                         <span>NGN</span>
                         <p>${dat.amount}</p>
@@ -1039,6 +1045,9 @@ transactionData();
 function makePaymentMArkup(amount) {
   const html = `<div class="payment_wrapper">
       <div class="payment">
+      <button class="payment_close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
       <p class="hidden">Successful</p>
         <form class="form" id="payForm">
           <p class="amt_to_pay">Pay NGN ${amount} </p>
