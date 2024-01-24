@@ -150,6 +150,7 @@ setterBtn.forEach((btn) =>
       window.location = "describeTask.html";
     } else {
       localStorage.setItem("role", "setter");
+      localStorage.setItem("setTask", true)
       window.location = "auth.html";
     }
   })
