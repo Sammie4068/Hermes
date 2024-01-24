@@ -1199,13 +1199,14 @@ body {
   width: 200px;
 }
 
-.modal .close_modal {
+.modal .close_modal,
+.payment_close_modal {
   display: none;
 }
 
 .availability {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
 }
 
 .availability p {
@@ -1317,5 +1318,72 @@ body {
   .task_table .order table tr td:first-child p {
     text-wrap: wrap;
     font-size: 13px;
+  }
+  .wallet-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .balance {
+    flex-direction: column;
+    width: 100%;
+  }
+  .operations {
+    flex-direction: row;
+  }
+  .transaction_table {
+    width: 100%;
+  }
+  .payment_close_modal {
+    display: block;
+    font-size: 30px;
+    color: #800000;
+    cursor: pointer;
+    border: none;
+    background: inherit;
+    position: relative;
+    left: 95%;
+    top: -30px;
+  }
+  #content .content_display .table-data .order table tr td:first-child {
+    display: table-cell;
+  }
+  .profile {
+    align-items: baseline;
+  }
+  .profile_card {
+    flex-direction: column;
+    width: 100%;
+  }
+  .password_card {
+    width: 100%;
+  }
+  .profile-info {
+    width: 100%;
+    position: relative;
+    top: -60px;
+  }
+  .profile-info input {
+    width: 100%;
+  }
+  .btn-wrapper {
+    width: 100%;
+    gap: 35px;
+  }
+  .button.password_save {
+    width: 30%;
+    position: relative;
+    left: -20%;
+  }
+  .password_card_top {
+    width: 90%;
+  }
+  .search-form input {
+    width: 100%;
+  }
+  .filter span {
+    width: 50%;
+  }
+  .filter span select {
+    width: 100%;
   }
 }
