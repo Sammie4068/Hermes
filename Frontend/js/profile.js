@@ -95,7 +95,7 @@ function responsiveness() {
     hideSideBar();
   }
 }
-document.addEventListener("load", responsiveness)
+document.addEventListener("load", responsiveness);
 
 function hideSideBar() {
   sidebar.classList.toggle("hide");
@@ -116,6 +116,7 @@ function changingHash(div, hash) {
   div.addEventListener("click", () => {
     window.location.hash = `#${hash}`;
   });
+  responsiveness();
 }
 
 changingHash(walletCard, "wallet");

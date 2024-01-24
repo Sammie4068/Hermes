@@ -165,7 +165,12 @@ async function postData(url, data) {
       localStorage.setItem("wallet", bodydata.wallet);
       localStorage.setItem("phone", bodydata.phone);
 
-      window.location = "index.html";
+      const setTask = localStorage.getItem("setTask");
+      if (setTask) {
+        window.location = "describeTask.html";
+      } else {
+        window.location = "index.html";
+      }
     }
     if (bodydata.message == "Already Exists") {
       signupMsg.textContent = "Email Already Exist";
@@ -208,7 +213,12 @@ async function loginPost(url, data) {
       localStorage.setItem("wallet", bodydata.wallet);
       localStorage.setItem("phone", bodydata.phone);
       if (bodydata.role == "setter") {
-        window.location = "index.html";
+        const setTask = localStorage.getItem("setTask");
+        if (setTask) {
+          window.location = "describeTask.html";
+        } else {
+          window.location = "index.html";
+        }
       } else if (bodydata.role == "runner") {
         window.location = "account.html#dashboard";
       }
