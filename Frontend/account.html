@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+     <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
       rel="stylesheet"
     />
     <link
@@ -17,6 +17,10 @@
     <link
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/thinline.css"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
     />
     <link rel="stylesheet" href="./css/account.css" />
 
@@ -84,20 +88,26 @@
             </button>
           </div>
         </form>
-        <p>Availability: <span id="avail_status">OFF</span></p>
+        <div class="availability">
+          <p>Availability: <span id="avail_status">OFF</span></p>
         <input type="checkbox" id="switch-mode" hidden />
         <label for="switch-mode" class="switch-mode"></label>
+        </div>
+        
         <!-- <a href="#" class="notification">
           <i class="bx bxs-bell"></i>
           <span class="num">0</span>
         </a> -->
-        <p id="userName"></p>
+        <div class="user">
+          <p id="userName"></p>
         <a href="#profile" class="profile">
           <img
             id="userImage"
             src="https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
           />
         </a>
+        </div>
+        
       </nav>
 
       <div class="content_display" id="dashboard_display">
@@ -140,7 +150,7 @@
                 <thead>
                   <tr>
                     <th>Setter</th>
-                    <th>Date of Task</th>
+                    <th class="remove_head">Date of Task</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -211,7 +221,7 @@
               <thead>
                 <tr>
                   <th>Setter</th>
-                  <th>Date of Task</th>
+                  <th class="remove_head">Date of Task</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
