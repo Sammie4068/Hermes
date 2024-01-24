@@ -88,14 +88,23 @@ const menuBar = document.querySelector("#content nav .bx.bx-menu");
 const sidebar = document.getElementById("sidebar");
 const logo = document.querySelector(".brand");
 
-menuBar.addEventListener("click", function () {
+menuBar.addEventListener("click", hideSideBar);
+
+function responsiveness() {
+  if (window.matchMedia("(max-width: 768px)").matches) {
+    hideSideBar();
+  }
+}
+document.addEventListener("load", responsiveness)
+
+function hideSideBar() {
   sidebar.classList.toggle("hide");
   if (sidebar.attributes.class.textContent == "hide") {
     logo.classList.add("disappear");
   } else {
     logo.classList.remove("disappear");
   }
-});
+}
 
 //Dashboard Hashchange
 const walletCard = document.getElementById("walletCard");
@@ -275,7 +284,7 @@ function dashboardTableDisplay(data) {
     let value = JSON.stringify(dat);
 
     let markup = `<tr id="table_element">
-                <td>
+                <td class="remove_tab">
                 <img src="${
                   dat.photo ||
                   "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
@@ -283,7 +292,7 @@ function dashboardTableDisplay(data) {
                    <p>${dat.name}</p>
                       </td>
                       <td>${dat.task}</td>
-                <td>${reformatDate(dat.date)}</td>
+                <td class="remove_tab">${reformatDate(dat.date)}</td>
                 <td><button class="status ${dat.status}" value='${value}'>${
       dat.status
     }</button>
@@ -306,7 +315,7 @@ function displayTask(data) {
     });
 
     let markup = `<tr id="table_tab">
-                <td id="table_element">
+                <td id="table_element" class="remove_tab">
                 <img src="${
                   dat.photo ||
                   "https://res.cloudinary.com/okorosamuel/image/upload/v1701356059/Hermes/user-avatar-svgrepo-com_wof4w4.svg"
@@ -314,7 +323,9 @@ function displayTask(data) {
                    <p>${dat.name}</p>
                       </td>
                       <td id="table_element">${dat.task}</td>
-                <td id="table_element">${reformatDate(dat.date)}</td>
+                <td id="table_element" class="remove_tab">${reformatDate(
+                  dat.date
+                )}</td>
                 <td id="table_element"> <button class="status ${
                   dat.status
                 }" value='${value}'>${dat.status}</button></td>
@@ -465,6 +476,7 @@ const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
 function displayContent(ele) {
   hideAllContents();
   ele.classList.remove("hidden");
+  responsiveness();
 }
 
 function hideAllContents() {
@@ -514,7 +526,11 @@ const overlay = document.querySelector(".overlay");
 const modal = document.querySelector(".modal");
 
 function seeMore(data, taskImgData) {
-  let html = `<div class="card_body">
+  let html = `
+  <button class="close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
+  <div class="card_body">
         <div class="task_side">
           <span>
             <h1>${data.task}</h1>
@@ -582,12 +598,14 @@ async function taskTableInfo(id, gig) {
 }
 
 // close modal
-overlay.addEventListener("click", () => {
+overlay.addEventListener("click", closeModal);
+
+function closeModal() {
   modal.innerHTML = ``;
   modal.style.padding = "25px";
   modal.classList.add("hidden");
   overlay.classList.add("hidden");
-});
+}
 
 //Switch to password
 const profileCard = document.querySelector(".profile_card");
@@ -757,6 +775,9 @@ const withdrawalBtn = document.getElementById("withdrawal");
 function depositFormMarkup() {
   const html = `<div class="payment_wrapper">
       <div class="payment">
+      <button class="payment_close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
       <p class="hidden">Successful</p>
         <form class="form" id="depositForm">
           <div class="card space icon-relative">
@@ -858,6 +879,9 @@ depositBtn.addEventListener("click", () => {
 withdrawalBtn.addEventListener("click", () => {
   html = `<div class="payment_wrapper">
       <div class="payment">
+      <button class="payment_close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
       <p class="hidden">Successful</p>
         <form class="form" id="withdrawalForm">
           <div class="card space icon-relative">
@@ -995,7 +1019,7 @@ function transactionDisplay(data) {
                       <td><span class="status ${dat.type}">${
       dat.type
     }</span></td>
-                      <td>${reformatDate(dat.date)}</td>
+                      <td class="remove_tab">${reformatDate(dat.date)}</td>
                       <td class="table_amt">
                         <span>NGN</span>
                         <p>${dat.amount}</p>
@@ -1021,6 +1045,9 @@ transactionData();
 function makePaymentMArkup(amount) {
   const html = `<div class="payment_wrapper">
       <div class="payment">
+      <button class="payment_close_modal" onclick="closeModal()">
+            <i class="ri-close-fill"></i>
+          </button>
       <p class="hidden">Successful</p>
         <form class="form" id="payForm">
           <p class="amt_to_pay">Pay NGN ${amount} </p>

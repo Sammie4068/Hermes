@@ -70,7 +70,7 @@ body {
   display: none;
 }
 #sidebar.hide {
-  width: 60px;
+  width: 0px;
 }
 #sidebar .brand,
 #sidebar .brand h2 {
@@ -140,8 +140,8 @@ body {
   transition: 0.3s ease;
 }
 #sidebar.hide ~ #content {
-  width: calc(100% - 60px);
-  left: 60px;
+  width: calc(100% - 0px);
+  left: 0px;
 }
 
 #content nav {
@@ -171,6 +171,7 @@ body {
   color: var(--dark);
 }
 #content nav .bx.bx-menu {
+  display: none;
   cursor: pointer;
   color: var(--dark);
 }
@@ -505,20 +506,24 @@ body {
   border: none;
   text-transform: uppercase;
 }
-#content .content_display .table-data .order table tr td .status.completed,#content .content_display .table-data .order table tr td .status.deposit,
+#content .content_display .table-data .order table tr td .status.completed,
+#content .content_display .table-data .order table tr td .status.deposit,
 .task_table .order table tr td .status.status.completed {
   background: var(--primary);
 }
-#content .content_display .table-data .order table tr td .status.processing,  #content .content_display .table-data .order table tr td .status.reward,
+#content .content_display .table-data .order table tr td .status.processing,
+#content .content_display .table-data .order table tr td .status.reward,
 .task_table .order table tr td .status.processing {
   background: var(--yellow);
 }
-#content .content_display .table-data .order table tr td .status.pending,  #content .content_display .table-data .order table tr td .status.withdrawal,
+#content .content_display .table-data .order table tr td .status.pending,
+#content .content_display .table-data .order table tr td .status.withdrawal,
 .task_table .order table tr td .status.pending {
   background: var(--orange);
 }
 
-#content .content_display .table-data .order table tr td .status.cancelled, #content .content_display .table-data .order table tr td .status.paid,
+#content .content_display .table-data .order table tr td .status.cancelled,
+#content .content_display .table-data .order table tr td .status.paid,
 .task_table .order table tr td .status.cancelled {
   background-color: #800000;
 }
@@ -995,66 +1000,6 @@ body {
   transform: scale(1.07);
 }
 
-@media screen and (max-width: 768px) {
-  #sidebar {
-    width: 200px;
-  }
-
-  #content {
-    width: calc(100% - 60px);
-    left: 200px;
-  }
-
-  #content nav .nav-link {
-    display: none;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  #content nav form .form-input input {
-    display: none;
-  }
-
-  #content nav form .form-input button {
-    width: auto;
-    height: auto;
-    background: transparent;
-    border-radius: none;
-    color: var(--dark);
-  }
-
-  #content nav form.show .form-input input {
-    display: block;
-    width: 100%;
-  }
-  #content nav form.show .form-input button {
-    width: 36px;
-    height: 100%;
-    border-radius: 0 36px 36px 0;
-    color: var(--light);
-    background: var(--red);
-  }
-
-  #content nav form.show ~ .notification,
-  #content nav form.show ~ .profile {
-    display: none;
-  }
-
-  #content .content_display .box-info {
-    grid-template-columns: 1fr;
-  }
-
-  #content .content_display .table-data .head {
-    min-width: 420px;
-  }
-  #content .content_display .table-data .order table {
-    min-width: 420px;
-  }
-  #content .content_display .table-data .todo .todo-list {
-    min-width: 420px;
-  }
-}
-
 /* Wallet */
 
 /* MAIN */
@@ -1098,8 +1043,6 @@ body {
   align-items: center;
   color: var(--primary);
   gap: 20px;
-  /* border-right: 1px solid #333;
-  padding-right: 7px;  */
 }
 
 .balance_title {
@@ -1256,6 +1199,23 @@ body {
   width: 200px;
 }
 
+.modal .close_modal,
+.payment_close_modal {
+  display: none;
+}
+
+.availability {
+  display: flex;
+  gap: 10px;
+}
+
+.availability p {
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
 @media screen and (max-width: 420px) {
   .card-grp {
     flex-direction: column;
@@ -1266,5 +1226,164 @@ body {
   }
   .btn {
     margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #content nav .bx.bx-menu {
+    display: block;
+    font-size: 30px;
+  }
+  #content nav .nav-link {
+    display: none;
+  }
+  #userName {
+    text-wrap: nowrap;
+  }
+  #content .content_display .box-info {
+    margin-bottom: 70px;
+  }
+  .remove_head {
+    display: none !important;
+  }
+  .remove_tab {
+    display: none !important;
+  }
+  .modal {
+    width: 100%;
+  }
+  .modal .close_modal {
+    display: block;
+    float: right;
+    font-size: 30px;
+    color: #800000;
+    cursor: pointer;
+    border: none;
+    background: inherit;
+  }
+  .modal .card_body {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .modal .card_body .task_side {
+    width: 100%;
+  }
+  .modal .billing {
+    width: 100%;
+    margin-bottom: 30px;
+  }
+  .modal .heading .runner-info {
+    align-items: flex-start;
+  }
+  .modal .heading {
+    width: 100%;
+    gap: 50px;
+  }
+  .modal .heading .setter-info {
+    align-items: flex-start;
+  }
+
+  /* account.html */
+  .availability {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .availability p {
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+  #content nav .switch-mode {
+    width: 30%;
+  }
+  #content nav .user {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  #content nav .user {
+    font-size: 13px;
+  }
+  #content .content_display .table-data .order table tr td:first-child {
+    flex-direction: column;
+    grid-gap: 6px;
+    align-items: baseline;
+  }
+  .task_table .order table tr td:first-child {
+    flex-direction: column;
+    grid-gap: 6px;
+    align-items: baseline;
+  }
+  .task_table .order table tr td:first-child p {
+    text-wrap: wrap;
+    font-size: 13px;
+  }
+  .wallet-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .balance {
+    flex-direction: column;
+    width: 100%;
+  }
+  .operations {
+    flex-direction: row;
+  }
+  .transaction_table {
+    width: 100%;
+  }
+  .payment_close_modal {
+    display: block;
+    font-size: 30px;
+    color: #800000;
+    cursor: pointer;
+    border: none;
+    background: inherit;
+    position: relative;
+    left: 95%;
+    top: -30px;
+  }
+  #content .content_display .table-data .order table tr td:first-child {
+    display: table-cell;
+  }
+  .profile {
+    align-items: baseline;
+  }
+  .profile_card {
+    flex-direction: column;
+    width: 100%;
+  }
+  .password_card {
+    width: 100%;
+  }
+  .profile-info {
+    width: 100%;
+    position: relative;
+    top: -60px;
+  }
+  .profile-info input {
+    width: 100%;
+  }
+  .btn-wrapper {
+    width: 100%;
+    gap: 35px;
+  }
+  .button.password_save {
+    width: 30%;
+    position: relative;
+    left: -20%;
+  }
+  .password_card_top {
+    width: 90%;
+  }
+  .search-form input {
+    width: 100%;
+  }
+  .filter span {
+    width: 50%;
+  }
+  .filter span select {
+    width: 100%;
   }
 }
