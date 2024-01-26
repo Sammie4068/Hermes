@@ -281,7 +281,7 @@ const taskTable = document.getElementById("task_table");
 
 function dashboardTableDisplay(data) {
   const sortedData = data
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .sort((a, b) => new Date(b.created) - new Date(a.created))
     .slice(0, 3);
   sortedData.map((dat) => {
     let value = JSON.stringify(dat);
@@ -306,7 +306,7 @@ function dashboardTableDisplay(data) {
 
 function displayTask(data) {
   taskTable.innerHTML = ``;
-  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedData = data.sort((a, b) => new Date(b.created) - new Date(a.created));
   taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
     let value = JSON.stringify({
