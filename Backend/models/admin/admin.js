@@ -14,7 +14,7 @@ exports.getAllRunners = async () => {
 
 exports.addActivity = async (data) => {
   return db.query(
-    "INSERT INTO activity VALUES (DEFAULT,$1,0,$2,$3,$4,$5,$6,$7, $8, $9, $10) RETURNING *",
+    "INSERT INTO activity VALUES (DEFAULT,$1,0,$2,$3,$4,$5,$6,$7, $8, $9, $10, $11) RETURNING *",
     [
       data.task,
       data.description,
@@ -26,6 +26,7 @@ exports.addActivity = async (data) => {
       data.duration,
       data.price,
       data.total,
+      data.created
     ]
   );
 };
