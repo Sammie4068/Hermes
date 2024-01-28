@@ -397,7 +397,7 @@ body {
   border-radius: 10px;
   background: #fff;
   padding: 24px;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
   height: fit-content;
 }
@@ -500,16 +500,15 @@ body {
   background: var(--grey);
   cursor: pointer;
 }
-#table_msg {
+.table_msg {
   display: none;
-  position: relative;
-  left: -70px;
+  margin: 15px 15%;
   color: #333;
 }
-.task_table #table_msg a {
+.describeTaskLink {
   color: var(--dark);
+  font-weight: 700;
   text-transform: uppercase;
-  text-decoration: underline;
 }
 
 #content .content_display .table-data .order table tr td .status,
@@ -1404,7 +1403,7 @@ body {
   .filter span select {
     width: 100%;
   }
-  #table_msg {
-    display: none !important;
+  .table_msg {
+    font-size: 12px;
   }
 }
