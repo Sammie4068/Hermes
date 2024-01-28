@@ -56,12 +56,6 @@
             <span class="text">Profile</span>
           </a>
         </li>
-        <!-- <li id="messagesLink">
-          <a href="#messages">
-            <i class="bx bxs-message-dots"></i>
-            <span class="text">Messages</span>
-          </a>
-        </li> -->
       </ul>
       <ul class="side-menu">
         <!-- <li id="settings">
@@ -138,12 +132,12 @@
             <div class="order">
               <div class="head">
                 <h3>Recent Tasks</h3>
-                <span id="table_msg"
+              </div>
+              <span id="table_msg" class="table_msg"
                   >You have no tasks yet. All your activities will be logged
-                  here. Click <a href="describeTask.html">Here</a> to set
+                  here. Click <a href="describeTask.html" class="describeTaskLink">Here</a> to set
                   task</span
                 >
-              </div>
               <table>
                 <thead>
                   <tr>
@@ -182,10 +176,6 @@
           <div class="order">
             <div class="head">
               <h3>Tasks <span>(0)</span></h3>
-              <span id="table_msg"
-                >You have no tasks yet. All your activities will be logged here.
-                Click <a href="describeTask.html">Here</a> to set task</span
-              >
               <span class="icon_wrapper">
                 <i class="bx bx-search" id="searchIcon"></i>
                 <i class="bx bx-filter" id="filterIcon"></i>
@@ -221,6 +211,10 @@
                 </div>
               </form>
             </div>
+            <span id="table_msg" class="table_msg"
+                >You have no tasks yet. All your activities will be logged here.
+                Click <a href="describeTask.html" class="describeTaskLink">Here</a> to set task</span
+              >
             <table>
               <thead>
                 <tr>
