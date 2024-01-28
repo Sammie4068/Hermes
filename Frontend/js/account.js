@@ -83,6 +83,7 @@ function responsiveness() {
     hideSideBar();
   }
 }
+responsiveness();
 document.addEventListener("load", responsiveness);
 
 function hideSideBar() {
@@ -116,7 +117,7 @@ function changingHash(div, hash) {
   div.addEventListener("click", () => {
     window.location.hash = `#${hash}`;
   });
-  responsiveness()
+  // responsiveness()
 }
 
 changingHash(walletCard, "wallet");
@@ -310,7 +311,7 @@ function dashboardTableDisplay(data) {
 
 function displayTask(data) {
   taskTable.innerHTML = ``;
-  const filteredData = data.filter(a => a.status !== "unpaid");
+  const filteredData = data.filter((a) => a.status !== "unpaid");
   const sortedData = filteredData.sort(
     (a, b) => new Date(b.created) - new Date(a.created)
   );
@@ -428,9 +429,9 @@ const settingsLink = document.getElementById("settings");
 const allSideMenu = document.querySelectorAll("#sidebar .side-menu.top li a");
 
 function displayContent(ele) {
+  responsiveness();
   hideAllContents();
   ele.classList.remove("hidden");
-  responsiveness();
 }
 
 function hideAllContents() {
@@ -438,8 +439,9 @@ function hideAllContents() {
     content.classList.add("hidden");
   });
 }
-updateDisplay();
 function updateDisplay() {
+  responsiveness();
+
   const state = window.location.hash.slice(1);
   switch (state) {
     case "dashboard":
@@ -470,7 +472,7 @@ function updateDisplay() {
   }
 }
 window.addEventListener("hashchange", updateDisplay);
-// window.addEventListener("hashchange", responsiveness);
+window.addEventListener("load", updateDisplay);
 
 // SideBar active
 function active(ele) {
