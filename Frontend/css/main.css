@@ -1698,6 +1698,10 @@ button.normal {
     left: 0;
   }
 
+  .dropdown__wrapper {
+    left: -10px;
+  }
+
   .close_btn {
     display: block;
     position: relative;

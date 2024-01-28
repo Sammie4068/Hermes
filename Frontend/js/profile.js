@@ -95,6 +95,7 @@ function responsiveness() {
     hideSideBar();
   }
 }
+responsiveness();
 document.addEventListener("load", responsiveness);
 
 function hideSideBar() {
@@ -304,7 +305,9 @@ function dashboardTableDisplay(data) {
 
 function displayTask(data) {
   taskTable.innerHTML = ``;
-  const sortedData = data.sort((a, b) => new Date(b.created) - new Date(a.created));
+  const sortedData = data.sort(
+    (a, b) => new Date(b.created) - new Date(a.created)
+  );
   taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
     let value = JSON.stringify({
@@ -485,8 +488,8 @@ function hideAllContents() {
     content.classList.add("hidden");
   });
 }
-updateDisplay();
 function updateDisplay() {
+  responsiveness();
   const state = window.location.hash.slice(1);
   switch (state) {
     case "dashboard":
@@ -513,6 +516,7 @@ function updateDisplay() {
   }
 }
 window.addEventListener("hashchange", updateDisplay);
+window.addEventListener("load", updateDisplay);
 
 // SideBar active
 function active(ele) {
