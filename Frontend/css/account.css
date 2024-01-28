@@ -1325,12 +1325,14 @@ body {
   #content nav .user {
     font-size: 13px;
   }
-  #content .content_display .table-data .order table tr td:first-child, .task_table .order table tr td:first-child {
+  #content .content_display .table-data .order table tr td:first-child,
+  .task_table .order table tr td:first-child {
     flex-direction: column;
     grid-gap: 6px;
     align-items: baseline;
   }
-  #content .content_display .table-data .order table tr td:first-child p, .task_table .order table tr td:first-child p {
+  #content .content_display .table-data .order table tr td:first-child p,
+  .task_table .order table tr td:first-child p {
     text-wrap: wrap;
     font-size: 13px;
     width: 50%;
@@ -1387,6 +1389,11 @@ body {
     gap: 35px;
   }
   .button.password_save {
+    width: 30%;
+    position: relative;
+    left: -20%;
+  }
+  .button.save_password {
     width: 30%;
     position: relative;
     left: -20%;
