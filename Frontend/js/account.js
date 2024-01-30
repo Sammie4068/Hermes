@@ -900,22 +900,30 @@ withdrawalBtn.addEventListener("click", () => {
 
   withdrawalForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    successMsg.forEach((msg) => {
-      return msg.classList.remove("hidden");
-    });
+    if (withdrawalAmt.value > walletBalance) {
+      successMsg.forEach((msg) => {
+        msg.classList.remove("hidden");
+        msg.innerText = "Insufficient funds";
+        msg.style.color = "#800000";
+      });
+    } else {
+      successMsg.forEach((msg) => {
+        return msg.classList.remove("hidden");
+      });
 
-    const data = {
-      id,
-      amount: withdrawalAmt.value,
-      type: "withdrawal",
-    };
-    addTransaction(data);
+      const data = {
+        id,
+        amount: withdrawalAmt.value,
+        type: "withdrawal",
+      };
+      addTransaction(data);
 
-    const updateWalletData = {
-      amount: parseFloat(walletBalance) - Number(withdrawalAmt.value),
-      id,
-    };
-    updateWallet(updateWalletData);
+      const updateWalletData = {
+        amount: parseFloat(walletBalance) - Number(withdrawalAmt.value),
+        id,
+      };
+      updateWallet(updateWalletData);
+    }
   });
 });
 
