@@ -13,6 +13,19 @@ function removeMenu() {
 
 AOS.init();
 
+// Paraallax effect
+const mainHeroImg = document.querySelector(".img_wrapper img");
+const subHeroImg = document.querySelector(".grid-item-1 img");
+
+window.addEventListener("scroll", () => {
+  let value = window.scrollY;
+  mainHeroImg.style.position = "relative"
+  subHeroImg.style.position = "relative"
+
+  mainHeroImg.style.left = value * 0.5 + "px";
+  subHeroImg.style.left = value * 0.5 + "px";
+});
+
 // gsap.from(".logo", {
 //   opacity: 0,
 //   y: -10,
