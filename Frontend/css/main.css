@@ -1729,7 +1729,7 @@ button.normal {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    padding: 5px;
+    padding: 6px 5px;
   }
 
   .card {
