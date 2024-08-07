@@ -13,6 +13,19 @@ function removeMenu() {
 
 AOS.init();
 
+// Paraallax effect
+const mainHeroImg = document.querySelector(".img_wrapper img");
+const subHeroImg = document.querySelector(".grid-item-1 img");
+
+window.addEventListener("scroll", () => {
+  let value = window.scrollY;
+  mainHeroImg.style.position = "relative"
+  subHeroImg.style.position = "relative"
+
+  mainHeroImg.style.left = value * 0.5 + "px";
+  subHeroImg.style.left = value * 0.5 + "px";
+});
+
 // gsap.from(".logo", {
 //   opacity: 0,
 //   y: -10,
@@ -123,7 +136,9 @@ const startingTip = document.getElementById("starting_tip");
 
 async function displayTask(title) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks/${title}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/tasks/${title}`
+    );
     const data = await res.json();
 
     taskImage.attributes.src.nodeValue = data[0].image;
@@ -148,6 +163,7 @@ setterBtn.forEach((btn) =>
       window.location = "describeTask.html";
     } else {
       localStorage.setItem("role", "setter");
+      localStorage.setItem("setTask", true)
       window.location = "auth.html";
     }
   })

@@ -281,6 +281,16 @@ button {
   transform: translateY(-3px);
   background-color: var(--btn-hover-color);
 }
+
+@keyframes scaleUp {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
 .setter_btn {
   width: 250px;
   height: 65px;
@@ -293,6 +303,7 @@ button {
   font-weight: 500;
   margin-right: 10px;
   box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
+  animation: scaleUp 1s linear infinite alternate;
 }
 .setter_btn i {
   margin-left: 0.7rem;
@@ -440,6 +451,7 @@ aside span:not(:last-child) {
   width: 500px;
   max-width: 100%;
   height: 440px;
+  transition: 1s ease-in-out;
 }
 .img_wrapper img {
   width: 100%;
@@ -631,6 +643,7 @@ footer .follow .socials i:hover {
     align-items: center;
     justify-content: center;
     padding-top: 0;
+    overflow: hidden;
   }
   .main-heading {
     font-size: 32px;
@@ -1650,6 +1663,7 @@ button.normal {
     width: 100px;
     height: 100px;
     margin: 20px;
+    transition: 1s;
   }
   .logo h2 {
     font-size: 30px;
@@ -1698,6 +1712,10 @@ button.normal {
     left: 0;
   }
 
+  .dropdown__wrapper {
+    left: -10px;
+  }
+
   .close_btn {
     display: block;
     position: relative;
@@ -1723,7 +1741,7 @@ button.normal {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: flex-start;
-    padding: 5px;
+    padding: 6px 5px;
   }
 
   .card {
@@ -1775,7 +1793,7 @@ button.normal {
     width: 140px;
     height: 55px;
     font-size: 13.5px;
-    margin-right: 1rem;
+    font-weight: 600;
   }
   .badges {
     grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
@@ -1798,7 +1816,8 @@ button.normal {
   }
 
   .article_btn {
-    display: block;
+    display: flex;
+    align-items: center;
   }
   footer {
     padding: 20px;

@@ -33,6 +33,7 @@ body {
   font-size: 40px;
   color: #002b1d;
 }
+
 .container {
   position: relative;
   width: 850px;
@@ -433,7 +434,7 @@ button {
     width: 100%;
   }
   form {
-    width: 160%;
+    width: 94dvw;
     margin-left: -73px;
   }
   #signup-form {

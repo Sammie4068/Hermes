@@ -75,7 +75,9 @@ init();
 
 async function getTableData() {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity/${id}`
+    );
     const data = await res.json();
     return data;
   } catch (err) {
@@ -95,7 +97,8 @@ function responsiveness() {
     hideSideBar();
   }
 }
-document.addEventListener("load", responsiveness)
+responsiveness();
+document.addEventListener("load", responsiveness);
 
 function hideSideBar() {
   sidebar.classList.toggle("hide");
@@ -116,6 +119,7 @@ function changingHash(div, hash) {
   div.addEventListener("click", () => {
     window.location.hash = `#${hash}`;
   });
+  responsiveness();
 }
 
 changingHash(walletCard, "wallet");
@@ -184,7 +188,7 @@ searchCancel.addEventListener("click", async () => {
 const taskFilterOPt = document.querySelector(".task_filter_options");
 async function allTasks(parentEle) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<option>${dt.title}</option>`;
@@ -278,7 +282,7 @@ const taskTable = document.getElementById("task_table");
 
 function dashboardTableDisplay(data) {
   const sortedData = data
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .sort((a, b) => new Date(b.created) - new Date(a.created))
     .slice(0, 3);
   sortedData.map((dat) => {
     let value = JSON.stringify(dat);
@@ -303,7 +307,9 @@ function dashboardTableDisplay(data) {
 
 function displayTask(data) {
   taskTable.innerHTML = ``;
-  const sortedData = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedData = data.sort(
+    (a, b) => new Date(b.created) - new Date(a.created)
+  );
   taskTableNumber.innerHTML = `(${sortedData.length})`;
   sortedData.map((dat) => {
     let value = JSON.stringify({
@@ -442,7 +448,7 @@ function displayTask(data) {
 async function updateStatus(id, statusData) {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/activity/status/${id}`,
+      `https://hermes-yto9.onrender.com/api/v1/activity/status/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -484,8 +490,8 @@ function hideAllContents() {
     content.classList.add("hidden");
   });
 }
-updateDisplay();
 function updateDisplay() {
+  responsiveness();
   const state = window.location.hash.slice(1);
   switch (state) {
     case "dashboard":
@@ -512,6 +518,7 @@ function updateDisplay() {
   }
 }
 window.addEventListener("hashchange", updateDisplay);
+window.addEventListener("load", updateDisplay);
 
 // SideBar active
 function active(ele) {
@@ -584,10 +591,14 @@ function seeMore(data, taskImgData) {
 // more Info
 async function taskTableInfo(id, gig) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/activity/id/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/activity/id/${id}`
+    );
     const data = await res.json();
 
-    const result = await fetch(`http://localhost:3000/api/v1/tasks/${gig}`);
+    const result = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/tasks/${gig}`
+    );
     const bodydata = await result.json();
     const taskImgData = bodydata[0];
 
@@ -680,7 +691,7 @@ async function changePassword() {
     };
 
     const res = await fetch(
-      `http://localhost:3000/api/v1/users/password/${id}`,
+      `https://hermes-yto9.onrender.com/api/v1/users/password/${id}`,
       {
         method: "PATCH",
         headers: {
@@ -737,13 +748,16 @@ async function save() {
       bio: null,
     };
 
-    const res = await fetch(`http://localhost:3000/api/v1/users/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newData),
-    });
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/${id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newData),
+      }
+    );
     const data = await res.json();
 
     if (data.message == "success") {
@@ -928,34 +942,45 @@ withdrawalBtn.addEventListener("click", () => {
 
   withdrawalForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    successMsg.forEach((msg) => {
-      return msg.classList.remove("hidden");
-    });
+    if (withdrawalAmt.value > walletBalance) {
+      successMsg.forEach((msg) => {
+        msg.classList.remove("hidden");
+        msg.innerText = "Insufficient funds";
+        msg.style.color = "#800000"
+      });
+    } else {
+      successMsg.forEach((msg) => {
+        return msg.classList.remove("hidden");
+      });
 
-    const data = {
-      id,
-      amount: withdrawalAmt.value,
-      type: "withdrawal",
-    };
-    addTransaction(data);
+      const data = {
+        id,
+        amount: withdrawalAmt.value,
+        type: "withdrawal",
+      };
+      addTransaction(data);
 
-    const updateWalletData = {
-      amount: parseFloat(walletBalance) - Number(withdrawalAmt.value),
-      id,
-    };
-    updateWallet(updateWalletData);
+      const updateWalletData = {
+        amount: parseFloat(walletBalance) - Number(withdrawalAmt.value),
+        id,
+      };
+      updateWallet(updateWalletData);
+    }
   });
 });
 
 async function addTransaction(data) {
   try {
-    const res = await fetch("http://localhost:3000/api/v1/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      "https://hermes-yto9.onrender.com/api/v1/transaction",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
 
     const apiData = await res.json();
     if (apiData.message) {
@@ -970,13 +995,16 @@ async function addTransaction(data) {
 
 async function updateWallet(data) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/users/wallet`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/users/wallet`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
     const apiData = await res.json();
     if (apiData.message) {
       localStorage.setItem("wallet", apiData.data.wallet);
@@ -989,7 +1017,7 @@ async function updateWallet(data) {
 async function rewardRunner(data) {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/users/wallet/reward`,
+      `https://hermes-yto9.onrender.com/api/v1/users/wallet/reward`,
       {
         method: "PATCH",
         headers: {
@@ -1031,7 +1059,9 @@ function transactionDisplay(data) {
 
 async function transactionData() {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/transaction/${id}`);
+    const res = await fetch(
+      `https://hermes-yto9.onrender.com/api/v1/transaction/${id}`
+    );
     const data = await res.json();
 
     transactionDisplay(data);

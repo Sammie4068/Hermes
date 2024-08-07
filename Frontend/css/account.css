@@ -6,11 +6,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 a {
   text-decoration: none;
 }
-
 li {
   list-style: none;
 }
@@ -157,6 +155,15 @@ body {
   left: 0;
   z-index: 1000;
 }
+
+#content nav .user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#userName {
+  text-wrap: nowrap;
+}
 #content nav::before {
   content: "";
   position: absolute;
@@ -263,7 +270,8 @@ body {
   min-width: 50px;
   height: 25px;
   border-radius: 25px;
-  background: var(--grey);
+  background: #fefefa;
+  border: 2px solid #800000;
   cursor: pointer;
   position: relative;
 }
@@ -274,12 +282,18 @@ body {
   left: 2px;
   bottom: 2px;
   width: calc(25px - 4px);
-  background: var(--primary);
+  background: #800000;
   border-radius: 50%;
   transition: all 0.3s ease;
 }
 #content nav #switch-mode:checked + .switch-mode::before {
+  background-color: var(--primary);
   left: calc(100% - (25px - 4px) - 2px);
+}
+
+#content nav #switch-mode:checked + .switch-mode {
+  border: 2px solid var(--primary);
+  background: #f5fefd;
 }
 
 /* CONTENT */
@@ -381,7 +395,7 @@ body {
   border-radius: 10px;
   background: #fff;
   padding: 24px;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
   height: fit-content;
 }
@@ -484,16 +498,15 @@ body {
   background: var(--grey);
   cursor: pointer;
 }
-#table_msg {
+.table_msg {
   display: none;
-  position: relative;
-  left: -70px;
+  margin: 15px 15%;
   color: #333;
 }
-.task_table #table_msg a {
+.describeTaskLink {
   color: var(--dark);
+  font-weight: 700;
   text-transform: uppercase;
-  text-decoration: underline;
 }
 
 #content .content_display .table-data .order table tr td .status,
@@ -1284,6 +1297,10 @@ body {
   }
 
   /* account.html */
+  /* #content nav form {
+    width: 50%;
+  } */
+
   .availability {
     display: flex;
     flex-direction: column;
@@ -1301,24 +1318,24 @@ body {
   #content nav .user {
     display: flex;
     flex-direction: column-reverse;
+    gap: 0rem;
   }
   #content nav .user {
     font-size: 13px;
   }
-  #content .content_display .table-data .order table tr td:first-child {
-    flex-direction: column;
-    grid-gap: 6px;
-    align-items: baseline;
-  }
+  #content .content_display .table-data .order table tr td:first-child,
   .task_table .order table tr td:first-child {
     flex-direction: column;
     grid-gap: 6px;
     align-items: baseline;
   }
+  #content .content_display .table-data .order table tr td:first-child p,
   .task_table .order table tr td:first-child p {
     text-wrap: wrap;
     font-size: 13px;
+    width: 50%;
   }
+
   .wallet-top {
     flex-direction: column;
     align-items: flex-start;
@@ -1374,6 +1391,11 @@ body {
     position: relative;
     left: -20%;
   }
+  .button.save_password {
+    width: 30%;
+    position: relative;
+    left: -20%;
+  }
   .password_card_top {
     width: 90%;
   }
@@ -1385,5 +1407,8 @@ body {
   }
   .filter span select {
     width: 100%;
+  }
+  .table_msg {
+    font-size: 12px;
   }
 }

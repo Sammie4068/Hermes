@@ -60,6 +60,7 @@ exports.addActivity = async (req, res, next) => {
     const { tip } = taskData.rows[0];
     const price = duration * tip;
     const total = price + 500;
+    const created = new Date()
     const data = {
       task,
       description,
@@ -71,6 +72,7 @@ exports.addActivity = async (req, res, next) => {
       duration,
       price,
       total,
+      created
     };
     const result = await addActivity(data);
     const { id } = result.rows[0];
@@ -83,9 +85,7 @@ exports.addActivity = async (req, res, next) => {
 exports.updateRunnerID = async (req, res, next) => {
   try {
     const { runnerID, status } = req.body;
-   
-    console.log(status)
-
+  
     const id = req.params.id;
     const result = await updateRunnerID(runnerID, status, id);
     return res.json({ message: "success", data: result.rows });

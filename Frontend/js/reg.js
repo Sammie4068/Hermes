@@ -33,7 +33,7 @@ signinLink.addEventListener("click", () => {
 // Get all taskers
 async function allTasks(parentEle) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     data.forEach((dt) => {
       const html = `<option>${dt.title}</option>`;
@@ -49,7 +49,7 @@ allTasks(taskInput);
 // Gig tip
 async function getTip(gig) {
   try {
-    const res = await fetch(`http://localhost:3000/api/v1/tasks`);
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/tasks`);
     const data = await res.json();
     const gigArr = data.filter((dat) => dat.title == gig);
     const gigTip = +gigArr[0].tip.split(" ")[1];
@@ -134,7 +134,7 @@ function emailValidation() {
 async function checkEmail() {
   try {
     const res = await fetch(
-      `http://localhost:3000/api/v1/runners/email/${email.value}`
+      `https://hermes-yto9.onrender.com/api/v1/runners/email/${email.value}`
     );
     const data = await res.json();
     if (data.message === "exists") {
@@ -277,7 +277,7 @@ submitBtn.addEventListener("click", (e) => {
 async function postData(data) {
   try {
     renderSpinner(overlay);
-    const res = await fetch(`http://localhost:3000/api/v1/runners`, {
+    const res = await fetch(`https://hermes-yto9.onrender.com/api/v1/runners`, {
       method: "POST",
       body: data,
     });
