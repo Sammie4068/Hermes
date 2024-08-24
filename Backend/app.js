@@ -16,7 +16,7 @@ app.use("/api/v1", cors(), usersRoute);
 const port = process.env.PORT;
 
 app.get("/", (req, res) => {
-  res.json({ message: "e dey work!!!" });
+  res.json({ message: "e don dey work!!!" });
 });
 
 app.use((req, res, next) => {
